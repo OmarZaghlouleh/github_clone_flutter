@@ -1,0 +1,1 @@
+const kFontFamily = "Almarai";

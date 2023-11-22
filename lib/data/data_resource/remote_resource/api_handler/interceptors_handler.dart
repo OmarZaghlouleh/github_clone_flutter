@@ -1,13 +1,14 @@
 import "package:dio/dio.dart";
+import "package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart";
 
 class ClientInterceptor extends Interceptor {
   @override
   void onRequest(options, handler) {
     options.headers = {
-      "Accept-Language": DataStore.instance.lang,
+      // "Accept-Language": DataStore.instance.lang,
       // "Content-Type": Headers.jsonContentType,
       // "Content-Type":"text/html",
-      "token": DataStore.instance.token,
+      "token": LocalResource.sharedPreferences.getString('token') ?? "",
       // "Accept": Headers.jsonContentType,
       "Accept": '*/*',
       // "AcceptApplication/json": Headers.jsonContentType,

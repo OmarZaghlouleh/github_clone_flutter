@@ -8,7 +8,8 @@ class ImageWidget extends StatelessWidget {
   final Color? color;
   final BoxFit fit;
 
-  const ImageWidget({Key? key,
+  const ImageWidget({
+    Key? key,
     required this.url,
     this.width,
     this.height,
@@ -16,19 +17,17 @@ class ImageWidget extends StatelessWidget {
     this.fit = BoxFit.cover,
   }) : super(key: key);
 
-
   Widget buildAssetSvgImage() {
     return SvgPicture.asset(
       url,
       width: width,
       height: height,
-      color: color,
       fit: BoxFit.contain,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return this;
   }
 }

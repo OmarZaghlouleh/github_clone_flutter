@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../links.dart';
 import 'dio_errors_handler.dart';
@@ -43,8 +44,8 @@ class BaseApiClient {
         options: Options(
           headers: {
             'accept': _acceptHeader,
-            'authorization': 'Bearer ${DataStore.instance.token ?? ''}',
-            "lang": DataStore.instance.lang
+            'authorization':
+                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
           },
         ),
       );
@@ -52,8 +53,9 @@ class BaseApiClient {
         if (kDebugMode) {
           print(response.data);
         }
-        if (saveToken != null)
+        if (saveToken != null) {
           saveToken(response.headers['Authorization']!.first);
+        }
         return right(converter(response.data));
       } else {
         return left(response.data['message']);
@@ -94,8 +96,8 @@ class BaseApiClient {
         options: Options(
           headers: {
             'accept': _acceptHeader,
-            'authorization': 'Bearer ${DataStore.instance.token ?? ''}',
-            "lang": DataStore.instance.lang
+            'authorization':
+                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
           },
         ),
       );
@@ -130,8 +132,8 @@ class BaseApiClient {
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${DataStore.instance.token}',
-            "lang": DataStore.instance.lang
+            'authorization':
+                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
           },
         ),
       );
@@ -169,7 +171,8 @@ class BaseApiClient {
         options: Options(
           headers: {
             'accept': _acceptHeader,
-            'authorization': 'Bearer ${DataStore.instance.token ?? ''}',
+            'authorization':
+                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
           },
         ),
       );

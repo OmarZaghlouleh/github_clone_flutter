@@ -32,10 +32,12 @@ class CustomTextFormField extends StatelessWidget {
         obscuringCharacter: '*',
         cursorColor: AppColors.primaryColor,
         decoration: InputDecoration(
-          label: Text(
-            label,
-            style: const TextStyle(
-                color: AppColors.primaryColor, fontWeight: FontWeight.w600),
+          label: FittedBox(
+            child: Text(
+              label,
+              style: const TextStyle(
+                  color: AppColors.primaryColor, fontWeight: FontWeight.w600),
+            ),
           ),
           prefixIcon: icon == null ? null : Icon(icon),
           suffixIcon: suffixIcon != null

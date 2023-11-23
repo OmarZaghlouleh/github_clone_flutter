@@ -16,7 +16,7 @@ class SignUpScreen extends StatelessWidget {
       body: Center(
         child: Container(
           width: 0.95.mqWdith(context),
-          height: 0.9.mqHeight(context),
+          height: 0.95.mqHeight(context),
           decoration: BoxDecoration(
             color: AppColors.thirdColor,
             borderRadius: BorderRadius.circular(

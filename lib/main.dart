@@ -7,6 +7,8 @@ import 'package:github_clone_flutter/data/data_resource/remote_resource/api_hand
 import 'package:github_clone_flutter/presentation/screens/auth/sign_up_screen.dart';
 import 'package:github_clone_flutter/presentation/style/themes/app_theme.dart';
 
+import 'presentation/screens/home/home_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // checkInternetApp();
@@ -30,7 +32,9 @@ class GithubCloneApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: appTheme(),
-        home: const SignUpScreen(),
+        home:
+            //  const HomeScreen(),
+            const SignUpScreen(),
       ),
     );
   }

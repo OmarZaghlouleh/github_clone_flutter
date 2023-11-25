@@ -5,6 +5,7 @@ import 'package:github_clone_flutter/cubit/auth/signup_confirm_password_visibili
 import 'package:github_clone_flutter/cubit/auth/signup_password_visibility_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/sign_up_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/create_group/create_group_screen.dart';
 import 'package:github_clone_flutter/presentation/style/themes/app_theme.dart';
 
 void main() async {
@@ -30,7 +31,7 @@ class GithubCloneApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: appTheme(),
-        home: const SignUpScreen(),
+        home:  CreateGroupScreen(),
       ),
     );
   }

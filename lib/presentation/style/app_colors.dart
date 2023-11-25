@@ -8,4 +8,5 @@ class AppColors {
 
   static const Color thirdColor = Colors.white;
   static const Color errorColor = Colors.orange;
+  static const Color textFieldValueColor = Colors.black87;
 }

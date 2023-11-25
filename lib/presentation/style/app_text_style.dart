@@ -18,4 +18,14 @@ class AppTextStyle {
         fontSize: AppFontSize.elevatedButtonTextFontSize,
         fontWeight: FontWeight.w400,
       );
+  static TextStyle snackbarTextStyle() => const TextStyle(
+        color: AppColors.primaryColor,
+        fontSize: AppFontSize.snackbarTextFontSize,
+        fontWeight: FontWeight.w500,
+      );
+  static TextStyle authTextButtonStyle() => const TextStyle(
+        color: AppColors.primaryColor,
+        fontSize: AppFontSize.authTextButtonFontSize,
+        fontWeight: FontWeight.w500,
+      );
 }

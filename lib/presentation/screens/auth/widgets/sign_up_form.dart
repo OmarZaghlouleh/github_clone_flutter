@@ -1,20 +1,30 @@
-import 'package:file_picker/file_picker.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/constants.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
-import 'package:github_clone_flutter/cubit/auth/signup_confirm_password_visibility_cubit.dart';
-import 'package:github_clone_flutter/cubit/auth/signup_password_visibility_cubit.dart';
-import 'package:github_clone_flutter/cubit/auth/signup_profile_image_cubit.dart';
-import 'package:github_clone_flutter/cubit/auth/signup_profile_image_hover_cubit.dart';
+import 'package:github_clone_flutter/core/utils/utils_functions.dart';
+import 'package:github_clone_flutter/cubit/auth/sign_up/signup_confirm_password_visibility_cubit.dart';
+import 'package:github_clone_flutter/cubit/auth/sign_up/signup_cubit.dart';
+import 'package:github_clone_flutter/cubit/auth/sign_up/signup_password_visibility_cubit.dart';
+import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_cubit.dart';
+import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_hover_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
+import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/controllers/sign_up_controllers.dart';
+import 'package:github_clone_flutter/presentation/screens/auth/widgets/auth_section.dart';
+import 'package:github_clone_flutter/presentation/screens/auth/widgets/fake_field.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_sizes.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
 class SignUpForm extends StatelessWidget {
-  const SignUpForm({super.key});
+  const SignUpForm({super.key, this.isPortrait = false});
+
+  final bool isPortrait;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +34,50 @@ class SignUpForm extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: AppSizes.signUpFormLeftPadding, top: 10),
-              child: Text(
-                "Sign Up".toUpperCase(),
-                style: AppTextStyle.headerTextStyle(),
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: AppSizes.signUpFormLeftPadding, top: 10),
+                    child: Text(
+                      "Sign Up".toUpperCase(),
+                      style: AppTextStyle.headerTextStyle(),
+                    ),
+                  ),
+                ),
+                10.space(),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: SizedBox(
+                    height: 20,
+                    child: VerticalDivider(
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: TextButton(
+                      onHover: null,
+                      onPressed: () {
+                        AuthSection.pageController.animateToPage(0,
+                            duration: const Duration(milliseconds: 600),
+                            curve: Curves.linear);
+                        SignUpControllers.clearControllers();
+                        BlocProvider.of<SignupProfileImageCubit>(context)
+                            .reset();
+                      },
+                      child: Text(
+                        "Sign In instead".toUpperCase(),
+                        style: AppTextStyle.authTextButtonStyle(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -54,13 +101,17 @@ class SignUpForm extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: Form(
+                    key: SignUpControllers.signUpFormKey,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: AppSizes.signUpFormLeftPadding - 8, top: 30),
+                      padding: EdgeInsets.only(
+                          left: isPortrait
+                              ? 0
+                              : AppSizes.signUpFormLeftPadding - 8,
+                          top: 30),
                       child: Column(
                         children: [
                           // Image
-                          BlocBuilder<SignupProfileImageCubit, FileImage?>(
+                          BlocBuilder<SignupProfileImageCubit, MemoryImage?>(
                             builder: (context, state) {
                               return InkWell(
                                 onTap: () async {
@@ -117,6 +168,11 @@ class SignUpForm extends StatelessWidget {
                                   hint: "ex: Fadi",
                                   textInputType: TextInputType.name,
                                   icon: Icons.person_rounded,
+                                  maxLength: maxNameLength,
+                                  validator: (_) {
+                                    return SignUpControllers
+                                        .validateFirstName();
+                                  },
                                 ),
                               ),
                               //Last Name
@@ -127,6 +183,10 @@ class SignUpForm extends StatelessWidget {
                                   label: "Last name",
                                   hint: "ex: Za",
                                   textInputType: TextInputType.name,
+                                  maxLength: maxNameLength,
+                                  validator: (_) {
+                                    return SignUpControllers.validateLastName();
+                                  },
                                 ),
                               ),
                             ],
@@ -139,6 +199,10 @@ class SignUpForm extends StatelessWidget {
                             hint: "example123",
                             icon: Icons.alternate_email_rounded,
                             textInputType: TextInputType.text,
+                            maxLength: maxAccountNameLength,
+                            validator: (_) {
+                              return SignUpControllers.validateAccountName();
+                            },
                           ),
                           //Email
                           CustomTextFormField(
@@ -147,6 +211,9 @@ class SignUpForm extends StatelessWidget {
                             hint: "example@gmail.com",
                             icon: Icons.email_rounded,
                             textInputType: TextInputType.emailAddress,
+                            validator: (_) {
+                              return SignUpControllers.validateEmail();
+                            },
                           ),
                           //Password
                           BlocBuilder<SignupPasswordVisibilityCubit, bool>(
@@ -164,6 +231,9 @@ class SignUpForm extends StatelessWidget {
                                 suffixIcon: state
                                     ? Icons.visibility_off
                                     : Icons.visibility,
+                                validator: (_) {
+                                  return SignUpControllers.validatePassword();
+                                },
                               );
                             },
                           ),
@@ -182,11 +252,20 @@ class SignUpForm extends StatelessWidget {
                                             SignupConfirmPasswordVisibilityCubit>(
                                         context)
                                     .toggleVisibility(),
+                                // focusNode:
+                                //     SignUpControllers.confirmPasswordFocusNode,
                                 suffixIcon: state
                                     ? Icons.visibility_off
                                     : Icons.visibility,
+                                validator: (_) {
+                                  return SignUpControllers
+                                      .validateConfirmPassword();
+                                },
                               );
                             },
+                          ),
+                          FakeField(
+                            controller: SignUpControllers.fakeFieldController,
                           ),
                         ],
                       ),
@@ -201,8 +280,8 @@ class SignUpForm extends StatelessWidget {
         ),
         Center(
           child: Padding(
-            padding: const EdgeInsets.only(
-              left: AppSizes.signUpFormLeftPadding,
+            padding: EdgeInsets.only(
+              left: isPortrait ? 0 : AppSizes.signUpFormLeftPadding,
               right: 8,
               bottom: 8,
             ),
@@ -213,18 +292,37 @@ class SignUpForm extends StatelessWidget {
                   endIndent: 20,
                   indent: 20,
                 ),
-                SizedBox(
-                  width: 0.28.mqWdith(context),
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: Theme.of(context).elevatedButtonTheme.style,
-                    child: Text(
-                      "Create Account",
-                      style: AppTextStyle.elevatedButtonTextStyle(),
+                BlocBuilder<SignupCubit, SignupState>(
+                    builder: (context, state) {
+                  if (state is SignupLoading) return const Loader();
+                  return SizedBox(
+                    width: isPortrait
+                        ? 0.9.mqWdith(context)
+                        : 0.28.mqWdith(context),
+                    height: 55,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (SignUpControllers.signUpFormKey.currentState !=
+                                null &&
+                            SignUpControllers.signUpFormKey.currentState!
+                                .validate()) {
+                          await BlocProvider.of<SignupCubit>(context)
+                              .signup(context: context);
+                        } else if (SignUpControllers.message.isNotEmpty) {
+                          showSnackBar(
+                              title: SignUpControllers.message,
+                              context: context,
+                              error: true);
+                        }
+                      },
+                      style: Theme.of(context).elevatedButtonTheme.style,
+                      child: Text(
+                        "Create Account",
+                        style: AppTextStyle.elevatedButtonTextStyle(),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ],
             ),
           ),

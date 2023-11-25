@@ -22,10 +22,11 @@ class BaseApiClient {
     client.interceptors.add(LogInterceptor());
     if (kDebugMode) {
       client.interceptors.add(PrettyDioLogger(
-          requestBody: true,
-          requestHeader: true,
-          responseHeader: true,
-          request: true));
+        requestBody: true,
+        requestHeader: true,
+        responseHeader: true,
+        request: true,
+      ));
     }
     //  client.interceptors.add(ClientInterceptor());
     client.options.baseUrl = Links.baseUrl;

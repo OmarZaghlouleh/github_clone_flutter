@@ -3,6 +3,8 @@ import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/border_radius.dart';
 
 ThemeData appTheme() => ThemeData(
+  colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+        useMaterial3: true,
       fontFamily: 'SourceCodePro',
       primaryColor: AppColors.primaryColor,
       scrollbarTheme: ScrollbarThemeData(

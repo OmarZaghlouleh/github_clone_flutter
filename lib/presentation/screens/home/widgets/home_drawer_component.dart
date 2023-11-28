@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
-import 'package:provider/provider.dart';
-
 import '../../../common_widgets/divider.dart';
-import '../../../common_widgets/empty_widget.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
@@ -15,6 +12,12 @@ class HomeDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Drawer(
+        // clipBehavior: Clip.hardEdge,
+        // shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        // backgroundColor: Colors.yellow,
+        // shadowColor: Colors.green,
+        // surfaceTintColor: Colors.purple,
+        // elevation: 0,
         child: Center(
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,28 +55,28 @@ class HomeDrawer extends StatelessWidget {
                           "My groups",
                           style: AppTextStyle.headerTextStyle(),
                         ),
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.people_rounded,
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      //Donations list
-                      ListTile(
-                        onTap: () async {
-                          // Navigator.pushNamed(
-                          //     context, RoutesManager.donationsListRoute);
-                        },
-                        title: Text(
-                          "",
-                          style: AppTextStyle.headerTextStyle(),
-                        ),
-                        leading: Icon(
-                          CupertinoIcons.cube_box_fill,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
+                      // //Donations list
+                      // ListTile(
+                      //   onTap: () async {
+                      //     // Navigator.pushNamed(
+                      //     //     context, RoutesManager.donationsListRoute);
+                      //   },
+                      //   title: Text(
+                      //     "",
+                      //     style: AppTextStyle.headerTextStyle(),
+                      //   ),
+                      //   leading: Icon(
+                      //     CupertinoIcons.cube_box_fill,
+                      //     color: AppColors.primaryColor,
+                      //   ),
+                      // ),
 
-                      const CustomDivider(),
+                      // const CustomDivider(),
                       //Language
                       /*       Selector<HomeProvider, Locale>(
                         selector: (p0, p1) => p1.getLanguage,

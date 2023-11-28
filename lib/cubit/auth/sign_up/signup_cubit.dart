@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +42,7 @@ class SignupCubit extends Cubit<SignupState> {
       LocalResource.sharedPreferences.setInt('roleId', r.roleId);
       LocalResource.sharedPreferences.setString('roleName', r.roleName);
       emit(SignupLoaded());
-      //TODO: Navigate to home
+      //TODO: Nav
       // TODO: SignUpControllers.disposeControllers();
     });
   }

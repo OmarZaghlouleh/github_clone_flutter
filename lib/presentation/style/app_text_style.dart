@@ -28,4 +28,9 @@ class AppTextStyle {
         fontSize: AppFontSize.authTextButtonFontSize,
         fontWeight: FontWeight.w500,
       );
+  static TextStyle creatorsTextStyle() => const TextStyle(
+        color: AppColors.primaryColor,
+        fontSize: AppFontSize.creatorsTextFontSize,
+        fontWeight: FontWeight.w600,
+      );
 }

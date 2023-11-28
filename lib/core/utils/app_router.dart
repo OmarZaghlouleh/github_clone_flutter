@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import 'global.dart';
@@ -8,7 +9,7 @@ class AppRouter {
     required Widget destination,
   }) {
     return Navigator.of(context).push<Object>(MaterialPageRoute(
-      builder: (context) => destination,
+      builder: (context) => FadeIn(child: destination),
     ));
   }
 
@@ -17,7 +18,8 @@ class AppRouter {
     required Widget destination,
   }) {
     return Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => destination), (route) => false);
+        MaterialPageRoute(builder: (context) => FadeIn(child: destination)),
+        (route) => false);
   }
 
   static Future<dynamic> navigateReplacementTo({
@@ -25,7 +27,7 @@ class AppRouter {
     required Widget destination,
   }) {
     return Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => destination),
+      MaterialPageRoute(builder: (context) => FadeIn(child: destination)),
     );
   }
 
@@ -39,7 +41,7 @@ class AppRouter {
     navigatorKey.currentState?.push(PageRouteBuilder<Object>(
       pageBuilder:
           (BuildContext c, Animation<double> a1, Animation<double> a2) =>
-              classToNavigate,
+              FadeIn(child: classToNavigate),
       maintainState: true,
       barrierDismissible: true,
       opaque: true,

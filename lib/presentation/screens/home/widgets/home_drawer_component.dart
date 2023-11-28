@@ -13,6 +13,12 @@ class HomeDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Drawer(
+        // clipBehavior: Clip.hardEdge,
+        // shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        // backgroundColor: Colors.yellow,
+        // shadowColor: Colors.green,
+        // surfaceTintColor: Colors.purple,
+        // elevation: 0,
         child: Center(
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,28 +56,28 @@ class HomeDrawer extends StatelessWidget {
                           "My groups",
                           style: AppTextStyle.headerTextStyle(),
                         ),
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.people_rounded,
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      //Donations list
-                      ListTile(
-                        onTap: () async {
-                          // Navigator.pushNamed(
-                          //     context, RoutesManager.donationsListRoute);
-                        },
-                        title: Text(
-                          "",
-                          style: AppTextStyle.headerTextStyle(),
-                        ),
-                        leading: Icon(
-                          CupertinoIcons.cube_box_fill,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
+                      // //Donations list
+                      // ListTile(
+                      //   onTap: () async {
+                      //     // Navigator.pushNamed(
+                      //     //     context, RoutesManager.donationsListRoute);
+                      //   },
+                      //   title: Text(
+                      //     "",
+                      //     style: AppTextStyle.headerTextStyle(),
+                      //   ),
+                      //   leading: Icon(
+                      //     CupertinoIcons.cube_box_fill,
+                      //     color: AppColors.primaryColor,
+                      //   ),
+                      // ),
 
-                      const CustomDivider(),
+                      // const CustomDivider(),
                       //Language
                       /*       Selector<HomeProvider, Locale>(
                         selector: (p0, p1) => p1.getLanguage,

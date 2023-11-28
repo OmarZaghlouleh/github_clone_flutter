@@ -1,3 +1,4 @@
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +42,7 @@ class SignupCubit extends Cubit<SignupState> {
       //Save To Storage
       LocalResource.saveUserData(r);
       emit(SignupLoaded());
+
       AppRouter.navigateReplacementTo(
           context: context, destination: const HomeScreen());
 

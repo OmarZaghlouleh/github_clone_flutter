@@ -10,14 +10,23 @@ class BaseApiClient {
   static Dio client = Dio();
   static const String _acceptHeader = 'application/json';
 
+  static Map<String, dynamic> defaultHeaders = {
+    'accept': _acceptHeader,
+    'x-api-key':
+        "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
+    'authorization':
+        'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
+  };
+
   BaseApiClient() {
     client.interceptors.add(LogInterceptor());
     if (kDebugMode) {
       client.interceptors.add(PrettyDioLogger(
-          requestBody: true,
-          requestHeader: true,
-          responseHeader: true,
-          request: true));
+        requestBody: true,
+        requestHeader: true,
+        responseHeader: true,
+        request: true,
+      ));
     }
     //  client.interceptors.add(ClientInterceptor());
     client.options.baseUrl = Links.baseUrl;
@@ -25,12 +34,14 @@ class BaseApiClient {
 
   static Future<Either<String, T>> post<T>(
       {required String url,
+      Map<String, dynamic>? headers,
       FormData? formData,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
       Function(String)? saveToken,
       dynamic returnOnError}) async {
     try {
+      print(defaultHeaders);
       var response = await client.post(
         url,
         queryParameters: queryParameters,
@@ -42,13 +53,10 @@ class BaseApiClient {
           }
         },
         options: Options(
-          headers: {
-            'accept': _acceptHeader,
-            'authorization':
-                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
-          },
+          headers: headers ?? defaultHeaders,
         ),
       );
+
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
@@ -79,6 +87,7 @@ class BaseApiClient {
   static Future<Either<String, T>> put<T>(
       {required String url,
       dynamic formData,
+      Map<String, dynamic>? headers,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
       dynamic returnOnError}) async {
@@ -94,11 +103,7 @@ class BaseApiClient {
           }
         },
         options: Options(
-          headers: {
-            'accept': _acceptHeader,
-            'authorization':
-                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
-          },
+          headers: headers ?? defaultHeaders,
         ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
@@ -125,16 +130,14 @@ class BaseApiClient {
   static Future<Either<String, T>> get<T>(
       {required String url,
       Map<String, dynamic>? queryParameters,
+      Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
       var response = await client.get(
         url,
         queryParameters: queryParameters,
         options: Options(
-          headers: {
-            'authorization':
-                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
-          },
+          headers: headers ?? defaultHeaders,
         ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
@@ -163,17 +166,14 @@ class BaseApiClient {
   static Future<Either<String, T>> delete<T>(
       {required String url,
       Map<String, dynamic>? queryParameters,
+      Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
       var response = await client.delete(
         url,
         queryParameters: queryParameters,
         options: Options(
-          headers: {
-            'accept': _acceptHeader,
-            'authorization':
-                'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
-          },
+          headers: headers ?? defaultHeaders,
         ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {

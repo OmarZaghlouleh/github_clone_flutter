@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalResource {
   static late SharedPreferences sharedPreferences;
 
-  Future<void> initLocalResource() async {
+  static Future<void> initLocalResource() async {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 }

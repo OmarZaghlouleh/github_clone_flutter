@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/border_radius.dart';
 
@@ -11,8 +14,13 @@ class CustomTextFormField extends StatelessWidget {
       this.icon,
       this.suffixIcon,
       this.hint,
+        this.minLines,
+      this.maxLength,
+      this.formatters,
       this.obsecure = false,
-      required this.controller});
+      this.validator,
+      this.focusNode,
+      required this.controller, this.maxLines});
   final TextEditingController controller;
   final String label;
   final IconData? icon;
@@ -21,21 +29,40 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? suffixIcon;
   final TextInputType textInputType;
   final VoidCallback? onSuffixClick;
+  final int? maxLength;
+  final int? maxLines;
+  final int?minLines;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? formatters;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: TextFormField(
+        focusNode: focusNode,
+        inputFormatters: formatters,
+        style: const TextStyle(
+            color: AppColors.textFieldValueColor, fontWeight: FontWeight.w400),
+        maxLength: maxLength,
+        minLines: minLines,
+        maxLines: maxLines,
+        controller: controller,
         textInputAction: TextInputAction.next,
         obscureText: obsecure,
         obscuringCharacter: '*',
+        validator: validator,
         cursorColor: AppColors.primaryColor,
         decoration: InputDecoration(
-          label: Text(
-            label,
-            style: const TextStyle(
-                color: AppColors.primaryColor, fontWeight: FontWeight.w600),
+          errorMaxLines: 5,
+          errorStyle: const TextStyle(color: AppColors.errorColor),
+          label: FittedBox(
+            child: Text(
+              label,
+              style: const TextStyle(
+                  color: AppColors.primaryColor, fontWeight: FontWeight.w600),
+            ),
           ),
           prefixIcon: icon == null ? null : Icon(icon),
           suffixIcon: suffixIcon != null
@@ -54,11 +81,18 @@ class CustomTextFormField extends StatelessWidget {
               color: AppColors.primaryColor, fontWeight: FontWeight.w500),
           hintText: hint,
           border: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.primaryColor),
             borderRadius: BorderRadius.circular(
               BorderRadiusSizes.textFormFieldRadius,
             ),
           ),
           focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.primaryColor),
+            borderRadius: BorderRadius.circular(
+              BorderRadiusSizes.textFormFieldRadius,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: AppColors.primaryColor),
             borderRadius: BorderRadius.circular(
               BorderRadiusSizes.textFormFieldRadius,

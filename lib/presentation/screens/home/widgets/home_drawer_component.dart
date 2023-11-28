@@ -46,7 +46,6 @@ class HomeDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //Beneficiaries list
                       ListTile(
                         onTap: () async {
                           // Navigator.pushNamed(

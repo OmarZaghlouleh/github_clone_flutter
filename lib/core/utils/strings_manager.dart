@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class StringManager {
   static String noRouteFound = "No Route Found";
   static String interfaceNotExist = "Interface does not exist";

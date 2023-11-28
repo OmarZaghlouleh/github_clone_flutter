@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 
 <head>
   <!--
@@ -15,50 +15,90 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="Github Clone.">
+  <!-- <meta name="theme-color" content="#073b4c" /> -->
+  <base href="$FLUTTER_BASE_HREF">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="github_clone_flutter">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="apple-mobile-web-app-title" content="Github Clone">
+  <link rel="apple-touch-icon" href="./assets/images/logo.png">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="./assets/images/logo.png" />
 
   <title>Github Clone</title>
   <link rel="manifest" href="manifest.json">
 
+
   <script>
     // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
+    var serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+
 </head>
 
 <body>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      /* background-image: linear-gradient(135deg, black, #073b4c); */
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .main-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease-out;
+      border: none;
+    }
+
+    .main-content iframe {
+      border: none;
+    }
+  </style>
   <script>
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
     window.addEventListener('load', function (ev) {
+      var loaderContent = document.querySelector('#loader-content');
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function (engineInitializer) {
-          engineInitializer.initializeEngine().then(function (appRunner) {
+          engineInitializer.initializeEngine().then(async function (appRunner) {
+            loaderContent.style.opacity = "0";
+            await delay(400);
             appRunner.runApp();
           });
         }
       });
     });
   </script>
+  <div class="main-content" id="loader-content">
+    <lottie-player src="./assets/animations/loading.json" background="transparent" speed="1"
+      style="width: 250px; height: 250px;" loop reverse autoplay></lottie-player>
+  </div>
 </body>
 
 </html>

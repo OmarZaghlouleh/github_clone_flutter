@@ -14,9 +14,8 @@ import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/auth_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/splash_screen.dart';
 import 'package:github_clone_flutter/presentation/style/themes/app_theme.dart';
-
-import 'presentation/screens/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,9 +49,11 @@ class GithubCloneApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: appTheme(),
-        home: const HomeScreen(),
-        // const SignUpScreen(),
-        // const AuthScreen(),
+
+        home:
+            //const HomeScreen(),
+            // const SignUpScreen(),
+            const SplashScreen(),
       ),
     );
   }

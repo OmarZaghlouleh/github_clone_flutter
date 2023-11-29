@@ -30,4 +30,10 @@ class LocalResource {
         .setString('roleName', authModel.roleName);
     sharedPreferences.getString('token')!.dprint();
   }
+
+  static deleteUserData() {
+    LocalResource.sharedPreferences.remove('token');
+    LocalResource.sharedPreferences.remove('roleId');
+    LocalResource.sharedPreferences.remove('roleName');
+  }
 }

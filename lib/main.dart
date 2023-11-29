@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/global.dart';
+
 import 'package:github_clone_flutter/core/utils/service_locator_di.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/sign_in_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/signin_password_visibility_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:github_clone_flutter/cubit/auth/sign_up/signup_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_password_visibility_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_hover_cubit.dart';
+import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/auth_screen.dart';
@@ -40,12 +42,14 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => SignupCubit()),
         BlocProvider(create: (context) => SignInPasswordVisibilityCubit()),
         BlocProvider(create: (context) => SignInCubit()),
+        BlocProvider(create: (context) => ProfileCubit()),
       ],
       child: MaterialApp(
         title: 'Github Clone',
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: appTheme(),
+
         home:
             //const HomeScreen(),
             // const SignUpScreen(),

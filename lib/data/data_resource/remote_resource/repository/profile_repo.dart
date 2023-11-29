@@ -10,8 +10,6 @@ class ProfileRepoImp {
         url: Links.baseUrl + Links.userProfile,
         converter: (value) {
           return ProfileModel.fromJson(value["data"]);
-          //  return List<ProfileModel>.from(
-          // value["data"].map((x) => ProfileModel.fromJson(x)));
         });
   }
 }

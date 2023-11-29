@@ -27,10 +27,11 @@ class SignupParams extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-        'img': MultipartFile.fromBytes(
-          profileImage!.bytes,
-          filename: "-$fileName",
-        ),
+        if (profileImage != null)
+          'img': MultipartFile.fromBytes(
+            profileImage!.bytes,
+            filename: "-$fileName",
+          ),
         'first_name': firstName,
         'last_name': lastName,
         'account_name': accountName,
@@ -43,10 +44,11 @@ class SignupParams extends Equatable {
   @override
   List<Object> get props {
     return [
-      MultipartFile.fromBytes(
-        profileImage!.bytes,
-        filename: "-$fileName",
-      ),
+      if (profileImage != null)
+        MultipartFile.fromBytes(
+          profileImage!.bytes,
+          filename: "-$fileName",
+        ),
       firstName,
       lastName,
       accountName,

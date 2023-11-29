@@ -4,14 +4,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/empty_widget.dart';
 import 'package:github_clone_flutter/presentation/screens/home/widgets/home_drawer_component.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 
+import '../../../core/utils/constants.dart';
 import '../../../core/utils/global.dart';
 import '../../../core/utils/strings_manager.dart';
+import '../../../data/data_resource/remote_resource/links.dart';
 import '../../common_widgets/info_row_component.dart';
 import '../../common_widgets/loader.dart';
 import '../../style/app_text_style.dart';
@@ -35,16 +38,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldkey,
       drawerScrimColor: AppColors.thirdColor.withOpacity(0),
-      drawer: const HomeDrawer(),
+      drawer: (1.mqWdith(context) < bigScreen) ? const HomeDrawer() : null,
       appBar: AppBar(
-        backgroundColor: AppColors.secondaryColor,
-        title: Text(
-          "Welcome!",
-          style: AppTextStyle.headerTextStyle(),
-        ),
-      ),
+          // backgroundColor: AppColors.secondaryColor,
+          // title: Text(
+          //   "Welcome!",
+          //   style: AppTextStyle.headerTextStyle(),
+          // ),
+          ),
       body: BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
         if (state is ProfileLoading) {
           return const Center(child: Loader());
@@ -101,7 +103,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //       : null,
                 // ),
               ),
-              const CustomDivider(),
+              CustomDivider(
+                start: 0.3.mqWdith(context),
+                end: 0.3.mqWdith(context),
+              ),
               Text(
                 "${(state).profile.firstName} ${(state).profile.lastName}",
                 style: AppTextStyle.headerTextStyle(),
@@ -131,22 +136,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               InfoRow(
                 label1: "Groups count",
                 label2: (state).profile.groupsCount.toString(),
-                label2Color: AppColors.secondaryColor,
+                // label2Color: AppColors.secondaryColor,
               ),
               InfoRow(
                 label1: "Commits count",
                 label2: (state).profile.commitsCount.toString(),
-                label2Color: AppColors.secondaryColor,
+                // label2Color: AppColors.secondaryColor,
               ),
               InfoRow(
                 label1: "Commits this year",
                 label2: (state).profile.commitsThisYear.toString(),
-                label2Color: AppColors.secondaryColor,
+                // label2Color: AppColors.secondaryColor,
               ),
               InfoRow(
                 label1: "Created at",
                 label2: (state).profile.createdAt,
-                label2Color: AppColors.secondaryColor,
+                // label2Color: AppColors.secondaryColor,
               ),
             ]),
           );

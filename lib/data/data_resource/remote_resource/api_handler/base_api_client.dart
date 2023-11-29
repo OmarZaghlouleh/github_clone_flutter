@@ -15,7 +15,7 @@ class BaseApiClient {
     'x-api-key':
         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
     'authorization':
-        'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
+        'Bearer ${LocalResource.sharedPreferences.getString('token') ?? "1|QWtMd9Xivsk0QkBlgv3lHLW9LzvqwKVFNCtouqy489a5c886"}', //TODO: delete token
   };
 
   BaseApiClient() {

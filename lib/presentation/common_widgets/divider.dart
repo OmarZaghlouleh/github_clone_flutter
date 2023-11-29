@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 
 class CustomDivider extends StatelessWidget {
-  const CustomDivider({super.key});
+  const CustomDivider({super.key, this.start = 50, this.end = 50});
+  final double start;
+  final double end;
 
   @override
   Widget build(BuildContext context) {
     return Divider(
-      endIndent: 0.3.mqWdith(context),
-      indent: 0.3.mqWdith(context),
+      endIndent: end,
+      indent: start,
       color: AppColors.secondaryColor,
     );
   }

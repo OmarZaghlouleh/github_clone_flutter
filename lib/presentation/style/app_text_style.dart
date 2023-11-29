@@ -31,7 +31,7 @@ class AppTextStyle {
   static TextStyle getSmallBoldStyle(
       {double fontSize = 18, required Color color}) {
     return TextStyle(
-      color: AppColors.primaryColor,
+      color: color,
       fontSize: fontSize,
       fontWeight: FontWeight.bold,
     );
@@ -40,11 +40,12 @@ class AppTextStyle {
   static TextStyle getMediumBoldStyle(
       {double fontSize = 20, required Color color}) {
     return TextStyle(
-      color: AppColors.primaryColor,
+      color: color,
       fontSize: fontSize,
       fontWeight: FontWeight.bold,
     );
   }
+
   static TextStyle creatorsTextStyle() => const TextStyle(
         color: AppColors.primaryColor,
         fontSize: AppFontSize.creatorsTextFontSize,

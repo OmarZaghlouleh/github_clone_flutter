@@ -14,8 +14,6 @@ class BaseApiClient {
     'accept': _acceptHeader,
     'x-api-key':
         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
-    'authorization':
-        'Bearer ${LocalResource.sharedPreferences.getString('token') ?? "1|QWtMd9Xivsk0QkBlgv3lHLW9LzvqwKVFNCtouqy489a5c886"}', //TODO: delete token
   };
 
   BaseApiClient() {
@@ -42,6 +40,16 @@ class BaseApiClient {
       dynamic returnOnError}) async {
     try {
       print(defaultHeaders);
+      // Add Token
+      if (LocalResource.sharedPreferences.getString('token') != null ||
+          LocalResource.sharedPreferences.getString('token')!.isNotEmpty) {
+        MapEntry<String, dynamic> token = MapEntry('authorization',
+            'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}');
+        headers == null
+            ? defaultHeaders.addEntries([token])
+            : headers.addEntries([token]);
+      }
+
       var response = await client.post(
         url,
         queryParameters: queryParameters,
@@ -92,6 +100,12 @@ class BaseApiClient {
       required Function(dynamic) converter,
       dynamic returnOnError}) async {
     try {
+      // Add Token
+      MapEntry<String, dynamic> token = MapEntry('authorization',
+          'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}');
+      headers == null
+          ? defaultHeaders.addEntries([token])
+          : headers.addEntries([token]);
       var response = await client.put(
         url,
         data: formData,
@@ -133,6 +147,12 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
+      // Add Token
+      MapEntry<String, dynamic> token = MapEntry('authorization',
+          'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}');
+      headers == null
+          ? defaultHeaders.addEntries([token])
+          : headers.addEntries([token]);
       var response = await client.get(
         url,
         queryParameters: queryParameters,
@@ -169,6 +189,12 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
+      // Add Token
+      MapEntry<String, dynamic> token = MapEntry('authorization',
+          'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}');
+      headers == null
+          ? defaultHeaders.addEntries([token])
+          : headers.addEntries([token]);
       var response = await client.delete(
         url,
         queryParameters: queryParameters,

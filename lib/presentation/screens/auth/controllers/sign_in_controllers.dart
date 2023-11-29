@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SignInControllers {
-  static final accountNameTextController = TextEditingController();
-  static final passwordTextController = TextEditingController();
-  static final fakeFieldController = TextEditingController();
+  static TextEditingController accountNameTextController =
+      TextEditingController();
+  static TextEditingController passwordTextController = TextEditingController();
+  static TextEditingController fakeFieldController = TextEditingController();
   static final signInFormKey = GlobalKey<FormState>();
   static String message = "";
 
@@ -17,6 +18,12 @@ class SignInControllers {
     accountNameTextController.clear();
     passwordTextController.clear();
     fakeFieldController.clear();
+  }
+
+  static void initControllers() {
+    accountNameTextController = TextEditingController();
+    passwordTextController = TextEditingController();
+    fakeFieldController = TextEditingController();
   }
 
   static String? validateAccountName() {

@@ -24,16 +24,15 @@ class LocalResource {
   }
 
   static Future<void> saveUserData(AuthModel authModel) async {
-    await LocalResource.sharedPreferences.setString('token', authModel.token);
-    await LocalResource.sharedPreferences.setInt('roleId', authModel.roleId);
-    await LocalResource.sharedPreferences
-        .setString('roleName', authModel.roleName);
+    await sharedPreferences.setString('token', authModel.token);
+    await sharedPreferences.setInt('roleId', authModel.roleId);
+    await sharedPreferences.setString('roleName', authModel.roleName);
     sharedPreferences.getString('token')!.dprint();
   }
 
   static deleteUserData() {
-    LocalResource.sharedPreferences.remove('token');
-    LocalResource.sharedPreferences.remove('roleId');
-    LocalResource.sharedPreferences.remove('roleName');
+    sharedPreferences.remove('token');
+    sharedPreferences.remove('roleId');
+    sharedPreferences.remove('roleName');
   }
 }

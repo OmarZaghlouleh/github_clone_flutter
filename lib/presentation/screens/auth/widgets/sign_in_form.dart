@@ -5,7 +5,6 @@ import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/sign_in_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/signin_password_visibility_cubit.dart';
-import 'package:github_clone_flutter/cubit/auth/sign_up/signup_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/controllers/sign_in_controllers.dart';

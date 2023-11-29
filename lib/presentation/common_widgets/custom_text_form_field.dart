@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
@@ -20,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
       this.obsecure = false,
       this.validator,
       this.focusNode,
-      required this.controller, this.maxLines});
+      required this.controller, this.maxLines=1});
   final TextEditingController controller;
   final String label;
   final IconData? icon;

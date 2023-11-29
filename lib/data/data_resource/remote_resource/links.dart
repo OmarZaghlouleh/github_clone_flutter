@@ -5,9 +5,8 @@ abstract class Links {
   static const register = "register";
   static const logout = "logout";
   static const login = "login";
-  static const loginSocial = "social/login";
-  static const getUserById = "user/get_by_id";
-  static const userProfile = "user/my-data";
-  static const updateUserProfile = "profile/update";
+  static const userProfile = "profile";
+  static const updateUserProfile = "update_profile";
+  static const createGroup="groups";
   //endregion
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
-import 'package:github_clone_flutter/domain/models/user_model/user_model.dart';
+import 'package:github_clone_flutter/domain/models/user_model.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/elevated_button_widget.dart';
 import 'package:github_clone_flutter/presentation/screens/create_group/controllers/create_group_controllers.dart';
@@ -87,6 +87,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         _pagingController.appendLastPage(newItems);
       } else {
         final nextPageKey = pageKey + 1;
+        _pagingController.appendPage(newItems, nextPageKey);
         final newPage = newItems.sublist(pageKey, pageKey + _pageSize);
 
         if (newPage.isNotEmpty) {

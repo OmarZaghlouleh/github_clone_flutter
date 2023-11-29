@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'check_internet.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:github_clone_flutter/core/utils/extensions/print.dart';
 
 ConnectionStatusSingleton connectionStatus =
     ConnectionStatusSingleton.getInstance();

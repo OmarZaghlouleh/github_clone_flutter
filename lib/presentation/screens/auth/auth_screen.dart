@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/core/utils/image_helper.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/widgets/auth_section.dart';
-import 'package:github_clone_flutter/presentation/screens/auth/widgets/sign_up_form.dart';
 import 'package:github_clone_flutter/presentation/style/app_assets.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/border_radius.dart';

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SignUpControllers {
-  static final firstNameTextController = TextEditingController();
-  static final lastNameTextController = TextEditingController();
-  static final accountNameTextController = TextEditingController();
-  static final emailTextController = TextEditingController();
-  static final passwordTextController = TextEditingController();
-  static final confirmPasswordTextController = TextEditingController();
-  static final fakeFieldController = TextEditingController();
+  static TextEditingController firstNameTextController =
+      TextEditingController();
+  static TextEditingController lastNameTextController = TextEditingController();
+  static TextEditingController accountNameTextController =
+      TextEditingController();
+  static TextEditingController emailTextController = TextEditingController();
+  static TextEditingController passwordTextController = TextEditingController();
+  static TextEditingController confirmPasswordTextController =
+      TextEditingController();
+  static TextEditingController fakeFieldController = TextEditingController();
   static final signUpFormKey = GlobalKey<FormState>();
   static String message = "";
 
@@ -19,6 +22,15 @@ class SignUpControllers {
     passwordTextController.dispose();
     confirmPasswordTextController.dispose();
     fakeFieldController.dispose();
+  }
+
+  static void initControllers() {
+    firstNameTextController = TextEditingController();
+    lastNameTextController = TextEditingController();
+    accountNameTextController = TextEditingController();
+    passwordTextController = TextEditingController();
+    confirmPasswordTextController = TextEditingController();
+    fakeFieldController = TextEditingController();
   }
 
   static void clearControllers() {

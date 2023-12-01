@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/presentation/screens/auth/auth_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/auth/controllers/sign_in_controllers.dart';
+import 'package:github_clone_flutter/presentation/screens/auth/controllers/sign_up_controllers.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
@@ -83,6 +85,9 @@ class HomeDrawer extends StatelessWidget {
                             onTap: () async {
                               //TODO: add API request
                               LocalResource.deleteUserData();
+                              // We should add these 2 functions because we disposed controllers after sign in/up
+                              SignInControllers.initControllers();
+                              SignUpControllers.initControllers();
                               AppRouter.navigateReplacementTo(
                                   context: context,
                                   destination: const AuthScreen());
@@ -101,7 +106,11 @@ class HomeDrawer extends StatelessWidget {
                           ListTile(
                             onTap: () async {
                               //TODO: add API request
+
                               LocalResource.deleteUserData();
+                              // We should add these 2 functions because we disposed controllers after sign in/up
+                              SignInControllers.initControllers();
+                              SignUpControllers.initControllers();
                               AppRouter.navigateReplacementTo(
                                   context: context,
                                   destination: const AuthScreen());

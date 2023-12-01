@@ -33,7 +33,8 @@ class InfoRow extends StatelessWidget {
           Text(
             "$label1:",
             style: AppTextStyle.getSmallBoldStyle(
-                color: label1Color ?? AppColors.secondaryColor),
+              color: label1Color ?? AppColors.secondaryColor,
+            ),
             textAlign: TextAlign.start,
           ),
           10.space(),

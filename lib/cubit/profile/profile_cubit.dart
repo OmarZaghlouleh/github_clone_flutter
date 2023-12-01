@@ -13,9 +13,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
   ProfileModel? profile;
   // String profileErrorMessage = '';
-  Future<void> getProfile({required BuildContext context}) async {
+  Future<void> getProfile(
+      {required BuildContext context, required int id}) async {
     emit(ProfileLoading());
-    final result = await getIt<ProfileRepoImp>().getProfile(id: -1);
+    final result = await getIt<ProfileRepoImp>().getProfile(id: id);
     result.fold((l) {
       // profileErrorMessage = l;
       emit(ProfileError(l));

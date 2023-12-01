@@ -4,6 +4,8 @@ import 'package:github_clone_flutter/core/utils/extensions/print.dart';
 import 'package:github_clone_flutter/domain/models/auth_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/utils/utils_functions.dart';
+
 class LocalResource {
   static late SharedPreferences sharedPreferences;
 
@@ -27,7 +29,7 @@ class LocalResource {
     await sharedPreferences.setString('token', authModel.token);
     await sharedPreferences.setInt('roleId', authModel.roleId);
     await sharedPreferences.setString('roleName', authModel.roleName);
-    sharedPreferences.getString('token')!.dprint();
+    dprint(sharedPreferences.getString('token'));
   }
 
   static deleteUserData() {

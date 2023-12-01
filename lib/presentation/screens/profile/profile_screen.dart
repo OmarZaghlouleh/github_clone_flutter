@@ -31,7 +31,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     Timer.run(() => scaffoldkey.currentState?.openDrawer());
-    BlocProvider.of<ProfileCubit>(context).getProfile(context: context);
+    BlocProvider.of<ProfileCubit>(context)
+        .getProfile(context: context, id: widget.profileId);
   }
 
   bool imageError = false;
@@ -62,10 +63,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   backgroundImage:
                       //  !(state).profile.img
                       //   ?
-                      const CachedNetworkImageProvider(
-                    // Links.baseUrl + (state).profile.img
-                    "https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png",
-                  )
+                      CachedNetworkImageProvider(
+                          Links.baseUrl + (state).profile.img
+                          // "https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png",
+                          )
                   // : null
                   ,
                   onBackgroundImageError: (exception, stackTrace) {
@@ -74,9 +75,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     });
                   },
                   child: imageError
-                      ? Icon(
+                      ? const Icon(
                           CupertinoIcons.person_alt,
-                          color: AppColors.darkGrey,
+                          color: AppColors.primaryColor,
                           size: 50,
                         )
                       : null,
@@ -104,8 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // ),
               ),
               CustomDivider(
-                start: 0.3.mqWdith(context),
-                end: 0.3.mqWdith(context),
+                start: 0.25.mqWdith(context),
+                end: 0.25.mqWdith(context),
               ),
               Text(
                 "${(state).profile.firstName} ${(state).profile.lastName}",
@@ -179,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       imageError = false;
                     });
                     BlocProvider.of<ProfileCubit>(context)
-                        .getProfile(context: context);
+                        .getProfile(context: context, id: widget.profileId);
                   },
                 ),
               ],

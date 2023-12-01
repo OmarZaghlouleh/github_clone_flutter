@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/constants.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/presentation/screens/groups/my_groups_screen.dart';
 import '../../../core/utils/global.dart';
 import '../../style/app_colors.dart';
 import '../profile/profile_screen.dart';
@@ -27,13 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
       key: scaffoldkey,
       drawerScrimColor: AppColors.thirdColor.withOpacity(0),
       drawer: (1.mqWdith(context) < bigScreen) ? const HomeDrawer() : null,
-      body: Container(
-        child: Row(
-          children: [
-            if (1.mqWdith(context) >= bigScreen) const HomeDrawer(),
-            const Expanded(child: ProfileScreen(profileId: -1)),
-          ],
-        ),
+      body: Row(
+        children: [
+          if (1.mqWdith(context) >= bigScreen) const HomeDrawer(),
+          // const Expanded(child: MyGroupsScreen()),
+
+          const Expanded(child: ProfileScreen(profileId: -1)),
+        ],
       ),
     );
   }

@@ -11,6 +11,7 @@ import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/strings_manager.dart';
 import '../../../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../../common_widgets/divider.dart';
+import '../../groups/my_groups_screen.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
@@ -54,8 +55,9 @@ class HomeDrawer extends StatelessWidget {
                     children: [
                       ListTile(
                         onTap: () async {
-                          // Navigator.pushNamed(
-                          //     context, RoutesManager.beneficiariesListRoute);
+                          AppRouter.navigateTo(
+                              context: context,
+                              destination: const MyGroupsScreen());
                         },
                         title: Text(
                           "My groups",

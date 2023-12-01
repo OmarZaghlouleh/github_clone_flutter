@@ -14,6 +14,7 @@ class BaseApiClient {
     'accept': _acceptHeader,
     'x-api-key':
         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
+
   };
 
   BaseApiClient() {

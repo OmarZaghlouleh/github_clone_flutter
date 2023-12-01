@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/global.dart';
@@ -10,6 +12,7 @@ import 'package:github_clone_flutter/cubit/auth/sign_up/signup_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_password_visibility_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_hover_cubit.dart';
+import 'package:github_clone_flutter/cubit/group/my_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
@@ -43,13 +46,23 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => SignInPasswordVisibilityCubit()),
         BlocProvider(create: (context) => SignInCubit()),
         BlocProvider(create: (context) => ProfileCubit()),
+        BlocProvider(create: (context) => MyGroupsCubit()),
       ],
       child: MaterialApp(
+        scrollBehavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown,
+            PointerDeviceKind.invertedStylus,
+            PointerDeviceKind.trackpad
+          },
+        ),
         title: 'Github Clone',
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: appTheme(),
-
         home:
             //const HomeScreen(),
             // const SignUpScreen(),

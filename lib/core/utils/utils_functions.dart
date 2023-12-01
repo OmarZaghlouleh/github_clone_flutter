@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
@@ -41,3 +44,13 @@ void showSnackBar(
         ),
       ),
     );
+
+void dprint(dynamic message) {
+  if (kDebugMode) print(message); //TODO: remove it when upload the last release
+}
+
+void dlog(dynamic message) {
+  if (kDebugMode) {
+    log(message.toString()); //TODO: remove it  when upload the last release
+  }
+}

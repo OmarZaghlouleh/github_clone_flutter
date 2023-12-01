@@ -7,7 +7,8 @@ import '../../../../domain/models/profile_model.dart';
 class ProfileRepoImp {
   Future<Either<String, ProfileModel>> getProfile({required int id}) {
     return BaseApiClient.get<ProfileModel>(
-        url: Links.baseUrl + Links.userProfile,
+        url: Links.baseUrl +
+            ((id == -1) ? Links.userProfile : Links.otherUserProfile(id)),
         converter: (value) {
           return ProfileModel.fromJson(value["data"]);
         });

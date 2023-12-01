@@ -9,4 +9,5 @@ class AppColors {
   static const Color thirdColor = Colors.white;
   static const Color errorColor = Colors.orange;
   static const Color textFieldValueColor = Colors.black87;
+  static Color shadowColor = Colors.black.withOpacity(0.3);
 }

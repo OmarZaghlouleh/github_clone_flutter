@@ -31,7 +31,6 @@ class UpdateGroupScreen extends StatefulWidget {
 }
 
 class _UpdateGroupScreenState extends State<UpdateGroupScreen> {
-  final _numberOfPostsPerRequest = 25;
   List<UserModel> listUsers = [];
 
   final PagingController<int, UserModel> _pagingControllerForUsersAddedToGroup =
@@ -73,9 +72,9 @@ class _UpdateGroupScreenState extends State<UpdateGroupScreen> {
       if (getListUsersCubit.state is GetListUsersStateLoaded) {
         listUsers.addAll((getListUsersCubit.state as GetListUsersStateLoaded)
             .usersModel
-            .data);
+            .items);
       }
-      final isLastPage = listUsers.length < _numberOfPostsPerRequest;
+      final isLastPage = listUsers.length < GetListUsersCubit.perPage!;
       if (isLastPage) {
         pagingController.appendLastPage(listUsers);
       } else {

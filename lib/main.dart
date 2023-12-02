@@ -49,7 +49,7 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => SignInCubit()),
         BlocProvider(create: (context) => ProfileCubit()),
         BlocProvider(create: (context)=>CreateGroupCubit()),
-        BlocProvider(create: (context)=>GetListUsersCubit()),
+        BlocProvider(create: (context)=>getIt<GetListUsersCubit>()),
         BlocProvider(create: (context)=> UpdateGroupCubit()),
         BlocProvider(create: (context) => MyGroupsCubit()),
       ],

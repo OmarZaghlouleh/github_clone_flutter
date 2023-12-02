@@ -10,6 +10,10 @@ class GetListUsersCubit extends Cubit<GetListUsersState> {
   GetListUsersCubit() : super(GetListUsersStateInitial());
   static Map<UserModel, bool> listUsersWithVariableBoolean={};
   static Map<UserModel,bool>listUsersDeletedFromGroup={};
+  static int? lastPage;
+  static int?total;
+  static int?perPage;
+  static int?currentPage;
   Future<void> getListUsers({required int pageKey}) async {
     try {
       emit(GetListUsersStateLoading());
@@ -19,7 +23,11 @@ class GetListUsersCubit extends Cubit<GetListUsersState> {
       result.fold(
             (l) => emit(GetListUsersStateError(messageError: l.toString())),
             (r) {
-              for (var item in r.data) {
+              lastPage=r.lastPage;
+              total=r.total;
+              perPage=r.perPage;
+              currentPage=r.currentPage;
+              for (var item in r.items) {
                 listUsersWithVariableBoolean[item] = false;
                 listUsersDeletedFromGroup[item]=false;
               }

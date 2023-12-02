@@ -12,12 +12,13 @@ class CustomTextFormField extends StatelessWidget {
       this.icon,
       this.suffixIcon,
       this.hint,
+        this.minLines,
       this.maxLength,
       this.formatters,
       this.obsecure = false,
       this.validator,
       this.focusNode,
-      required this.controller});
+      required this.controller, this.maxLines=1});
   final TextEditingController controller;
   final String label;
   final IconData? icon;
@@ -27,6 +28,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType textInputType;
   final VoidCallback? onSuffixClick;
   final int? maxLength;
+  final int? maxLines;
+  final int?minLines;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? formatters;
   final FocusNode? focusNode;
@@ -41,6 +44,8 @@ class CustomTextFormField extends StatelessWidget {
         style: const TextStyle(
             color: AppColors.textFieldValueColor, fontWeight: FontWeight.w400),
         maxLength: maxLength,
+        minLines: minLines,
+        maxLines: maxLines,
         controller: controller,
         textInputAction: TextInputAction.next,
         obscureText: obsecure,

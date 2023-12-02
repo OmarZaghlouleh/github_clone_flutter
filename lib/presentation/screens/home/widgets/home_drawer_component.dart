@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
-import 'package:github_clone_flutter/presentation/screens/auth/auth_screen.dart';
-import 'package:github_clone_flutter/presentation/screens/auth/controllers/sign_in_controllers.dart';
-import 'package:github_clone_flutter/presentation/screens/auth/controllers/sign_up_controllers.dart';
+import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
+import 'package:github_clone_flutter/presentation/screens/group/create_group_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/group/update_group_screen.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
@@ -68,67 +70,34 @@ class HomeDrawer extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      const CustomDivider(),
-                      ExpansionTile(
+                      ListTile(
+                        onTap: () async {
+                          AppRouter.navigateTo(context: context,
+                              destination: const CreateGroupScreen());
+                        },
                         title: Text(
-                          StringManager.logout,
-                          style: AppTextStyle.getSmallBoldStyle(
-                            color: AppColors.errorColor,
-                          ),
+                          'Create Group',
+                          style: AppTextStyle.headerTextStyle(),
                         ),
                         leading: const Icon(
-                          Icons.logout,
-                          color: AppColors.errorColor,
+                          Icons.groups,
+                          color: AppColors.primaryColor,
                         ),
-                        children: [
-                          ListTile(
-                            onTap: () async {
-                              //TODO: add API request
-                              LocalResource.deleteUserData();
-                              // We should add these 2 functions because we disposed controllers after sign in/up
-                              SignInControllers.initControllers();
-                              SignUpControllers.initControllers();
-                              AppRouter.navigateReplacementTo(
-                                  context: context,
-                                  destination: const AuthScreen());
-                            },
-                            title: Text(
-                              StringManager.logoutFromThisDevice,
-                              style: AppTextStyle.getSmallBoldStyle(
-                                color: AppColors.secondaryColor,
-                              ),
-                            ),
-                            leading: const Icon(
-                              Icons.stop_screen_share_outlined,
-                              color: AppColors.secondaryColor,
-                            ),
-                          ),
-                          ListTile(
-                            onTap: () async {
-                              //TODO: add API request
-
-                              LocalResource.deleteUserData();
-                              // We should add these 2 functions because we disposed controllers after sign in/up
-                              SignInControllers.initControllers();
-                              SignUpControllers.initControllers();
-                              AppRouter.navigateReplacementTo(
-                                  context: context,
-                                  destination: const AuthScreen());
-                            },
-                            title: Text(
-                              StringManager.logoutFromAllDevices,
-                              style: AppTextStyle.getSmallBoldStyle(
-                                color: AppColors.secondaryColor,
-                              ),
-                            ),
-                            leading: const Icon(
-                              Icons.devices_other_outlined,
-                              color: AppColors.secondaryColor,
-                            ),
-                          ),
-                        ],
                       ),
-                      50.space(),
+                      ListTile(
+                        onTap: () async {
+                          AppRouter.navigateTo(context: context,
+                              destination: const UpdateGroupScreen());
+                        },
+                        title: Text(
+                          'Update Group',
+                          style: AppTextStyle.headerTextStyle(),
+                        ),
+                        leading: const Icon(
+                          Icons.update_outlined,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -140,3 +109,103 @@ class HomeDrawer extends StatelessWidget {
     );
   }
 }
+// //Donations list
+// ListTile(
+//   onTap: () async {
+//     // Navigator.pushNamed(
+//     //     context, RoutesManager.donationsListRoute);
+//   },
+//   title: Text(
+//     "",
+//     style: AppTextStyle.headerTextStyle(),
+//   ),
+//   leading: Icon(
+//     CupertinoIcons.cube_box_fill,
+//     color: AppColors.primaryColor,
+//   ),
+// ),
+
+// const CustomDivider(),
+//Language
+//        Selector<HomeProvider, Locale>(
+//                         selector: (p0, p1) => p1.getLanguage,
+//                         builder: (context, value, child) => ExpansionTile(
+//                           title: Text(
+//                             StringManager.language,
+//                             style: getSmallBoldStyle(
+//                               color:  AppColors.primaryColor,
+// =======
+//                       const CustomDivider(),
+//                       ExpansionTile(
+//                         title: Text(
+//                           StringManager.logout,
+//                           style: AppTextStyle.getSmallBoldStyle(
+//                             color: AppColors.errorColor,
+//                           ),
+//                         ),
+//                         leading: const Icon(
+//                           Icons.logout,
+//                           color: AppColors.errorColor,
+//                         ),
+//                         children: [
+//                           ListTile(
+//                             onTap: () async {
+//                               //TODO: add API request
+//                               LocalResource.deleteUserData();
+//                               // We should add these 2 functions because we disposed controllers after sign in/up
+//                               SignInControllers.initControllers();
+//                               SignUpControllers.initControllers();
+//                               AppRouter.navigateReplacementTo(
+//                                   context: context,
+//                                   destination: const AuthScreen());
+//                             },
+//                             title: Text(
+//                               StringManager.logoutFromThisDevice,
+//                               style: AppTextStyle.getSmallBoldStyle(
+//                                 color: AppColors.secondaryColor,
+//                               ),
+//                             ),
+//                             leading: const Icon(
+//                               Icons.stop_screen_share_outlined,
+//                               color: AppColors.secondaryColor,
+// >>>>>>> a35a047b5be2684696bc20b9ac17c10885864322
+//                             ),
+//                           ),
+//                           ListTile(
+//                             onTap: () async {
+//                               //TODO: add API request
+//
+//                               LocalResource.deleteUserData();
+//                               // We should add these 2 functions because we disposed controllers after sign in/up
+//                               SignInControllers.initControllers();
+//                               SignUpControllers.initControllers();
+//                               AppRouter.navigateReplacementTo(
+//                                   context: context,
+//                                   destination: const AuthScreen());
+//                             },
+//                             title: Text(
+//                               StringManager.logoutFromAllDevices,
+//                               style: AppTextStyle.getSmallBoldStyle(
+//                                 color: AppColors.secondaryColor,
+//                               ),
+//                             ),
+//                             leading: const Icon(
+//                               Icons.devices_other_outlined,
+//                               color: AppColors.secondaryColor,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       50.space(),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+

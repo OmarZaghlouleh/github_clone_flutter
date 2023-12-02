@@ -1,8 +1,9 @@
-import 'package:github_clone_flutter/domain/models/params/get_groups_params.dart';
+
+import '../../../domain/models/params/get_groups_params.dart';
 
 abstract class Links {
-  static const baseUrl = // "http://localhost:8000/api/";
-      "http://192.168.1.104:8000/api/";
+  static const baseUrl = "http://127.0.0.1:8000/api/";
+
   //region auth
   static const register = "register";
   static const logout = "logout";
@@ -10,6 +11,8 @@ abstract class Links {
   static const userProfile = "profile";
   static otherUserProfile(int id) => "profile/$id";
   static const updateUserProfile = "update_profile";
+  static const createGroup="groups";
+  static const getListUsers="users";
   static String getGroups(GetGroupsParams getGroupsParams) {
     String url = "groups/user_groups/1?limit=1&page=${getGroupsParams.page}&";
     if (getGroupsParams.desc != "") {
@@ -23,5 +26,6 @@ abstract class Links {
     }
     return url;
   }
+
   //endregion
 }

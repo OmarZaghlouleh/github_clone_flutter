@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:github_clone_flutter/core/utils/extensions/print.dart';
 import 'package:github_clone_flutter/domain/models/auth_model.dart';
+import 'package:github_clone_flutter/domain/models/group_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/utils_functions.dart';
@@ -37,4 +38,8 @@ class LocalResource {
     sharedPreferences.remove('roleId');
     sharedPreferences.remove('roleName');
   }
+  static saveGroupData(GroupModel groupModel){
+    LocalResource.sharedPreferences.setString(groupModel.name, groupModel.groupKey);
+  }
+
 }

@@ -28,6 +28,20 @@ class BaseApiClient {
         request: true,
       ));
     }
+    //
+
+    BaseOptions baseOptions = BaseOptions(
+      baseUrl: Links.baseUrl,
+      receiveDataWhenStatusError: true,
+      headers: {
+        'accept': _acceptHeader,
+        'x-api-key':
+            "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
+      },
+    );
+    client = Dio(baseOptions);
+
+    //
     //  client.interceptors.add(ClientInterceptor());
     client.options.baseUrl = Links.baseUrl;
   }
@@ -35,13 +49,18 @@ class BaseApiClient {
   static Future<Either<String, T>> post<T>(
       {required String url,
       Map<String, dynamic>? headers,
-      FormData? formData,
+      Map<String, dynamic>? formData,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
       Function(String)? saveToken,
       dynamic returnOnError}) async {
     try {
-      print(defaultHeaders);
+      //
+      client.options.headers.addAll({
+        'Authorization':
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+      });
+      //
       var response = await client.post(
         url,
         queryParameters: queryParameters,
@@ -52,9 +71,9 @@ class BaseApiClient {
                 'progress: ${(sent / total * 100).toStringAsFixed(0)}% ($sent/$total)');
           }
         },
-        options: Options(
-          headers: headers ?? defaultHeaders,
-        ),
+        // options: Options(
+        //   headers: headers ?? defaultHeaders,
+        // ),
       );
 
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
@@ -86,12 +105,18 @@ class BaseApiClient {
 
   static Future<Either<String, T>> put<T>(
       {required String url,
-      dynamic formData,
+        Map<String, dynamic>? formData,
       Map<String, dynamic>? headers,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
       dynamic returnOnError}) async {
     try {
+      //
+      client.options.headers.addAll({
+        'Authorization':
+        "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+      });
+      //
       var response = await client.put(
         url,
         data: formData,
@@ -102,9 +127,9 @@ class BaseApiClient {
                 'progress: ${(sent / total * 100).toStringAsFixed(0)}% ($sent/$total)');
           }
         },
-        options: Options(
-          headers: headers ?? defaultHeaders,
-        ),
+        // options: Options(
+        //   headers: headers ?? defaultHeaders,
+        // ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {
@@ -133,12 +158,18 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
+      //
+      client.options.headers.addAll({
+        'Authorization':
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+      });
+      //
       var response = await client.get(
         url,
         queryParameters: queryParameters,
-        options: Options(
-          headers: headers ?? defaultHeaders,
-        ),
+        // options: Options(
+        //   headers:headers?? defaultHeaders,
+        // ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {

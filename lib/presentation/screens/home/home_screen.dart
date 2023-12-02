@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
-import 'package:github_clone_flutter/data/data_resource/remote_resource/links.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/empty_widget.dart';
 import 'package:github_clone_flutter/presentation/screens/home/widgets/home_drawer_component.dart';

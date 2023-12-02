@@ -1,4 +1,5 @@
 import 'package:github_clone_flutter/domain/models/auth_model.dart';
+import 'package:github_clone_flutter/domain/models/group_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalResource {
@@ -25,4 +26,8 @@ class LocalResource {
     LocalResource.sharedPreferences.setInt('roleId', authModel.roleId);
     LocalResource.sharedPreferences.setString('roleName', authModel.roleName);
   }
+  static saveGroupData(GroupModel groupModel){
+    LocalResource.sharedPreferences.setString(groupModel.name, groupModel.groupKey);
+  }
+
 }

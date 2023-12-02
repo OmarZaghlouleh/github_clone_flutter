@@ -10,7 +10,7 @@ class AuthRepoImp {
   Future<Either<String, AuthModel>> signUp(
       {required SignupParams signUpParam}) {
     return BaseApiClient.post<AuthModel>(
-        formData: FormData.fromMap(signUpParam.toJson()),
+        formData: signUpParam.toJson(),
         url: Links.baseUrl + Links.register,
         converter: (value) {
           return AuthModel.fromJson(value["data"]);
@@ -20,7 +20,7 @@ class AuthRepoImp {
   Future<Either<String, AuthModel>> signIn(
       {required SigninParams signinParams}) {
     return BaseApiClient.post<AuthModel>(
-        formData: FormData.fromMap(signinParams.toJson()),
+        formData: signinParams.toJson(),
         url: Links.baseUrl + Links.login,
         converter: (value) {
           return AuthModel.fromJson(value["data"]);

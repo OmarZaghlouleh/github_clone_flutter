@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:github_clone_flutter/domain/models/create_group_model.dart';
+import 'package:github_clone_flutter/domain/models/group_model.dart';
 
 abstract class CreateGroupState extends Equatable{
   const CreateGroupState();
@@ -9,7 +9,7 @@ abstract class CreateGroupState extends Equatable{
 class CreateGroupStateInitial extends CreateGroupState{}
 class CreateGroupStateLoading extends CreateGroupState{}
 class CreateGroupStateLoaded extends CreateGroupState{
-  final CreateGroupModel createGroupModel;
+  final GroupModel createGroupModel;
 
   const CreateGroupStateLoaded({required this.createGroupModel});
 }

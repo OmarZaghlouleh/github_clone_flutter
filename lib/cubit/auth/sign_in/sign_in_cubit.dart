@@ -1,4 +1,7 @@
+
+// ignore_for_file: use_build_context_synchronously
 import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,9 +30,9 @@ class SignInCubit extends Cubit<SignInState> {
       emit(SignInError());
 
       showSnackBar(title: l, context: context, error: true);
-    }, (r) {
+    }, (r) async {
       //Save To Storage
-      LocalResource.saveUserData(r);
+      await LocalResource.saveUserData(r);
       emit(SignInLoaded());
       AppRouter.navigateReplacementTo(
           context: context, destination: const HomeScreen());

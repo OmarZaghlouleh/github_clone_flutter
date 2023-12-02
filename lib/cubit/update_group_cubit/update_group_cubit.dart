@@ -8,6 +8,7 @@ import '../../core/utils/service_locator_di.dart';
 import '../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../data/data_resource/remote_resource/repository/Update_group_repo.dart';
 import '../../domain/models/params/update_group_params.dart';
+import '../../presentation/common_widgets/show_toast_widget.dart';
 import '../../presentation/screens/group/controllers/create_group_controllers.dart';
 import '../../presentation/screens/home/home_screen.dart';
 
@@ -19,10 +20,11 @@ class UpdateGroupCubit extends Cubit<UpdateGroupState> {
     emit(UpdateGroupStateLoading());
     final result = await getIt<UpdateGroupRepoImpl>().updateGroup( updateGroupParams: updateGroupObject);
     result.fold((l) => emit(UpdateGroupStateError(messageError: l.toString())),
-            (r) {
-          LocalResource.saveGroupData(r);
+            (r) async{
+         await LocalResource.saveGroupData(r);
           emit(UpdateGroupStateLoaded( updateGroupModel: r));
 
+          // ignore: use_build_context_synchronously
           AppRouter.navigateRemoveTo(context: context, destination: const HomeScreen());
           CreateGroupControllers.clearControllers();
 

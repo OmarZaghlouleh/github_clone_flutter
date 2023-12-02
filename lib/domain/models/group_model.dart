@@ -12,43 +12,43 @@ class GroupModel extends Equatable {
   final String lastCommit;
   final String lastCommitBy;
 
-  const GroupModel(
-      {required this.id,
-      required this.name,
-      required this.desc,
-      required this.groupKey,
-      required this.createdAt,
-      required this.numberFiles,
-      required this.numberContributers,
-      required this.numberCommits,
-      required this.lastCommit,
-      required this.lastCommitBy});
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) {
-    return GroupModel(
-        id: json['id'],
-        name: json['name'],
-        desc: json['desc'],
-        groupKey: json['group_key'],
-        createdAt: json['created_at'],
-        numberFiles: json['files'],
-        numberContributers: json['contributers'],
-        numberCommits: json['commits'],
-        lastCommit: json['last_commit'],
-        lastCommitBy: json['last_commit_By']);
-  }
+  const GroupModel({required this.id,
+    required this.name,
+    required this.desc,
+    required this.groupKey,
+    required this.createdAt,
+    required this.numberFiles,
+    required this.numberContributers,
+    required this.numberCommits,
+    required this.lastCommit,
+    required this.lastCommitBy});
+
+  factory GroupModel.fromJson(Map<String, dynamic> json) =>
+      GroupModel(
+          id: json['id'] ?? -1,
+          name: json['name'],
+          desc: json['desc'],
+          groupKey: json['group_key'],
+          createdAt: json['created_at'],
+          numberFiles: json['files'],
+          numberContributers: json['contributers'],
+          numberCommits: json['commits'],
+          lastCommit: json['last_commit'],
+          lastCommitBy: json['last_commit_By']);
 
   @override
   // TODO: implement props
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         id,
         name,
         desc,
         groupKey,
         createdAt,
         numberFiles,
-        numberContributers,
         numberCommits,
+        numberContributers,
         lastCommit,
         lastCommitBy
       ];

@@ -9,7 +9,11 @@ import 'package:github_clone_flutter/presentation/screens/group/update_group_scr
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/utils/strings_manager.dart';
+import '../../../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../../common_widgets/divider.dart';
+import '../../groups/my_groups_screen.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
@@ -51,11 +55,11 @@ class HomeDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //Beneficiaries list
                       ListTile(
                         onTap: () async {
-                          // Navigator.pushNamed(
-                          //     context, RoutesManager.beneficiariesListRoute);
+                          AppRouter.navigateTo(
+                              context: context,
+                              destination: const MyGroupsScreen());
                         },
                         title: Text(
                           "My groups",
@@ -68,7 +72,8 @@ class HomeDrawer extends StatelessWidget {
                       ),
                       ListTile(
                         onTap: () async {
-                          AppRouter.navigateTo(context: context, destination:const CreateGroupScreen());
+                          AppRouter.navigateTo(context: context,
+                              destination: const CreateGroupScreen());
                         },
                         title: Text(
                           'Create Group',
@@ -81,7 +86,8 @@ class HomeDrawer extends StatelessWidget {
                       ),
                       ListTile(
                         onTap: () async {
-                          AppRouter.navigateTo(context: context, destination:const UpdateGroupScreen());
+                          AppRouter.navigateTo(context: context,
+                              destination: const UpdateGroupScreen());
                         },
                         title: Text(
                           'Update Group',
@@ -92,73 +98,6 @@ class HomeDrawer extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      // //Donations list
-                      // ListTile(
-                      //   onTap: () async {
-                      //     // Navigator.pushNamed(
-                      //     //     context, RoutesManager.donationsListRoute);
-                      //   },
-                      //   title: Text(
-                      //     "",
-                      //     style: AppTextStyle.headerTextStyle(),
-                      //   ),
-                      //   leading: Icon(
-                      //     CupertinoIcons.cube_box_fill,
-                      //     color: AppColors.primaryColor,
-                      //   ),
-                      // ),
-
-                      // const CustomDivider(),
-                      //Language
-                      /*       Selector<HomeProvider, Locale>(
-                        selector: (p0, p1) => p1.getLanguage,
-                        builder: (context, value, child) => ExpansionTile(
-                          title: Text(
-                            StringManager.language,
-                            style: getSmallBoldStyle(
-                              color:  AppColors.primaryColor,
-                            ),
-                          ),
-                          leading: Icon(
-                            Icons.language,
-                            color:  AppColors.primaryColor,
-                          ),
-                          children: [
-                            RadioListTile(
-                                title: Text(
-                                  StringManager.arabicLang,
-                                  style: getSmallBoldStyle(
-                                      color: ColorManager.secondaryCol),
-                                ),
-                                value: const Locale(arabic),
-                                groupValue: value,
-                                onChanged: (_) async {
-                                  Provider.of<HomeProvider>(context,
-                                          listen: false)
-                                      .toggleLanguage(
-                                          locale: const Locale(arabic),
-                                          context: context);
-                                }),
-                            RadioListTile(
-                                title: Text(
-                                  StringManager.englishLang,
-                                  style: getSmallBoldStyle(
-                                      color: ColorManager.secondaryCol),
-                                ),
-                                value: const Locale(english),
-                                groupValue: value,
-                                onChanged: (_) {
-                                  Provider.of<HomeProvider>(context,
-                                          listen: false)
-                                      .toggleLanguage(
-                                          locale: const Locale(english),
-                                          context: context);
-                                })
-                          ],
-                        ),
-                      ),
-*/
-                      50.space(),
                     ],
                   ),
                 ),
@@ -170,3 +109,103 @@ class HomeDrawer extends StatelessWidget {
     );
   }
 }
+// //Donations list
+// ListTile(
+//   onTap: () async {
+//     // Navigator.pushNamed(
+//     //     context, RoutesManager.donationsListRoute);
+//   },
+//   title: Text(
+//     "",
+//     style: AppTextStyle.headerTextStyle(),
+//   ),
+//   leading: Icon(
+//     CupertinoIcons.cube_box_fill,
+//     color: AppColors.primaryColor,
+//   ),
+// ),
+
+// const CustomDivider(),
+//Language
+//        Selector<HomeProvider, Locale>(
+//                         selector: (p0, p1) => p1.getLanguage,
+//                         builder: (context, value, child) => ExpansionTile(
+//                           title: Text(
+//                             StringManager.language,
+//                             style: getSmallBoldStyle(
+//                               color:  AppColors.primaryColor,
+// =======
+//                       const CustomDivider(),
+//                       ExpansionTile(
+//                         title: Text(
+//                           StringManager.logout,
+//                           style: AppTextStyle.getSmallBoldStyle(
+//                             color: AppColors.errorColor,
+//                           ),
+//                         ),
+//                         leading: const Icon(
+//                           Icons.logout,
+//                           color: AppColors.errorColor,
+//                         ),
+//                         children: [
+//                           ListTile(
+//                             onTap: () async {
+//                               //TODO: add API request
+//                               LocalResource.deleteUserData();
+//                               // We should add these 2 functions because we disposed controllers after sign in/up
+//                               SignInControllers.initControllers();
+//                               SignUpControllers.initControllers();
+//                               AppRouter.navigateReplacementTo(
+//                                   context: context,
+//                                   destination: const AuthScreen());
+//                             },
+//                             title: Text(
+//                               StringManager.logoutFromThisDevice,
+//                               style: AppTextStyle.getSmallBoldStyle(
+//                                 color: AppColors.secondaryColor,
+//                               ),
+//                             ),
+//                             leading: const Icon(
+//                               Icons.stop_screen_share_outlined,
+//                               color: AppColors.secondaryColor,
+// >>>>>>> a35a047b5be2684696bc20b9ac17c10885864322
+//                             ),
+//                           ),
+//                           ListTile(
+//                             onTap: () async {
+//                               //TODO: add API request
+//
+//                               LocalResource.deleteUserData();
+//                               // We should add these 2 functions because we disposed controllers after sign in/up
+//                               SignInControllers.initControllers();
+//                               SignUpControllers.initControllers();
+//                               AppRouter.navigateReplacementTo(
+//                                   context: context,
+//                                   destination: const AuthScreen());
+//                             },
+//                             title: Text(
+//                               StringManager.logoutFromAllDevices,
+//                               style: AppTextStyle.getSmallBoldStyle(
+//                                 color: AppColors.secondaryColor,
+//                               ),
+//                             ),
+//                             leading: const Icon(
+//                               Icons.devices_other_outlined,
+//                               color: AppColors.secondaryColor,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       50.space(),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+

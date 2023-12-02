@@ -18,6 +18,7 @@ import 'package:github_clone_flutter/presentation/style/border_radius.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../core/utils/app_router.dart';
 import '../../../core/utils/service_locator_di.dart';
+import '../../common_widgets/loader.dart';
 import '../../common_widgets/show_toast_widget.dart';
 import '../../style/app_text_style.dart';
 
@@ -114,12 +115,12 @@ class BuildBody extends StatelessWidget {
               right: 0.2.mqWdith(context),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: EdgeInsets.only(
                       bottom: 0.02.mqHeight(context),
-                      left: 0.2.mqWdith(context)),
+                     ),
                   child: Text(
                     'Create Group',
                     style: AppTextStyle.headerTextStyle(),
@@ -160,7 +161,6 @@ class BuildBody extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 0.22.mqWdith(context),
                     top: 0.06.mqHeight(context),
                   ),
                   child: SizedBox(
@@ -170,14 +170,12 @@ class BuildBody extends StatelessWidget {
                         if (state is CreateGroupStateLoaded) {
                           showToastWidget(
                               'A group has been created successfully');
-                        } else if (state is CreateGroupStateError) {
-                          showToastWidget(
-                              state.messageError);
                         }
                       },
                       builder: (context, state) {
+                        if (state is CreateGroupStateLoading) return const Loader();
                         return ElevatedButtonWidget(
-                          onPressed: () {
+                          onPressed: ()async {
                             List<int> listUsersSelectedToJoinGroup = [];
                             GetListUsersCubit.listUsersWithVariableBoolean
                                 .forEach((key, value) {
@@ -186,7 +184,7 @@ class BuildBody extends StatelessWidget {
                               }
                             });
 
-                            getIt<CreateGroupCubit>().createGroup(
+                          await  BlocProvider.of<CreateGroupCubit>(context).createGroup(
                                 createGroupParams: CreateGroupParams(
                                     name: CreateGroupControllers
                                         .nameGroupTextController.text,
@@ -195,9 +193,7 @@ class BuildBody extends StatelessWidget {
                                     usersList: listUsersSelectedToJoinGroup),
                                 context: context);
                           },
-                          widget: state is CreateGroupStateLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : const Text('create group'),
+                          widget: const Text('create group'),
                           buttonStyle:
                               Theme.of(context).elevatedButtonTheme.style,
                         );

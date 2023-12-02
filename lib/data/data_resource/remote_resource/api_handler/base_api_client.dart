@@ -14,8 +14,7 @@ class BaseApiClient {
     'accept': _acceptHeader,
     'x-api-key':
         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
-    'authorization':
-        'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}',
+
   };
 
   BaseApiClient() {
@@ -49,7 +48,7 @@ class BaseApiClient {
   static Future<Either<String, T>> post<T>(
       {required String url,
       Map<String, dynamic>? headers,
-      Map<String, dynamic>? formData,
+      dynamic formData,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
       Function(String)? saveToken,
@@ -61,6 +60,7 @@ class BaseApiClient {
             "Bearer ${LocalResource.sharedPreferences.getString('token')}"
       });
       //
+
       var response = await client.post(
         url,
         queryParameters: queryParameters,
@@ -71,9 +71,9 @@ class BaseApiClient {
                 'progress: ${(sent / total * 100).toStringAsFixed(0)}% ($sent/$total)');
           }
         },
-        // options: Options(
-        //   headers: headers ?? defaultHeaders,
-        // ),
+        options: Options(
+          headers: headers ?? defaultHeaders,
+        ),
       );
 
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
@@ -105,7 +105,7 @@ class BaseApiClient {
 
   static Future<Either<String, T>> put<T>(
       {required String url,
-        Map<String, dynamic>? formData,
+       dynamic formData,
       Map<String, dynamic>? headers,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
@@ -127,9 +127,9 @@ class BaseApiClient {
                 'progress: ${(sent / total * 100).toStringAsFixed(0)}% ($sent/$total)');
           }
         },
-        // options: Options(
-        //   headers: headers ?? defaultHeaders,
-        // ),
+        options: Options(
+          headers: headers ?? defaultHeaders,
+        ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {
@@ -167,9 +167,9 @@ class BaseApiClient {
       var response = await client.get(
         url,
         queryParameters: queryParameters,
-        // options: Options(
-        //   headers:headers?? defaultHeaders,
-        // ),
+        options: Options(
+          headers:headers?? defaultHeaders,
+        ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {
@@ -200,6 +200,18 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
+      //
+      client.options.headers.addAll({
+        'Authorization':
+        "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+      });
+      //
+      // Add Token
+      // MapEntry<String, dynamic> token = MapEntry('authorization',
+      //     'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}');
+      // headers == null
+      //     ? defaultHeaders.addEntries([token])
+      //     : headers.addEntries([token]);
       var response = await client.delete(
         url,
         queryParameters: queryParameters,

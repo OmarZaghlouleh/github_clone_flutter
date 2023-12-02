@@ -10,6 +10,7 @@ import 'package:github_clone_flutter/presentation/screens/group/controllers/crea
 import '../../core/utils/app_router.dart';
 import '../../core/utils/service_locator_di.dart';
 import '../../data/data_resource/local_resource/shared_preferences.dart';
+import '../../presentation/common_widgets/show_toast_widget.dart';
 import '../../presentation/screens/home/home_screen.dart';
 
 class CreateGroupCubit extends Cubit<CreateGroupState> {
@@ -25,12 +26,13 @@ class CreateGroupCubit extends Cubit<CreateGroupState> {
       usersList: createGroupParams.usersList,
     ));
     result.fold((l) => emit(CreateGroupStateError(messageError: l.toString())),
-        (r) {
-      LocalResource.saveGroupData(r);
+        (r)async {
+      await LocalResource.saveGroupData(r);
       emit(CreateGroupStateLoaded(createGroupModel: r));
-
+      // ignore: use_build_context_synchronously
       AppRouter.navigateRemoveTo(context: context, destination: const HomeScreen());
       CreateGroupControllers.clearControllers();
+
     });
   }
 }

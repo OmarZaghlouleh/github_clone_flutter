@@ -16,11 +16,11 @@ class CreateGroupControllers {
     descriptionGroupTextController.clear();
   }
 
-  static String? validateGroupName(String value) {
-    if (value.isEmpty) {
+  static String? validateGroupName() {
+    if (nameGroupTextController.text.isEmpty) {
       return 'Enter Your Name';
     } else {
-      if (nameRegExp.hasMatch(value)) {
+      if (nameRegExp.hasMatch(nameGroupTextController.text)) {
         return null;
       } else {
         return 'Enter a Valid Name';
@@ -28,7 +28,5 @@ class CreateGroupControllers {
     }
   }
 
-  static String? validateDescriptionName() {
 
-  }
 }

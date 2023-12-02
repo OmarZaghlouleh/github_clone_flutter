@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class StringManager {
   static String noRouteFound = "No Route Found";
   static String interfaceNotExist = "Interface does not exist";
@@ -11,4 +9,7 @@ class StringManager {
   static String username = "Username";
   static String home = "Home";
   static String refresh = "Refresh";
+  static String logout = "Log out";
+  static String logoutFromThisDevice = "Log out from this device";
+  static String logoutFromAllDevices = "Log out from all devices";
 }

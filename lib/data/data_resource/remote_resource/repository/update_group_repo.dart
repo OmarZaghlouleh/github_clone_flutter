@@ -9,8 +9,8 @@ import '../links.dart';
 
 class UpdateGroupRepoImpl {
   Future<Either<String, GroupModel>> updateGroup(
-      {required UpdateGroupParams updateGroupParams}) {
-    return BaseApiClient.put<GroupModel>(
+      {required UpdateGroupParams updateGroupParams})async {
+    return await BaseApiClient.put<GroupModel>(
         url: '${Links.createGroup}/${LocalResource.sharedPreferences.getString(updateGroupParams.name)}',
         formData: updateGroupParams.toJson(),
         converter: (value) {

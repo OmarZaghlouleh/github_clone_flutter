@@ -11,7 +11,7 @@ class GroupsRepoImp {
         url: Links.baseUrl + Links.getGroups(getGroupsParams),
         converter: (value) {
           return List<GroupModel>.from(
-              value["data"].map((x) => GroupModel.fromJson(x)));
+              value["data"]["items"].map((x) => GroupModel.fromJson(x)));
         });
   }
 }

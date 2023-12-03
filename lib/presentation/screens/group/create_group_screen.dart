@@ -118,8 +118,8 @@ class BuildBody extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      bottom: 0.02.mqHeight(context),
-                     ),
+                    bottom: 0.02.mqHeight(context),
+                  ),
                   child: Text(
                     'Create Group',
                     style: AppTextStyle.headerTextStyle(),
@@ -172,9 +172,10 @@ class BuildBody extends StatelessWidget {
                         }
                       },
                       builder: (context, state) {
-                        if (state is CreateGroupStateLoading) return const Loader();
+                        if (state is CreateGroupStateLoading)
+                          return const Loader();
                         return ElevatedButtonWidget(
-                          onPressed: ()async {
+                          onPressed: () async {
                             List<int> listUsersSelectedToJoinGroup = [];
                             GetListUsersCubit.listUsersWithVariableBoolean
                                 .forEach((key, value) {
@@ -183,14 +184,17 @@ class BuildBody extends StatelessWidget {
                               }
                             });
 
-                          await  BlocProvider.of<CreateGroupCubit>(context).createGroup(
-                                createGroupParams: CreateGroupParams(
-                                    name: CreateGroupControllers
-                                        .nameGroupTextController.text,
-                                    desc: CreateGroupControllers
-                                        .descriptionGroupTextController.text,
-                                    usersList: listUsersSelectedToJoinGroup),
-                                context: context);
+                            await BlocProvider.of<CreateGroupCubit>(context)
+                                .createGroup(
+                                    createGroupParams: CreateGroupParams(
+                                        name: CreateGroupControllers
+                                            .nameGroupTextController.text,
+                                        desc: CreateGroupControllers
+                                            .descriptionGroupTextController
+                                            .text,
+                                        usersList:
+                                            listUsersSelectedToJoinGroup),
+                                    context: context);
                           },
                           widget: const Text('create group'),
                           buttonStyle:

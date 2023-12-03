@@ -59,7 +59,8 @@ class _BuildWidgetListWithPaginationState
                 onChanged: (bool? value) {
                   setState(() {
                     widget.delete == true
-                        ? GetListUsersCubit.listUsersDeletedFromGroup[item]=value!
+                        ? GetListUsersCubit.listUsersDeletedFromGroup[item] =
+                            value!
                         : GetListUsersCubit.listUsersWithVariableBoolean[item] =
                             value!;
                   });

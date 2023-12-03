@@ -30,18 +30,18 @@ class ProfileModel extends Equatable {
   });
 
   factory ProfileModel.fromJson(Map json) => ProfileModel(
-        id: json['id'],
-        role: json['role'],
-        roleName: json['role_name'],
-        accountName: json['account_name'],
-        email: json['email'],
-        firstName: json['first_name'],
-        lastName: json['last_name'],
-        img: json['img'],
-        createdAt: json['created_at'],
-        groupsCount: json['groups_count'],
-        commitsCount: json['commits_count'],
-        commitsThisYear: json['commits_this_year'],
+        id: json['id'] ?? 0,
+        role: json['role'] ?? 0,
+        roleName: json['role_name'] ?? "",
+        accountName: json['account_name'] ?? "",
+        email: json['email'] ?? "",
+        firstName: json['first_name'] ?? "",
+        lastName: json['last_name'] ?? "",
+        img: json['img'] ?? "",
+        createdAt: json['created_at'] ?? "",
+        groupsCount: json['groups_count'] ?? 0,
+        commitsCount: json['commits_count'] ?? 0,
+        commitsThisYear: json['commits_this_year'] ?? 0,
       );
 
   @override

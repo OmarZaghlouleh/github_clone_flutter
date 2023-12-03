@@ -37,8 +37,12 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
           name: searchController.text.trim());
 
       listViewController.addListener(() {
-        if (listViewController.position.maxScrollExtent ==
-            listViewController.offset) {
+        dprint(listViewController.position.extentAfter <= 0);
+        // if (listViewController.position.maxScrollExtent ==
+        //     listViewController.offset)
+        if (listViewController.position.extentAfter <= 0 ||
+            listViewController.position.maxScrollExtent ==
+                listViewController.offset) {
           BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
               context: context,
               order: "",
@@ -55,7 +59,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
     super.dispose();
   }
 
-  List<GroupModel> groups = [];
+  List groups = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,123 +70,149 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                 color: AppColors.secondaryColor),
           ),
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFieldComponent(
-                      controller: searchController,
-                      title: "Search by name",
-                      validate: () {},
-                      formatters: const [],
-                      textInputType: TextInputType.name,
-                      textInputAction: TextInputAction.search,
-                      onFieldSubmitted: () {
-                        BlocProvider.of<MyGroupsCubit>(context).reset();
-                        BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
-                            context: context,
-                            order: "",
-                            desc: "",
-                            name: searchController.text.trim());
-                      },
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldComponent(
+                        controller: searchController,
+                        title: "Search by name",
+                        validate: () {},
+                        formatters: const [],
+                        textInputType: TextInputType.name,
+                        textInputAction: TextInputAction.search,
+                        onFieldSubmitted: () {
+                          BlocProvider.of<MyGroupsCubit>(context).reset();
+                          BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+                              context: context,
+                              order: "",
+                              desc: "",
+                              name: searchController.text.trim());
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            BlocBuilder<MyGroupsCubit, MyGroupsState>(
-              builder: (context, state) {
-                if (state is MyGroupsLoaded || state is MyGroupsLoading) {
-                  dlog("yeeeeeeeees");
+              BlocBuilder<MyGroupsCubit, MyGroupsState>(
+                builder: (context, state) {
+                  if (state is MyGroupsLoaded || state is MyGroupsLoading) {
+                    dlog("yeeeeeeeees");
 
-                  if (state is MyGroupsLoaded) {
-                    groups = (state).myGroups;
+                    if (state is MyGroupsLoaded) {
+                      groups = (state).myGroups;
 
-                    dprint(groups);
-                  }
-                  return Column(
-                    children: [
-                      if (groups.isNotEmpty)
-                        RefreshIndicator(
-                          onRefresh: () async {
-                            BlocProvider.of<MyGroupsCubit>(context).reset();
-                            BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
-                                context: context,
-                                order: "",
-                                desc: "",
-                                name: searchController.text.trim());
-                          },
-                          child: ListView.builder(
-                            controller: listViewController,
-                            shrinkWrap: true,
-                            physics: const AlwaysScrollableScrollPhysics(
-                                parent: BouncingScrollPhysics()),
-                            itemCount: groups.length,
-                            itemBuilder: ((context, index) {
-                              if (index < groups.length) {
-                                return groupCard(context, groups[index]);
-                              } else {
-                                return const Center(child: Loader());
-                              }
-                            }),
-                          ),
-                        ),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     if (state is MyGroupsLoaded) {
-                      //       dprint(groups);
-                      //     }
-                      //   },
-                      //   child: const Text("data"),
-                      // ),
-                      if (state is MyGroupsLoading)
-                        const Center(child: Loader()),
-                    ],
-                  );
-                }
-                if (state is MyGroupsError) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      dprint(groups);
+                    }
+                    return Column(
                       children: [
-                        Text(
-                          textAlign: TextAlign.center,
-                          (state).myGroupsErrorMessage,
-                          style: AppTextStyle.getMediumBoldStyle(
-                              color: AppColors.secondaryColor),
-                        ),
-                        TextButton.icon(
-                          label: Text(
-                            StringManager.refresh,
+                        if (groups.isNotEmpty)
+                          RefreshIndicator(
+                            onRefresh: () async {
+                              BlocProvider.of<MyGroupsCubit>(context).reset();
+                              BlocProvider.of<MyGroupsCubit>(context)
+                                  .getMyGroups(
+                                      context: context,
+                                      order: "",
+                                      desc: "",
+                                      name: searchController.text.trim());
+                            },
+                            child: SingleChildScrollView(
+                              controller: listViewController,
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              child: Column(
+                                children: [
+                                  Column(
+                                    children: groups
+                                        .map((e) => groupCard(context, e))
+                                        .toList(),
+                                  ),
+                                  // if (dashbaords.getIsLoading &&
+                                  //     dashbaords.getReportedComments.isNotEmpty)
+                                  //   Padding(
+                                  //     padding: const EdgeInsets.all(8.0),
+                                  //     child: bigLoader(color: orangeColor),
+                                  //   )
+                                ],
+                              ),
+                            )
+                            //  ListView.builder(
+                            //   primary: false,
+                            //   controller: listViewController,
+                            //   shrinkWrap: true,
+                            //   physics: const AlwaysScrollableScrollPhysics(
+                            //       parent: BouncingScrollPhysics()),
+                            //   itemCount: groups.length,
+                            //   itemBuilder: ((context, index) {
+                            //     if (index < groups.length) {
+                            //       return groupCard(context, groups[index]);
+                            //     } else {
+                            //       return const Center(child: Loader());
+                            //     }
+                            //   }),
+                            // )
+                            ,
+                          ),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     if (state is MyGroupsLoaded) {
+                        //       dprint(groups);
+                        //     }
+                        //   },
+                        //   child: const Text("data"),
+                        // ),
+                        if (state is MyGroupsLoading)
+                          const Center(child: Loader()),
+                      ],
+                    );
+                  }
+                  if (state is MyGroupsError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            textAlign: TextAlign.center,
+                            (state).myGroupsErrorMessage,
                             style: AppTextStyle.getMediumBoldStyle(
                                 color: AppColors.secondaryColor),
                           ),
-                          icon: const Icon(Icons.refresh_outlined),
-                          onPressed: () {
-                            BlocProvider.of<MyGroupsCubit>(context).reset();
-                            BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
-                                context: context,
-                                order: "",
-                                desc: "",
-                                name: searchController.text.trim());
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return const Text("No data"); //todo edit it when finish
-                // const EmptyWidget();
-              },
-            ),
-          ],
+                          TextButton.icon(
+                            label: Text(
+                              StringManager.refresh,
+                              style: AppTextStyle.getMediumBoldStyle(
+                                  color: AppColors.secondaryColor),
+                            ),
+                            icon: const Icon(Icons.refresh_outlined),
+                            onPressed: () {
+                              BlocProvider.of<MyGroupsCubit>(context).reset();
+                              BlocProvider.of<MyGroupsCubit>(context)
+                                  .getMyGroups(
+                                      context: context,
+                                      order: "",
+                                      desc: "",
+                                      name: searchController.text.trim());
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const Text("No data"); //todo edit it when finish
+                  // const EmptyWidget();
+                },
+              ),
+            ],
+          ),
         ));
   }
 
-  groupCard(BuildContext context, GroupModel groupModel) {
+  Widget groupCard(BuildContext context, GroupModel groupModel) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Padding(

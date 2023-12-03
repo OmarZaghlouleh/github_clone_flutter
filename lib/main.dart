@@ -48,20 +48,20 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => SignInPasswordVisibilityCubit()),
         BlocProvider(create: (context) => SignInCubit()),
         BlocProvider(create: (context) => ProfileCubit()),
-        BlocProvider(create: (context)=>CreateGroupCubit()),
-        BlocProvider(create: (context)=>getIt<GetListUsersCubit>()),
-        BlocProvider(create: (context)=> UpdateGroupCubit()),
+        BlocProvider(create: (context) => CreateGroupCubit()),
+        BlocProvider(create: (context) => getIt<GetListUsersCubit>()),
+        BlocProvider(create: (context) => UpdateGroupCubit()),
         BlocProvider(create: (context) => MyGroupsCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(
           dragDevices: {
+            PointerDeviceKind.unknown,
             PointerDeviceKind.mouse,
+            PointerDeviceKind.trackpad,
             PointerDeviceKind.touch,
             PointerDeviceKind.stylus,
-            PointerDeviceKind.unknown,
             PointerDeviceKind.invertedStylus,
-            PointerDeviceKind.trackpad
           },
         ),
         title: 'Github Clone',
@@ -72,7 +72,7 @@ class GithubCloneApp extends StatelessWidget {
             //const HomeScreen(),
             // const SignUpScreen(),
             // const UpdateGroupScreen(),
-           const SplashScreen(),
+            const SplashScreen(),
       ),
     );
   }

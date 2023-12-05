@@ -1,3 +1,5 @@
+import 'package:github_clone_flutter/core/utils/utils_functions.dart';
+
 import '../../../domain/models/params/get_groups_params.dart';
 
 abstract class Links {
@@ -23,6 +25,7 @@ abstract class Links {
     if (getGroupsParams.order != "") {
       url += 'order=${getGroupsParams.order}';
     }
+    dprint(url);
     return url;
   }
 

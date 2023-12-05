@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 
 import '../style/app_text_style.dart';
 import 'empty_widget.dart';
 
-class InfoRow extends StatelessWidget {
-  InfoRow({
+class RowInfoTextSpan extends StatelessWidget {
+  RowInfoTextSpan({
     super.key,
     required this.label1,
     required this.label2,
@@ -29,20 +28,20 @@ class InfoRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "$label1:",
-            style: AppTextStyle.getSmallBoldStyle(
-              color: label1Color ?? AppColors.secondaryColor,
-            ),
-            textAlign: TextAlign.start,
-          ),
-          10.space(),
-          Expanded(
-            child: Text(
-              isNearly ? "~$label2" : label2,
-              style: AppTextStyle.getSmallBoldStyle(
-                  color: label2Color ?? AppColors.primaryColor),
-              textAlign: TextAlign.start,
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "$label1: ",
+                  style: AppTextStyle.getSmallBoldStyle(
+                      color: label1Color ?? AppColors.secondaryColor),
+                ),
+                TextSpan(
+                  text: isNearly ? "~$label2" : label2,
+                  style: AppTextStyle.getSmallBoldStyle(
+                      color: label2Color ?? AppColors.thirdColor),
+                ),
+              ],
             ),
           ),
         ],

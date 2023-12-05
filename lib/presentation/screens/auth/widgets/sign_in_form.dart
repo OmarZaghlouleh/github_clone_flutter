@@ -148,8 +148,8 @@ class SignInForm extends StatelessWidget {
                           if (state is SignInLoading) return const Loader();
                           return SizedBox(
                             width: isPortrait
-                                ? 0.8.mqWdith(context)
-                                : 0.28.mqWdith(context),
+                                ? 0.8.mqWidth(context)
+                                : 0.28.mqWidth(context),
                             height: 55,
                             child: ElevatedButton(
                               onPressed: () async {

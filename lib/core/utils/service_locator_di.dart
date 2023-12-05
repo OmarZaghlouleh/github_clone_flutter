@@ -14,8 +14,9 @@ void setUp() {
   getIt.registerLazySingleton<AuthRepoImp>(() => AuthRepoImp());
   getIt.registerLazySingleton<ProfileRepoImp>(() => ProfileRepoImp());
   getIt.registerLazySingleton<CreateGroupRepoImpl>(() => CreateGroupRepoImpl());
-  getIt.registerLazySingleton<GetUsersListRepoImpl>(() => GetUsersListRepoImpl());
-  getIt.registerLazySingleton<UpdateGroupRepoImpl>(()=>UpdateGroupRepoImpl());
+  getIt.registerLazySingleton<GetUsersListRepoImpl>(
+      () => GetUsersListRepoImpl());
+  getIt.registerLazySingleton<UpdateGroupRepoImpl>(() => UpdateGroupRepoImpl());
   getIt.registerFactory<GetListUsersCubit>(() => GetListUsersCubit());
   getIt.registerLazySingleton<GroupsRepoImp>(() => GroupsRepoImp());
 

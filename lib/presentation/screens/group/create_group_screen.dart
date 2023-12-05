@@ -110,8 +110,8 @@ class BuildBody extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(
               top: 0.02.mqHeight(context),
-              left: 0.2.mqWdith(context),
-              right: 0.2.mqWdith(context),
+              left: 0.2.mqWidth(context),
+              right: 0.2.mqWidth(context),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,7 +143,7 @@ class BuildBody extends StatelessWidget {
                   height: 0.02.mqHeight(context),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 0.01.mqWdith(context)),
+                  padding: EdgeInsets.only(left: 0.01.mqWidth(context)),
                   child: const Text(
                     'Add users to the group :',
                     style: TextStyle(
@@ -172,8 +172,9 @@ class BuildBody extends StatelessWidget {
                         }
                       },
                       builder: (context, state) {
-                        if (state is CreateGroupStateLoading)
+                        if (state is CreateGroupStateLoading) {
                           return const Loader();
+                        }
                         return ElevatedButtonWidget(
                           onPressed: () async {
                             List<int> listUsersSelectedToJoinGroup = [];

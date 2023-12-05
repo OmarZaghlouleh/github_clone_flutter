@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/strings_manager.dart';
 import 'package:github_clone_flutter/domain/models/params/get_groups_params.dart';
 
 import '../../core/utils/service_locator_di.dart';
@@ -72,6 +73,9 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
       dprint(r);
       if (r.isNotEmpty) {
         increasePages();
+      } else {
+        showSnackBar(
+            title: StringManager.noOtherData, context: context, error: false);
       }
     });
   }

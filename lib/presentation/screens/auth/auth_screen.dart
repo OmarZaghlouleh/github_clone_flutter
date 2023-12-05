@@ -16,7 +16,7 @@ class AuthScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Container(
-          width: 0.95.mqWdith(context),
+          width: 0.95.mqWidth(context),
           height: 0.95.mqHeight(context),
           decoration: BoxDecoration(
             color: AppColors.thirdColor,

@@ -30,7 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Timer.run(() => scaffoldkey.currentState?.openDrawer());
+    if (widget.profileId == -1) {
+      Timer.run(() => scaffoldkey.currentState?.openDrawer());
+    }
     BlocProvider.of<ProfileCubit>(context)
         .getProfile(context: context, id: widget.profileId);
   }
@@ -40,7 +42,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawerScrimColor: AppColors.thirdColor.withOpacity(0),
-      drawer: (1.mqWdith(context) < bigScreen) ? const HomeDrawer() : null,
+      drawer: widget.profileId == -1
+          ? (1.mqWidth(context) < bigScreen)
+              ? const HomeDrawer()
+              : null
+          : null,
       appBar: AppBar(
           // backgroundColor: AppColors.secondaryColor,
           // title: Text(
@@ -60,15 +66,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: CircleAvatar(
                   backgroundColor: AppColors.lightGrey,
                   radius: 100,
-                  backgroundImage:
-                      //  !(state).profile.img
-                      //   ?
-                      CachedNetworkImageProvider(
-                          Links.baseUrl + (state).profile.img
-                          // "https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png",
-                          )
-                  // : null
-                  ,
+                  backgroundImage: CachedNetworkImageProvider(
+                    Links.baseUrl + (state).profile.img,
+                  ),
                   onBackgroundImageError: (exception, stackTrace) {
                     setState(() {
                       imageError = true;
@@ -82,31 +82,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )
                       : null,
                 ),
-                // CircleAvatar(
-                //   backgroundColor: ColorManager.lightGrey,
-                //   radius: 65,
-                //   onBackgroundImageError: value
-                //       ? null
-                //       : (exception, stackTrace) =>
-                //           Provider.of<BeneficiaryProvider>(context,
-                //                   listen: false)
-                //               .setIsImageFail(state: true),
-                //   backgroundImage: !value
-                //       ? CachedNetworkImageProvider(
-                //           beneficiaryEntity.profileImage)
-                //       : null,
-                //   child: value
-                //       ? Icon(
-                //           Icons.person,
-                //           color: ColorManager.grey,
-                //           size: 40,
-                //         )
-                //       : null,
-                // ),
               ),
               CustomDivider(
-                start: 0.25.mqWdith(context),
-                end: 0.25.mqWdith(context),
+                start: 0.25.mqWidth(context),
+                end: 0.25.mqWidth(context),
               ),
               Text(
                 "${(state).profile.firstName} ${(state).profile.lastName}",

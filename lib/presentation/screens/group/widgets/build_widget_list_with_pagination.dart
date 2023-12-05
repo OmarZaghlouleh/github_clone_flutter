@@ -1,5 +1,3 @@
-import 'dart:js_interop_unsafe';
-
 import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
@@ -34,11 +32,11 @@ class _BuildWidgetListWithPaginationState
       ),
       constraints: BoxConstraints(
         maxHeight: 0.3.mqHeight(context),
-        maxWidth: 0.54.mqWdith(context),
+        maxWidth: 0.54.mqWidth(context),
       ),
       child: PagedListView<int, UserModel>(
         padding: EdgeInsets.only(
-          left: 0.02.mqWdith(context),
+          left: 0.02.mqWidth(context),
           top: 0.01.mqHeight(context),
         ),
         pagingController: widget.pagingController,

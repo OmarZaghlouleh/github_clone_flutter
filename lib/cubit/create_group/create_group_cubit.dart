@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_clone_flutter/cubit/create_group/create_group_state.dart';
@@ -18,7 +16,8 @@ class CreateGroupCubit extends Cubit<CreateGroupState> {
   CreateGroupCubit() : super(CreateGroupStateInitial());
 
   Future<void> createGroup(
-      {required CreateGroupParams createGroupParams,required BuildContext context}) async {
+      {required CreateGroupParams createGroupParams,
+      required BuildContext context}) async {
     emit(CreateGroupStateLoading());
     final result = await getIt<CreateGroupRepoImpl>().createGroup(
         createGroupParams: CreateGroupParams(
@@ -29,14 +28,13 @@ class CreateGroupCubit extends Cubit<CreateGroupState> {
     result.fold((l) {
       emit(CreateGroupStateError(messageError: l.toString()));
       showSnackBar(title: l, context: context, error: true);
-    },
-        (r)async {
+    }, (r) async {
       await LocalResource.saveGroupData(r);
       emit(CreateGroupStateLoaded(createGroupModel: r));
       // ignore: use_build_context_synchronously
-      AppRouter.navigateReplacementTo(context: context, destination: const HomeScreen());
+      AppRouter.navigateReplacementTo(
+          context: context, destination: const HomeScreen());
       CreateGroupControllers.clearControllers();
-
     });
   }
 }

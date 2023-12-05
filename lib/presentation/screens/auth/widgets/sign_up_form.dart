@@ -294,8 +294,8 @@ class SignUpForm extends StatelessWidget {
                   if (state is SignupLoading) return const Loader();
                   return SizedBox(
                     width: isPortrait
-                        ? 0.9.mqWdith(context)
-                        : 0.28.mqWdith(context),
+                        ? 0.9.mqWidth(context)
+                        : 0.28.mqWidth(context),
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () async {

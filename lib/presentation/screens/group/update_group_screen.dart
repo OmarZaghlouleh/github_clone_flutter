@@ -131,8 +131,8 @@ class BuildBody extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(
                 top: 0.02.mqHeight(context),
-                left: 0.2.mqWdith(context),
-                right: 0.2.mqWdith(context),
+                left: 0.2.mqWidth(context),
+                right: 0.2.mqWidth(context),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -140,7 +140,7 @@ class BuildBody extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: 0.02.mqHeight(context),
+                        bottom: 0.02.mqHeight(context),
                       ),
                       child: Text(
                         'Update Group',
@@ -166,7 +166,7 @@ class BuildBody extends StatelessWidget {
                       height: 0.02.mqHeight(context),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 0.01.mqWdith(context)),
+                      padding: EdgeInsets.only(left: 0.01.mqWidth(context)),
                       child: const Text(
                         'Add users to the group :',
                         style: TextStyle(
@@ -188,7 +188,7 @@ class BuildBody extends StatelessWidget {
                       height: 0.02.mqHeight(context),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 0.01.mqWdith(context)),
+                      padding: EdgeInsets.only(left: 0.01.mqWidth(context)),
                       child: const Text(
                         'Delete users from the group :',
                         style: TextStyle(
@@ -210,63 +210,54 @@ class BuildBody extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 0.06.mqHeight(context),bottom: 0.02.mqHeight(context),),
-
+                        top: 0.06.mqHeight(context),
+                        bottom: 0.02.mqHeight(context),
+                      ),
                       child: SizedBox(
                         height: 0.08.mqHeight(context),
                         child: BlocConsumer<UpdateGroupCubit, UpdateGroupState>(
-                          listener: (context, state) {
-                            if (state is UpdateGroupStateLoaded) {
-                              showToastWidget(
-                                  'The group has been modified successfully');
-                            }
-
-                          },
-                          builder:(context,state)
-                          {
-                            if (state is UpdateGroupStateLoading) return const Loader();
-                                return  ElevatedButtonWidget(
-                                    onPressed: () async {
-                                      List<int> listUsersSelectedToJoinGroup =
-                                          [];
-                                      List<int> listUsersDeleted = [];
-                                      GetListUsersCubit
-                                          .listUsersDeletedFromGroup
-                                          .forEach((key, value) {
-                                        if (value) {
-                                          listUsersDeleted.add(key.id);
-                                        }
-                                      });
-                                      GetListUsersCubit
-                                          .listUsersWithVariableBoolean
-                                          .forEach((key, value) {
-                                        if (value) {
-                                          listUsersSelectedToJoinGroup
-                                              .add(key.id);
-                                        }
-                                      });
-                                      await BlocProvider.of<
-                                              UpdateGroupCubit>(context)
-                                          .updateGroup(
-                                              updateGroupObject: UpdateGroupParams(
-                                                  name: CreateGroupControllers
-                                                      .nameGroupTextController
-                                                      .text,
-                                                  desc: CreateGroupControllers
-                                                      .descriptionGroupTextController
-                                                      .text,
-                                                  listUsers:
-                                                      listUsersSelectedToJoinGroup,
-                                                  deletedUsersList:
-                                                      listUsersDeleted),
-                                              context: context);
-                                    },
-                                    widget: const Text('update group'),
-                                    buttonStyle: Theme.of(context)
-                                        .elevatedButtonTheme
-                                        .style,
-                                  );
-                                }),
+                            listener: (context, state) {
+                          if (state is UpdateGroupStateLoaded) {
+                            showToastWidget(
+                                'The group has been modified successfully');
+                          }
+                        }, builder: (context, state) {
+                          if (state is UpdateGroupStateLoading)
+                            return const Loader();
+                          return ElevatedButtonWidget(
+                            onPressed: () async {
+                              List<int> listUsersSelectedToJoinGroup = [];
+                              List<int> listUsersDeleted = [];
+                              GetListUsersCubit.listUsersDeletedFromGroup
+                                  .forEach((key, value) {
+                                if (value) {
+                                  listUsersDeleted.add(key.id);
+                                }
+                              });
+                              GetListUsersCubit.listUsersWithVariableBoolean
+                                  .forEach((key, value) {
+                                if (value) {
+                                  listUsersSelectedToJoinGroup.add(key.id);
+                                }
+                              });
+                              await BlocProvider.of<UpdateGroupCubit>(context)
+                                  .updateGroup(
+                                      updateGroupObject: UpdateGroupParams(
+                                          name: CreateGroupControllers
+                                              .nameGroupTextController.text,
+                                          desc: CreateGroupControllers
+                                              .descriptionGroupTextController
+                                              .text,
+                                          listUsers:
+                                              listUsersSelectedToJoinGroup,
+                                          deletedUsersList: listUsersDeleted),
+                                      context: context);
+                            },
+                            widget: const Text('update group'),
+                            buttonStyle:
+                                Theme.of(context).elevatedButtonTheme.style,
+                          );
+                        }),
                       ),
                     )
                   ],

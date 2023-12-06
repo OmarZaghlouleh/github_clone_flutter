@@ -9,7 +9,7 @@ import '../../../style/app_colors.dart';
 import '../../../style/app_text_style.dart';
 
 Widget contributerCard(BuildContext context, ProfileModel profileModel) {
-  bool imageError = false;
+  // bool imageError = false;
   return InkWell(
     onTap: () {
       AppRouter.navigateTo(

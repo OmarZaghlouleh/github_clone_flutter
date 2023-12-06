@@ -4,6 +4,7 @@ import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.d
 import 'package:github_clone_flutter/cubit/update_group_cubit/update_group_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/auth_repo.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/create_group_repo.dart';
+import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/files_repo.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/profile_repo.dart';
 import '../../data/data_resource/remote_resource/repository/Update_group_repo.dart';
 import '../../data/data_resource/remote_resource/repository/get_users_list_repo.dart';
@@ -19,6 +20,7 @@ void setUp() {
   getIt.registerLazySingleton<UpdateGroupRepoImpl>(() => UpdateGroupRepoImpl());
   getIt.registerFactory<GetListUsersCubit>(() => GetListUsersCubit());
   getIt.registerLazySingleton<GroupsRepoImp>(() => GroupsRepoImp());
+  getIt.registerLazySingleton<FilesRepoImp>(() => FilesRepoImp());
 
   // getIt.registerSingleton<HomeRepoImpl>(HomeRepoImpl(getIt.get<ApiServices>()));
 }

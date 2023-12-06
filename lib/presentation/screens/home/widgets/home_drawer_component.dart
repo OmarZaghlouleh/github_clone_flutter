@@ -6,6 +6,7 @@ import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
 import 'package:github_clone_flutter/presentation/screens/group/create_group_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/group/update_group_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/files/files_list_screen.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
@@ -35,21 +36,6 @@ class HomeDrawer extends StatelessWidget {
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Welcome
-              30.space(),
-              // Selector<HomeProvider, HomeDataEntity?>(
-              //   selector: (p0, p1) => p1.getHomeData,
-              //   builder: (context, value, child) => value == null
-              //       ? const EmptyWidget()
-              //       : Padding(
-              //           padding: const EdgeInsets.all(8.0),
-              //           child: Text(
-              //             "${StringManager.welcome} ${value.userName}",
-              //             style: getSmallBoldStyle(
-              //                 color:  AppColors.primaryColor, fontSize: 20),
-              //           ),
-              //         ),
-              // ),
               15.space(),
               const CustomDivider(),
               Expanded(
@@ -100,6 +86,23 @@ class HomeDrawer extends StatelessWidget {
                         ),
                         leading: const Icon(
                           Icons.update_outlined,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () async {
+                          AppRouter.navigateTo(
+                              context: context,
+                              destination: const FilesListScreen(
+                                groupKey: "",
+                              ));
+                        },
+                        title: Text(
+                          "My files",
+                          style: AppTextStyle.headerTextStyle(),
+                        ),
+                        leading: const Icon(
+                          Icons.file_copy_sharp,
                           color: AppColors.primaryColor,
                         ),
                       ),

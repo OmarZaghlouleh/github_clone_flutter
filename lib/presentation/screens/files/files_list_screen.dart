@@ -1,35 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
-import 'package:github_clone_flutter/cubit/group/my_groups_cubit.dart';
-import 'package:github_clone_flutter/domain/models/group_model.dart';
-import 'package:github_clone_flutter/domain/models/profile_model.dart';
-import 'package:github_clone_flutter/presentation/common_widgets/row_info_text_span.dart';
-import 'package:github_clone_flutter/presentation/screens/groups/widgets/group_card.dart';
-
+import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
+import 'package:github_clone_flutter/presentation/screens/files/widgets/file_card.dart';
 import '../../../core/utils/strings_manager.dart';
-import '../../../data/data_resource/remote_resource/links.dart';
-import '../../common_widgets/custom_text_form_field.dart';
 import '../../common_widgets/empty_widget.dart';
 import '../../common_widgets/form_header.dart';
-import '../../common_widgets/info_row_component.dart';
 import '../../common_widgets/loader.dart';
 import '../../style/app_colors.dart';
 import '../../style/app_text_style.dart';
 import '../auth/widgets/text_field_component.dart';
 
-class MyGroupsScreen extends StatefulWidget {
-  const MyGroupsScreen({super.key});
-
+class FilesListScreen extends StatefulWidget {
+  const FilesListScreen({super.key, required this.groupKey});
+  final String groupKey;
   @override
-  State<MyGroupsScreen> createState() => _MyGroupsScreenState();
+  State<FilesListScreen> createState() => _FilesListScreenState();
 }
 
-class _MyGroupsScreenState extends State<MyGroupsScreen> {
+class _FilesListScreenState extends State<FilesListScreen> {
   final listViewController = ScrollController();
   final TextEditingController searchController = TextEditingController();
 
@@ -37,12 +27,13 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero).then((value) {
-      BlocProvider.of<MyGroupsCubit>(context).reset();
-      BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+      BlocProvider.of<FilesListCubit>(context).reset();
+      BlocProvider.of<FilesListCubit>(context).getFilesList(
           context: context,
           order: "",
           desc: "",
-          name: searchController.text.trim());
+          name: searchController.text.trim(),
+          key: widget.groupKey);
 
       listViewController.addListener(() {
         dprint(listViewController.position.extentAfter <= 0);
@@ -51,7 +42,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
         if (listViewController.position.extentAfter <= 0 ||
             listViewController.position.maxScrollExtent ==
                 listViewController.offset) {
-          BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+          BlocProvider.of<FilesListCubit>(context).getFilesList(
               context: context,
               order: (orderSelectedOption == 1)
                   ? "name"
@@ -63,7 +54,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                   : (descSelectedOption == 2)
                       ? "asc"
                       : "",
-              name: searchController.text.trim());
+              name: searchController.text.trim(),
+              key: "");
         }
       });
     });
@@ -78,13 +70,13 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
   int orderSelectedOption = 3;
   int descSelectedOption = 3;
 
-  List groups = [];
+  List files = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Groups",
+            "Files",
             style: AppTextStyle.getMediumBoldStyle(
                 color: AppColors.secondaryColor),
           ),
@@ -105,8 +97,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                         textInputType: TextInputType.name,
                         textInputAction: TextInputAction.search,
                         onFieldSubmitted: () {
-                          BlocProvider.of<MyGroupsCubit>(context).reset();
-                          BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+                          BlocProvider.of<FilesListCubit>(context).reset();
+                          BlocProvider.of<FilesListCubit>(context).getFilesList(
                               context: context,
                               order: (orderSelectedOption == 1)
                                   ? "name"
@@ -118,7 +110,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                   : (descSelectedOption == 2)
                                       ? "asc"
                                       : "",
-                              name: searchController.text.trim());
+                              name: searchController.text.trim(),
+                              key: widget.groupKey);
                         },
                       ),
                     ),
@@ -148,10 +141,10 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                     setState(() {
                                       orderSelectedOption = value!;
                                     });
-                                    BlocProvider.of<MyGroupsCubit>(context)
+                                    BlocProvider.of<FilesListCubit>(context)
                                         .reset();
-                                    BlocProvider.of<MyGroupsCubit>(context)
-                                        .getMyGroups(
+                                    BlocProvider.of<FilesListCubit>(context)
+                                        .getFilesList(
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -163,7 +156,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                                 : (descSelectedOption == 2)
                                                     ? "asc"
                                                     : "",
-                                            name: searchController.text.trim());
+                                            name: searchController.text.trim(),
+                                            key: widget.groupKey);
                                   },
                                 ),
                                 Text(
@@ -189,10 +183,10 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                     setState(() {
                                       orderSelectedOption = value!;
                                     });
-                                    BlocProvider.of<MyGroupsCubit>(context)
+                                    BlocProvider.of<FilesListCubit>(context)
                                         .reset();
-                                    BlocProvider.of<MyGroupsCubit>(context)
-                                        .getMyGroups(
+                                    BlocProvider.of<FilesListCubit>(context)
+                                        .getFilesList(
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -204,7 +198,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                                 : (descSelectedOption == 2)
                                                     ? "asc"
                                                     : "",
-                                            name: searchController.text.trim());
+                                            name: searchController.text.trim(),
+                                            key: widget.groupKey);
                                   },
                                 ),
                                 Text(
@@ -229,10 +224,10 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                     setState(() {
                                       orderSelectedOption = value!;
                                     });
-                                    BlocProvider.of<MyGroupsCubit>(context)
+                                    BlocProvider.of<FilesListCubit>(context)
                                         .reset();
-                                    BlocProvider.of<MyGroupsCubit>(context)
-                                        .getMyGroups(
+                                    BlocProvider.of<FilesListCubit>(context)
+                                        .getFilesList(
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -244,7 +239,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                                 : (descSelectedOption == 2)
                                                     ? "asc"
                                                     : "",
-                                            name: searchController.text.trim());
+                                            name: searchController.text.trim(),
+                                            key: widget.groupKey);
                                   },
                                 ),
                                 Text(
@@ -273,10 +269,10 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                     setState(() {
                                       descSelectedOption = value!;
                                     });
-                                    BlocProvider.of<MyGroupsCubit>(context)
+                                    BlocProvider.of<FilesListCubit>(context)
                                         .reset();
-                                    BlocProvider.of<MyGroupsCubit>(context)
-                                        .getMyGroups(
+                                    BlocProvider.of<FilesListCubit>(context)
+                                        .getFilesList(
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -288,7 +284,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                                 : (descSelectedOption == 2)
                                                     ? "asc"
                                                     : "",
-                                            name: searchController.text.trim());
+                                            name: searchController.text.trim(),
+                                            key: widget.groupKey);
                                   },
                                 ),
                                 Text(
@@ -314,10 +311,10 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                     setState(() {
                                       descSelectedOption = value!;
                                     });
-                                    BlocProvider.of<MyGroupsCubit>(context)
+                                    BlocProvider.of<FilesListCubit>(context)
                                         .reset();
-                                    BlocProvider.of<MyGroupsCubit>(context)
-                                        .getMyGroups(
+                                    BlocProvider.of<FilesListCubit>(context)
+                                        .getFilesList(
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -329,7 +326,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                                 : (descSelectedOption == 2)
                                                     ? "asc"
                                                     : "",
-                                            name: searchController.text.trim());
+                                            name: searchController.text.trim(),
+                                            key: widget.groupKey);
                                   },
                                 ),
                                 Text(
@@ -354,10 +352,10 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                     setState(() {
                                       descSelectedOption = value!;
                                     });
-                                    BlocProvider.of<MyGroupsCubit>(context)
+                                    BlocProvider.of<FilesListCubit>(context)
                                         .reset();
-                                    BlocProvider.of<MyGroupsCubit>(context)
-                                        .getMyGroups(
+                                    BlocProvider.of<FilesListCubit>(context)
+                                        .getFilesList(
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -369,7 +367,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                                 : (descSelectedOption == 2)
                                                     ? "asc"
                                                     : "",
-                                            name: searchController.text.trim());
+                                            name: searchController.text.trim(),
+                                            key: widget.groupKey);
                                   },
                                 ),
                                 Text(
@@ -384,24 +383,24 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                       ),
                     ]),
               ),
-              BlocBuilder<MyGroupsCubit, MyGroupsState>(
+              BlocBuilder<FilesListCubit, FilesListState>(
                 builder: (context, state) {
-                  if (state is MyGroupsLoaded || state is MyGroupsLoading) {
+                  if (state is FilesListLoaded || state is FilesListLoading) {
                     dlog("yeeeeeeeees");
 
-                    if (state is MyGroupsLoaded) {
-                      groups = (state).myGroups;
+                    if (state is FilesListLoaded) {
+                      files = (state).filesList;
 
-                      dprint(groups);
+                      dprint(files);
                     }
                     return Column(
                       children: [
-                        if (groups.isNotEmpty)
+                        if (files.isNotEmpty)
                           RefreshIndicator(
                             onRefresh: () async {
-                              BlocProvider.of<MyGroupsCubit>(context).reset();
-                              BlocProvider.of<MyGroupsCubit>(context)
-                                  .getMyGroups(
+                              BlocProvider.of<FilesListCubit>(context).reset();
+                              BlocProvider.of<FilesListCubit>(context)
+                                  .getFilesList(
                                       context: context,
                                       order: (orderSelectedOption == 1)
                                           ? "name"
@@ -413,7 +412,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                           : (descSelectedOption == 2)
                                               ? "asc"
                                               : "",
-                                      name: searchController.text.trim());
+                                      name: searchController.text.trim(),
+                                      key: widget.groupKey);
                             },
                             child: ListView.builder(
                               primary: false,
@@ -421,17 +421,17 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                               shrinkWrap: true,
                               physics: const AlwaysScrollableScrollPhysics(
                                   parent: BouncingScrollPhysics()),
-                              itemCount: groups.length,
+                              itemCount: files.length,
                               itemBuilder: ((context, index) {
-                                if (index < groups.length) {
-                                  return groupCard(context, groups[index]);
+                                if (index < files.length) {
+                                  return fileCard(context, files[index]);
                                 } else {
                                   return const Center(child: Loader());
                                 }
                               }),
                             ),
                           ),
-                        state is MyGroupsLoading
+                        state is FilesListLoading
                             ? const Center(
                                 child: Padding(
                                 padding: EdgeInsets.only(bottom: 8),
@@ -439,8 +439,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                               ))
                             : TextButton.icon(
                                 onPressed: () {
-                                  BlocProvider.of<MyGroupsCubit>(context)
-                                      .getMyGroups(
+                                  BlocProvider.of<FilesListCubit>(context)
+                                      .getFilesList(
                                           context: context,
                                           order: (orderSelectedOption == 1)
                                               ? "name"
@@ -452,7 +452,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                               : (descSelectedOption == 2)
                                                   ? "asc"
                                                   : "",
-                                          name: searchController.text.trim());
+                                          name: searchController.text.trim(),
+                                          key: widget.groupKey);
                                 },
                                 icon: const Icon(
                                   Icons.cloud_download_rounded,
@@ -466,14 +467,14 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                       ],
                     );
                   }
-                  if (state is MyGroupsError) {
+                  if (state is FilesListError) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             textAlign: TextAlign.center,
-                            (state).myGroupsErrorMessage,
+                            (state).filesListErrorMessage,
                             style: AppTextStyle.getMediumBoldStyle(
                                 color: AppColors.secondaryColor),
                           ),
@@ -485,9 +486,9 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                             ),
                             icon: const Icon(Icons.refresh_outlined),
                             onPressed: () {
-                              BlocProvider.of<MyGroupsCubit>(context).reset();
-                              BlocProvider.of<MyGroupsCubit>(context)
-                                  .getMyGroups(
+                              BlocProvider.of<FilesListCubit>(context).reset();
+                              BlocProvider.of<FilesListCubit>(context)
+                                  .getFilesList(
                                       context: context,
                                       order: (orderSelectedOption == 1)
                                           ? "name"
@@ -499,7 +500,8 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                           : (descSelectedOption == 2)
                                               ? "asc"
                                               : "",
-                                      name: searchController.text.trim());
+                                      name: searchController.text.trim(),
+                                      key: widget.groupKey);
                             },
                           ),
                         ],

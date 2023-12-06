@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/strings_manager.dart';
 import 'package:github_clone_flutter/domain/models/params/get_groups_params.dart';
-
 import '../../core/utils/service_locator_di.dart';
 import '../../core/utils/utils_functions.dart';
 import '../../data/data_resource/remote_resource/repository/groups_repo.dart';
 import '../../domain/models/group_model.dart';
-
 part 'my_groups_state.dart';
 
 class MyGroupsCubit extends Cubit<MyGroupsState> {
@@ -23,16 +21,6 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
     myGroups = [];
   }
 
-  // reset() {
-  //   notificationsList = null;
-  //   notificationsListState = RequestState.loading;
-  //   notificationsListMessage = '';
-  //   page = 1;
-  //   isLoading = false;
-  //   getNotificationsRequestState = false;
-
-  //   notifyListeners();
-  // }
   increasePages() {
     dprint("Paaaaaaaaaaaaaaaaaage");
     dprint(page);
@@ -41,7 +29,6 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
 
   Future<void> getMyGroups({
     required BuildContext context,
-    // required int page,
     required String order,
     required String desc,
     required String name,

@@ -22,6 +22,8 @@ import 'package:github_clone_flutter/data/data_resource/remote_resource/api_hand
 import 'package:github_clone_flutter/presentation/screens/splash_screen.dart';
 import 'package:github_clone_flutter/presentation/style/themes/app_theme.dart';
 
+import 'cubit/files/files_list_cubit.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // checkInternetApp();
@@ -52,6 +54,7 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<GetListUsersCubit>()),
         BlocProvider(create: (context) => UpdateGroupCubit()),
         BlocProvider(create: (context) => MyGroupsCubit()),
+        BlocProvider(create: (context) => FilesListCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(

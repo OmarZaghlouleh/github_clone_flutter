@@ -79,6 +79,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
+      appBar: AppBar(),
       body: BuildBody(
         pagingController: _pagingController,
       ),

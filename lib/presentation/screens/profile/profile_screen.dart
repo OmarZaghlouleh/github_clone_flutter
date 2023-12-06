@@ -47,13 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ? const HomeDrawer()
               : null
           : null,
-      appBar: AppBar(
-          // backgroundColor: AppColors.secondaryColor,
-          // title: Text(
-          //   "Welcome!",
-          //   style: AppTextStyle.headerTextStyle(),
-          // ),
-          ),
+      appBar: AppBar(),
       body: BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
         if (state is ProfileLoading) {
           return const Center(child: Loader());

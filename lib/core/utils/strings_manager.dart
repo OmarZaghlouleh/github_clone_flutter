@@ -14,4 +14,8 @@ class StringManager {
   static String logoutFromAllDevices = "Log out from all devices";
   static String loadMoreData = "Load more data";
   static String noOtherData = "There is no other current data";
+  static String edit = "Edit";
+  static String delete = "Delete";
+  static String yes = "Yes";
+  static String no = "No";
 }

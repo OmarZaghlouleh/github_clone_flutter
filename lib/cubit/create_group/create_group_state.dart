@@ -1,5 +1,6 @@
-import 'package:equatable/equatable.dart';
-import 'package:github_clone_flutter/domain/models/group_model.dart';
+
+part of 'create_group_cubit.dart';
+
 
 abstract class CreateGroupState extends Equatable{
   const CreateGroupState();

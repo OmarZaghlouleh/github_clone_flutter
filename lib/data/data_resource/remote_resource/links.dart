@@ -14,6 +14,7 @@ abstract class Links {
   static const updateUserProfile = "update_profile";
   static const createGroup = "groups";
   static const getListUsers = "users?limit=1";
+  static const addFilesToGroup="files";
   static String getGroups(GetGroupsParams getGroupsParams) {
     String url = "groups/user_groups/1?limit=1&page=${getGroupsParams.page}&";
     if (getGroupsParams.desc != "") {

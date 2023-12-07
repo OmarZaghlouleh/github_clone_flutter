@@ -1,10 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
 import 'package:github_clone_flutter/presentation/screens/files/widgets/file_card.dart';
+import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_files_widget.dart';
 import '../../../core/utils/strings_manager.dart';
+import '../../common_widgets/elevated_button_widget.dart';
 import '../../common_widgets/empty_widget.dart';
 import '../../common_widgets/form_header.dart';
 import '../../common_widgets/loader.dart';
@@ -14,7 +16,9 @@ import '../auth/widgets/text_field_component.dart';
 
 class FilesListScreen extends StatefulWidget {
   const FilesListScreen({super.key, required this.groupKey});
+
   final String groupKey;
+
   @override
   State<FilesListScreen> createState() => _FilesListScreenState();
 }
@@ -71,6 +75,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
   int descSelectedOption = 3;
 
   List files = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +85,28 @@ class _FilesListScreenState extends State<FilesListScreen> {
             style: AppTextStyle.getMediumBoldStyle(
                 color: AppColors.secondaryColor),
           ),
+          actions: [
+            ElevatedButtonWidget(
+              widget: Row(
+                children: [
+                  Text(
+                    'upload file',
+                    style: AppTextStyle.elevatedButtonTextStyle(),
+                  ),
+                  const Icon(Icons.file_upload),
+                ],
+              ),
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return  UploadFileWidget(groupKey: widget.groupKey,);
+                  },
+                );
+              },
+              buttonStyle: Theme.of(context).elevatedButtonTheme.style,
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Column(

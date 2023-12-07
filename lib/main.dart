@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/global.dart';
 
 import 'package:github_clone_flutter/core/utils/service_locator_di.dart';
+import 'package:github_clone_flutter/cubit/add_files_to_group/add_files_to_group_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/sign_in_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/signin_password_visibility_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_confirm_password_visibility_cubit.dart';
@@ -59,6 +60,7 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<GetListUsersCubit>()),
         BlocProvider(create: (context) => UpdateGroupCubit()),
         BlocProvider(create: (context) => MyGroupsCubit()),
+        BlocProvider(create: (context)=>AddFilesToGroupCubit()),
         BlocProvider(create: (context) => FilesListCubit()),
         BlocProvider(create: (context) => ReportsCubit()),
         BlocProvider(create: (context) => ReportTypeCubit()),

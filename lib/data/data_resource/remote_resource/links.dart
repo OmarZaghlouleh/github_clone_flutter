@@ -1,5 +1,6 @@
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/domain/models/params/get_files_params.dart';
+import 'package:github_clone_flutter/domain/models/params/get_reports_params.dart';
 
 import '../../../domain/models/params/get_groups_params.dart';
 
@@ -53,6 +54,19 @@ abstract class Links {
     }
     if (getFilesParams.order != "") {
       url += 'order=${getFilesParams.order}';
+    }
+    dprint(url);
+    return url;
+  }
+
+  static String getReportsUrl(GetReportsParams getReportsParams) {
+    String url = "";
+    if (getReportsParams.reportType.toLowerCase() == "file") {
+      url =
+          "files_log?page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&file_key=${getReportsParams.key}";
+    } else {
+      url =
+          "groups_log?limit=2&page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&group_key=${getReportsParams.key}";
     }
     dprint(url);
     return url;

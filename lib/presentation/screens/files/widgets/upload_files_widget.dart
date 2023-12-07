@@ -40,17 +40,20 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
 
   Future<void> uploadFile() async {
     if (result != null) {
-      FormData formData =  FormData.fromMap({
-        "file": MultipartFile.fromBytes(
-          result!.files.single.bytes!,
-          filename: result!.files.single.name,
-        ),
-      });
+      // FormData formData = FormData.fromMap({
+      //   "file": MultipartFile.fromBytes(
+      //     result!.files.single.bytes!,
+      //     filename: result!.files.single.name,
+      //   ),
+      // });
 
-    BlocProvider.of<AddFilesToGroupCubit>(context).addFilesToGroupParams(
+      BlocProvider.of<AddFilesToGroupCubit>(context).addFilesToGroupParams(
           addFilesToGroupParams: AddFilesToGroupParams(
               commit: _commitController.text,
-              filesArray: [formData],
+              filesArray: result!.files
+                  .map((e) =>
+                      MultipartFile.fromBytes(e.bytes!, filename: "-${e.name}"))
+                  .toList(),
               filesDesc: [_descriptionController.text],
               groupKey: widget.groupKey));
     } else {

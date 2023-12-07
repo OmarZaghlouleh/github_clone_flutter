@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
+import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 
 class AddFilesToGroupParams {
   final String commit;
-  final List<FormData> filesArray;
+  final List<MultipartFile> filesArray;
   final List<String> filesDesc;
   final String groupKey;
 
@@ -13,11 +12,12 @@ class AddFilesToGroupParams {
       required this.filesArray,
       required this.filesDesc,
       required this.groupKey});
-  Map<String,dynamic>toJson()=>{
-      "commit":commit,
-    "files_array[]":filesArray,
-    "files_desc[]":filesDesc,
-    "group_key":groupKey,
+  Map<String, dynamic> toJson() {
+    return {
+      "commit": commit,
+      "files_array": filesArray.length == 1 ? [filesArray] : filesArray,
+      "files_desc": filesDesc.length == 1 ? [filesDesc] : filesDesc,
+      "group_key": groupKey,
     };
-
+  }
 }

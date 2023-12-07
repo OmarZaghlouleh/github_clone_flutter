@@ -9,12 +9,12 @@ import '../links.dart';
 
 class CreateGroupRepoImpl {
   Future<Either<String, CreateUpdateGroupModel>> createGroup(
-      {required CreateGroupParams createGroupParams})async {
+      {required CreateGroupParams createGroupParams}) async {
     return await BaseApiClient.post<CreateUpdateGroupModel>(
         url: Links.createGroup,
         formData: createGroupParams.toJson(),
         converter: (value) {
-         return  CreateUpdateGroupModel.fromJson(value["data"]);
+          return CreateUpdateGroupModel.fromJson(value["data"]);
         });
   }
 }

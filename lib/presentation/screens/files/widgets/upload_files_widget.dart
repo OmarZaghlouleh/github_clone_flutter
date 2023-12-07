@@ -78,12 +78,12 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                   maxLines: null,
                   minLines: 2,
                 ),
-                SizedBox(height: 0.05.mqHeight(context)),
+                SizedBox(height: 0.01.mqHeight(context)),
                 CustomTextFormField(
                     label: 'add description',
                     textInputType: TextInputType.text,
                     controller: _descriptionController),
-                SizedBox(height: 0.05.mqHeight(context)),
+                SizedBox(height: 0.01.mqHeight(context)),
                 Row(
                   children: [
                     Expanded(
@@ -96,7 +96,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                   ],
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
                 // a button to upload the file
                 ElevatedButton(
                   onPressed: uploadFile,

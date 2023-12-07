@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../links.dart';
@@ -14,7 +15,6 @@ class BaseApiClient {
     'accept': _acceptHeader,
     'x-api-key':
         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
-
   };
 
   BaseApiClient() {
@@ -29,16 +29,16 @@ class BaseApiClient {
     }
     //
 
-    BaseOptions baseOptions = BaseOptions(
-      baseUrl: Links.baseUrl,
-      receiveDataWhenStatusError: true,
-      headers: {
-        'accept': _acceptHeader,
-        'x-api-key':
-            "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
-      },
-    );
-    client = Dio(baseOptions);
+    // BaseOptions baseOptions = BaseOptions(
+    //   baseUrl: Links.baseUrl,
+    //   receiveDataWhenStatusError: true,
+    //   headers: {
+    //     'accept': _acceptHeader,
+    //     'x-api-key':
+    //         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
+    //   },
+    // );
+    // client = Dio(baseOptions);
 
     //
     //  client.interceptors.add(ClientInterceptor());
@@ -60,7 +60,6 @@ class BaseApiClient {
             "Bearer ${LocalResource.sharedPreferences.getString('token')}"
       });
       //
-
       var response = await client.post(
         url,
         queryParameters: queryParameters,
@@ -75,7 +74,6 @@ class BaseApiClient {
           headers: headers ?? defaultHeaders,
         ),
       );
-
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
@@ -105,7 +103,7 @@ class BaseApiClient {
 
   static Future<Either<String, T>> put<T>(
       {required String url,
-       dynamic formData,
+      dynamic formData,
       Map<String, dynamic>? headers,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
@@ -114,7 +112,7 @@ class BaseApiClient {
       //
       client.options.headers.addAll({
         'Authorization':
-        "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
       });
       //
       var response = await client.put(
@@ -168,7 +166,7 @@ class BaseApiClient {
         url,
         queryParameters: queryParameters,
         options: Options(
-          headers:headers?? defaultHeaders,
+          headers: headers ?? defaultHeaders,
         ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
@@ -203,7 +201,7 @@ class BaseApiClient {
       //
       client.options.headers.addAll({
         'Authorization':
-        "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
       });
       //
       // Add Token

@@ -45,10 +45,4 @@ class AppTextStyle {
       fontWeight: FontWeight.bold,
     );
   }
-
-  static TextStyle creatorsTextStyle() => const TextStyle(
-        color: AppColors.primaryColor,
-        fontSize: AppFontSize.creatorsTextFontSize,
-        fontWeight: FontWeight.w600,
-      );
 }

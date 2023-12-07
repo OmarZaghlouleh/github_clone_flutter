@@ -7,6 +7,7 @@ import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.d
 import 'package:github_clone_flutter/presentation/screens/group/create_group_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/group/update_group_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/files/files_list_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/reports/reports_screen.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
@@ -106,6 +107,24 @@ class HomeDrawer extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                       ),
+                      if (LocalResource.getIfAdmin())
+                        ListTile(
+                          onTap: () async {
+                            AppRouter.navigateTo(
+                                context: context,
+                                destination: ReportsScreen(
+                                  keyString: "",
+                                ));
+                          },
+                          title: Text(
+                            "Reports",
+                            style: AppTextStyle.headerTextStyle(),
+                          ),
+                          leading: const Icon(
+                            Icons.file_copy_rounded,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
                       const CustomDivider(),
                       ExpansionTile(
                         title: Text(

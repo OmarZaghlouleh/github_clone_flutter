@@ -10,9 +10,9 @@ abstract class CreateGroupState extends Equatable{
 class CreateGroupStateInitial extends CreateGroupState{}
 class CreateGroupStateLoading extends CreateGroupState{}
 class CreateGroupStateLoaded extends CreateGroupState{
-  final GroupModel createGroupModel;
+  final CreateUpdateGroupModel createUpdateGroupModel;
 
-  const CreateGroupStateLoaded({required this.createGroupModel});
+  const CreateGroupStateLoaded({required this.createUpdateGroupModel});
 }
 class CreateGroupStateError extends CreateGroupState{
   final String messageError;

@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+
 class AddFilesToGroupParams {
   final String commit;
-  final List<File> filesArray;
+  final List<FormData> filesArray;
   final List<String> filesDesc;
   final String groupKey;
 

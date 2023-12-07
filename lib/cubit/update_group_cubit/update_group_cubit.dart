@@ -1,5 +1,7 @@
-import 'package:bloc/bloc.dart';
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/cubit/update_group_cubit/update_group_state.dart';
 
 import '../../core/utils/app_router.dart';
@@ -25,7 +27,7 @@ class UpdateGroupCubit extends Cubit<UpdateGroupState> {
       showSnackBar(title: l, context: context, error: true);
     }, (r) async {
       await LocalResource.saveGroupData(r);
-      emit(UpdateGroupStateLoaded(updateGroupModel: r));
+      emit(UpdateGroupStateLoaded(createUpdateGroupModel: r));
 
       // ignore: use_build_context_synchronously
       AppRouter.navigateReplacementTo(

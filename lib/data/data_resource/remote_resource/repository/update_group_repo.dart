@@ -1,20 +1,19 @@
 
 import 'package:dartz/dartz.dart';
-
-import '../../../../domain/models/group_model.dart';
+import 'package:github_clone_flutter/domain/models/create_update_group_model.dart';
 import '../../../../domain/models/params/update_group_params.dart';
 import '../../local_resource/shared_preferences.dart';
 import '../api_handler/base_api_client.dart';
 import '../links.dart';
 
 class UpdateGroupRepoImpl {
-  Future<Either<String, GroupModel>> updateGroup(
+  Future<Either<String, CreateUpdateGroupModel>> updateGroup(
       {required UpdateGroupParams updateGroupParams})async {
-    return await BaseApiClient.put<GroupModel>(
+    return await BaseApiClient.put<CreateUpdateGroupModel>(
         url: '${Links.createGroup}/${LocalResource.sharedPreferences.getString(updateGroupParams.name)}',
         formData: updateGroupParams.toJson(),
         converter: (value) {
-          return  GroupModel.fromJson(value["data"]);
+          return  CreateUpdateGroupModel.fromJson(value["data"]);
         });
   }
 }

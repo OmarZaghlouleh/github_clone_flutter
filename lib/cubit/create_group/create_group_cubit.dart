@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/create_group_repo.dart';
+import 'package:github_clone_flutter/domain/models/create_update_group_model.dart';
 import 'package:github_clone_flutter/domain/models/params/create_group_params.dart';
 import 'package:github_clone_flutter/presentation/screens/group/controllers/create_group_controllers.dart';
 
@@ -31,7 +32,7 @@ class CreateGroupCubit extends Cubit<CreateGroupState> {
       showSnackBar(title: l, context: context, error: true);
     }, (r) async {
       await LocalResource.saveGroupData(r);
-      emit(CreateGroupStateLoaded(createGroupModel: r));
+      emit(CreateGroupStateLoaded(createUpdateGroupModel: r));
       // ignore: use_build_context_synchronously
       AppRouter.navigateReplacementTo(
           context: context, destination: const HomeScreen());

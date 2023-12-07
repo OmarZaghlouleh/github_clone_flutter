@@ -17,11 +17,18 @@ import 'package:github_clone_flutter/cubit/create_group/create_group_cubit.dart'
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/my_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_action_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_desc_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_order_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/reports_cubit.dart';
 import 'package:github_clone_flutter/cubit/update_group_cubit/update_group_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
 import 'package:github_clone_flutter/presentation/screens/splash_screen.dart';
 import 'package:github_clone_flutter/presentation/style/themes/app_theme.dart';
+
+import 'cubit/files/files_list_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +60,13 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<GetListUsersCubit>()),
         BlocProvider(create: (context) => UpdateGroupCubit()),
         BlocProvider(create: (context) => MyGroupsCubit()),
-        BlocProvider(create: (context)=>AddFilesToGroupCubit())
+        BlocProvider(create: (context)=>AddFilesToGroupCubit()),
+        BlocProvider(create: (context) => FilesListCubit()),
+        BlocProvider(create: (context) => ReportsCubit()),
+        BlocProvider(create: (context) => ReportTypeCubit()),
+        BlocProvider(create: (context) => ReportOrderCubit()),
+        BlocProvider(create: (context) => ReportDescCubit()),
+        BlocProvider(create: (context) => ReportActionCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(

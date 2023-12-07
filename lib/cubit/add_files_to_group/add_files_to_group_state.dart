@@ -6,17 +6,17 @@ sealed class AddFilesToGroupState extends Equatable {
   List<Object> get props => [];
 }
 
-final class AddFilesToGroupStateInitial extends AddFilesToGroupState {}
+ class AddFilesToGroupStateInitial extends AddFilesToGroupState {}
 
-final class AddFilesToGroupStateLoading extends AddFilesToGroupState {}
+ class AddFilesToGroupStateLoading extends AddFilesToGroupState {}
 
-final class AddFilesToGroupStateLoaded extends AddFilesToGroupState {
+ class AddFilesToGroupStateLoaded extends AddFilesToGroupState {
   final AddFilesToGroupModel addFilesToGroupModel;
 
   const AddFilesToGroupStateLoaded({required this.addFilesToGroupModel});
 }
 
-final class AddFilesToGroupStateError extends AddFilesToGroupState {
+ class AddFilesToGroupStateError extends AddFilesToGroupState {
   final String messageError;
 
  const AddFilesToGroupStateError({required this.messageError});

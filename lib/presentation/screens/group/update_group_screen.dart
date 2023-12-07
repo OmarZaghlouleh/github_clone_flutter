@@ -93,6 +93,7 @@ class _UpdateGroupScreenState extends State<UpdateGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
+      appBar: AppBar(),
       body: BuildBody(
         pagingControllerForUsersAddedToGroup:
             _pagingControllerForUsersAddedToGroup,
@@ -222,8 +223,9 @@ class BuildBody extends StatelessWidget {
                                 'The group has been modified successfully');
                           }
                         }, builder: (context, state) {
-                          if (state is UpdateGroupStateLoading)
+                          if (state is UpdateGroupStateLoading) {
                             return const Loader();
+                          }
                           return ElevatedButtonWidget(
                             onPressed: () async {
                               List<int> listUsersSelectedToJoinGroup = [];

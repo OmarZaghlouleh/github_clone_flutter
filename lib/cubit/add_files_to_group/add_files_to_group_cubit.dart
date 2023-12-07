@@ -10,8 +10,6 @@ part './add_files_to_group_state.dart';
 
 class AddFilesToGroupCubit extends Cubit<AddFilesToGroupState> {
   AddFilesToGroupCubit() : super(AddFilesToGroupStateInitial());
-
-
   Future<void> addFilesToGroupParams(
       {required AddFilesToGroupParams addFilesToGroupParams}) async {
     emit(AddFilesToGroupStateLoading());

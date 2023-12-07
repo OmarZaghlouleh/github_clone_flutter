@@ -57,7 +57,8 @@ class BaseApiClient {
       //
       client.options.headers.addAll({
         'Authorization':
-            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+      "Content-type": "multipart/form-data",
       });
       //
 

@@ -37,7 +37,6 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
       });
     }
   }
-
   Future<void> uploadFile() async {
     if (result != null) {
       FormData formData =  FormData.fromMap({

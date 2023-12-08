@@ -6,7 +6,7 @@ import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dar
 import 'package:github_clone_flutter/cubit/reports/reports_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
 import 'package:github_clone_flutter/presentation/screens/reports/widgets/filters.dart';
-import 'package:github_clone_flutter/presentation/screens/reports/widgets/report_card_row.dart';
+import 'package:github_clone_flutter/presentation/common_widgets/card_row.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 
@@ -19,13 +19,13 @@ class ReportsScreen extends StatelessWidget {
   void init(BuildContext context) {
     if (!_scrollController.hasListeners) {
       BlocProvider.of<ReportsCubit>(context)
-          .getReports(context: context, key: "", clear: true);
+          .getReports(context: context, key: keyString, clear: true);
       dprint("Listener Added");
       _scrollController.addListener(() {
         if (_scrollController.offset ==
             _scrollController.position.maxScrollExtent) {
           BlocProvider.of<ReportsCubit>(context)
-              .getReports(context: context, key: "");
+              .getReports(context: context, key: keyString);
         }
       });
     }
@@ -70,8 +70,8 @@ class ReportsScreen extends StatelessWidget {
                 return Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      await BlocProvider.of<ReportsCubit>(context)
-                          .getReports(context: context, key: "", clear: true);
+                      await BlocProvider.of<ReportsCubit>(context).getReports(
+                          context: context, key: keyString, clear: true);
                     },
                     child: Scrollbar(
                       thumbVisibility: true,
@@ -90,22 +90,22 @@ class ReportsScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                ReportRowCard(
+                                CardRow(
                                     title: "Action",
                                     description: state.reports[index].action),
-                                ReportRowCard(
+                                CardRow(
                                     title: "At",
                                     description:
                                         state.reports[index].createdAt),
-                                ReportRowCard(
+                                CardRow(
                                     title: "By",
                                     description:
                                         state.reports[index].user.fullName),
-                                ReportRowCard(
+                                CardRow(
                                     title: "Importance",
                                     description: state.reports[index].importance
                                         .toString()),
-                                ReportRowCard(
+                                CardRow(
                                     title: "Info",
                                     description:
                                         state.reports[index].additionalInfo),

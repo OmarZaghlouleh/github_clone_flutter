@@ -52,7 +52,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
               commit: _commitController.text,
               filesArray: result!.files
                   .map((e) =>
-                      MultipartFile.fromBytes(e.bytes!, filename: "-${e.name}"))
+                      MultipartFile.fromBytes(e.bytes!, filename: e.name))
                   .toList(),
               filesDesc: [_descriptionController.text],
               groupKey: widget.groupKey));

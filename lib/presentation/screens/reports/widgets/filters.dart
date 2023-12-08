@@ -18,53 +18,54 @@ class ReportsFilters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Type
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text(
-                'Report Type: ',
-                style: AppTextStyle.getSmallBoldStyle(
-                    color: AppColors.primaryColor),
-              ),
-              Wrap(
-                children: Report.values
-                    .map(
-                      (e) => InkWell(
-                        onTap: () {
-                          BlocProvider.of<ReportTypeCubit>(context)
-                              .toggleType();
-                          BlocProvider.of<ReportsCubit>(context).getReports(
-                              context: context, key: keyString, clear: true);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BlocBuilder<ReportTypeCubit, Report>(
-                            builder: (context, state) {
-                              return Card(
-                                color: state == e
-                                    ? AppColors.primaryColor
-                                    : AppColors.darkGrey,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    e.name,
-                                    style: AppTextStyle.getSmallBoldStyle(
-                                        color: AppColors.thirdColor),
+        if (keyString.isEmpty)
+          // Type
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text(
+                  'Report Type: ',
+                  style: AppTextStyle.getSmallBoldStyle(
+                      color: AppColors.primaryColor),
+                ),
+                Wrap(
+                  children: Report.values
+                      .map(
+                        (e) => InkWell(
+                          onTap: () {
+                            BlocProvider.of<ReportTypeCubit>(context)
+                                .toggleType();
+                            BlocProvider.of<ReportsCubit>(context).getReports(
+                                context: context, key: keyString, clear: true);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BlocBuilder<ReportTypeCubit, Report>(
+                              builder: (context, state) {
+                                return Card(
+                                  color: state == e
+                                      ? AppColors.primaryColor
+                                      : AppColors.darkGrey,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      e.name,
+                                      style: AppTextStyle.getSmallBoldStyle(
+                                          color: AppColors.thirdColor),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
-              )
-            ],
+                      )
+                      .toList(),
+                )
+              ],
+            ),
           ),
-        ),
         // Action
         Padding(
           padding: const EdgeInsets.all(8.0),

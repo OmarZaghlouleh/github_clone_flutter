@@ -18,7 +18,7 @@ abstract class Links {
   static const updateUserProfile = "update_profile";
   static const createGroup = "groups";
   static const getListUsers = "users?limit=1";
-  static const addFilesToGroup="files";
+  static const addFilesToGroup = "files";
   static String getGroups(GetGroupsParams getGroupsParams) {
     String url = "groups/user_groups?page=${getGroupsParams.page}&";
     // limit=1&
@@ -67,10 +67,18 @@ abstract class Links {
           "files_log?page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&file_key=${getReportsParams.key}";
     } else {
       url =
-          "groups_log?limit=2&page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&group_key=${getReportsParams.key}";
+          "groups_log?page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&group_key=${getReportsParams.key}";
     }
     dprint(url);
     return url;
+  }
+
+  static String getAllGroupsUrl(GetGroupsParams getGroupsParams) {
+    return "groups?page=${getGroupsParams.page}&orderBy=${getGroupsParams.order == 'createdAt' ? 'created_at' : getGroupsParams.order}&desc=${getGroupsParams.desc}&name=${getGroupsParams.name}";
+  }
+
+  static String getAllFilesUrl(GetFilesParams getFilesParams) {
+    return "files?page=${getFilesParams.page}&orderBy=${getFilesParams.order == 'createdAt' ? 'created_at' : getFilesParams.order}&desc=${getFilesParams.desc}&name=${getFilesParams.name}";
   }
 
   //endregion

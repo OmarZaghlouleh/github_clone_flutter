@@ -12,6 +12,7 @@ class FileModel extends Equatable {
   final String size;
   final String type;
   final String createdAt;
+  final String createdBy;
   final String lastUpdate;
   const FileModel(
       {required this.id,
@@ -24,6 +25,7 @@ class FileModel extends Equatable {
       required this.reservedByName,
       required this.size,
       required this.type,
+      required this.createdBy,
       required this.createdAt,
       required this.lastUpdate});
 
@@ -39,6 +41,7 @@ class FileModel extends Equatable {
         size: json['size'] ?? "",
         type: json['type'] ?? "",
         createdAt: json['created_at'] ?? "",
+        createdBy: json['created_by'] ?? "",
         lastUpdate: json['last_update'] ?? "",
       );
 

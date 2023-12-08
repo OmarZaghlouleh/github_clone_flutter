@@ -14,4 +14,14 @@ class FilesRepoImp {
               value["data"]["items"].map((x) => FileModel.fromJson(x)));
         });
   }
+
+  Future<Either<String, List<FileModel>>> getAllFiles(
+      {required GetFilesParams getFilesParams}) {
+    return BaseApiClient.get<List<FileModel>>(
+        url: Links.baseUrl + Links.getAllFilesUrl(getFilesParams),
+        converter: (value) {
+          return List<FileModel>.from(
+              value["data"]["items"].map((x) => FileModel.fromJson(x)));
+        });
+  }
 }

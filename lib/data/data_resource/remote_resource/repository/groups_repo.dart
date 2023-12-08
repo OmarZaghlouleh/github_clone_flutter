@@ -14,4 +14,14 @@ class GroupsRepoImp {
               value["data"]["items"].map((x) => GroupModel.fromJson(x)));
         });
   }
+
+  Future<Either<String, List<GroupModel>>> getAllGroups(
+      {required GetGroupsParams getGroupsParams}) {
+    return BaseApiClient.get<List<GroupModel>>(
+        url: Links.baseUrl + Links.getAllGroupsUrl(getGroupsParams),
+        converter: (value) {
+          return List<GroupModel>.from(
+              value["data"]["items"].map((x) => GroupModel.fromJson(x)));
+        });
+  }
 }

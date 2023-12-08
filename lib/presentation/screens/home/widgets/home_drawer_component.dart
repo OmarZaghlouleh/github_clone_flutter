@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
-import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
+import 'package:github_clone_flutter/cubit/group/all_groups_cubit.dart';
+import 'package:github_clone_flutter/presentation/screens/files/all_files_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/group/create_group_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/group/update_group_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/files/files_list_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/groups/all_groups_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/reports/reports_screen.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
-
-import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/strings_manager.dart';
 import '../../../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../../common_widgets/divider.dart';
@@ -108,22 +108,64 @@ class HomeDrawer extends StatelessWidget {
                         ),
                       ),
                       if (LocalResource.getIfAdmin())
-                        ListTile(
-                          onTap: () async {
-                            AppRouter.navigateTo(
-                                context: context,
-                                destination: ReportsScreen(
-                                  keyString: "",
-                                ));
-                          },
-                          title: Text(
-                            "Reports",
-                            style: AppTextStyle.headerTextStyle(),
-                          ),
+                        ExpansionTile(
                           leading: const Icon(
-                            Icons.file_copy_rounded,
+                            Icons.admin_panel_settings_rounded,
                             color: AppColors.primaryColor,
                           ),
+                          title: Text(
+                            'Dashboard',
+                            style: AppTextStyle.headerTextStyle(),
+                          ),
+                          children: [
+                            ListTile(
+                              onTap: () async {
+                                AppRouter.navigateTo(
+                                    context: context,
+                                    destination: ReportsScreen(
+                                      keyString: "",
+                                    ));
+                              },
+                              title: Text(
+                                "Reports",
+                                style: AppTextStyle.headerTextStyle(),
+                              ),
+                              leading: const Icon(
+                                Icons.file_copy_rounded,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                            ListTile(
+                              onTap: () async {
+                                AppRouter.navigateTo(
+                                    context: context,
+                                    destination: AllGroupsScreen());
+                              },
+                              title: Text(
+                                "All Groups",
+                                style: AppTextStyle.headerTextStyle(),
+                              ),
+                              leading: const Icon(
+                                Icons.folder_copy_rounded,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                            ListTile(
+                              onTap: () async {
+                                AppRouter.navigateTo(
+                                    context: context,
+                                    destination: AllFilesScreen());
+                              },
+                              title: Text(
+                                "All Files",
+                                style: AppTextStyle.headerTextStyle(),
+                              ),
+                              leading: const Icon(
+                                Icons.file_present_rounded,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                       const CustomDivider(),
                       ExpansionTile(

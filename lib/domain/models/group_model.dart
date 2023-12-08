@@ -12,6 +12,7 @@ class GroupModel extends Equatable {
   final int numberCommits;
   final String lastCommit;
   final String lastCommitBy;
+  final String createdBy;
 
   const GroupModel(
       {required this.id,
@@ -23,6 +24,7 @@ class GroupModel extends Equatable {
       required this.numberContributers,
       required this.numberCommits,
       required this.lastCommit,
+      required this.createdBy,
       required this.lastCommitBy});
 
   factory GroupModel.fromJson(Map<String, dynamic> json) => GroupModel(
@@ -31,6 +33,7 @@ class GroupModel extends Equatable {
         desc: json['desc'] ?? "",
         groupKey: json['group_key'] ?? "",
         createdAt: json['created_at'] ?? "",
+        createdBy: json['created_by'] ?? "",
         numberFiles: json['files'] ?? 0,
         numberContributers: json['contributers'] != null
             ? List<ProfileModel>.from(

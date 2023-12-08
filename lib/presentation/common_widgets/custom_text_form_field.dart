@@ -12,13 +12,16 @@ class CustomTextFormField extends StatelessWidget {
       this.icon,
       this.suffixIcon,
       this.hint,
-        this.minLines,
+      this.minLines,
       this.maxLength,
       this.formatters,
       this.obsecure = false,
       this.validator,
       this.focusNode,
-      required this.controller, this.maxLines=1});
+      this.textInputAction,
+      this.onSubmit,
+      required this.controller,
+      this.maxLines = 1});
   final TextEditingController controller;
   final String label;
   final IconData? icon;
@@ -29,10 +32,12 @@ class CustomTextFormField extends StatelessWidget {
   final VoidCallback? onSuffixClick;
   final int? maxLength;
   final int? maxLines;
-  final int?minLines;
+  final int? minLines;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? formatters;
   final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final Function(String)? onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,8 @@ class CustomTextFormField extends StatelessWidget {
         minLines: minLines,
         maxLines: maxLines,
         controller: controller,
-        textInputAction: TextInputAction.next,
+        textInputAction: textInputAction ?? TextInputAction.next,
+        onFieldSubmitted: onSubmit,
         obscureText: obsecure,
         obscuringCharacter: '*',
         validator: validator,

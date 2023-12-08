@@ -32,7 +32,7 @@ class CreateUpdateGroupModel extends Equatable {
     groupKey: json['group_key'] ?? "",
     createdAt: json['created_at'] ?? "",
     numberFiles: json['files'] ?? 0,
-    numberContributers: json['contributers'],
+    numberContributers: json['contributers_count'],
     numberCommits: json['commits'] ?? 0,
     lastCommit: json['last_commit'] ?? "",
     lastCommitBy: json['last_commit_By'] ?? "",

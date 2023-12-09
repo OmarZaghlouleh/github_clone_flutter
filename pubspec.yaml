@@ -47,6 +47,7 @@ dependencies:
   animate_do: ^3.1.2
   pull_to_refresh: ^2.0.0
   fluttertoast: ^8.2.4
+  universal_html: ^2.2.4
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

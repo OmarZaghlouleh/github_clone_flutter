@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/widgets/contributers_card.dart';
 
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/strings_manager.dart';
+import '../../../../cubit/group/my_groups_cubit.dart';
 import '../../../../domain/models/group_model.dart';
 import '../../../common_widgets/confirm_dialog.dart';
 import '../../../common_widgets/row_info_text_span.dart';
@@ -53,6 +55,14 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
                       color: AppColors.thirdColor.withOpacity(0.9),
                       itemBuilder: (context) => [
                         PopupMenuItem(
+                          value: StringManager.download,
+                          child: Text(
+                            StringManager.download,
+                            style: const TextStyle(
+                                color: AppColors.secondaryColor),
+                          ),
+                        ),
+                        PopupMenuItem(
                           value: StringManager.edit,
                           child: Text(
                             StringManager.edit,
@@ -75,7 +85,16 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
                           if (await showConfirmDialog(
                               context: context,
                               contentText:
-                                  "Are you sure that you want to delete the group?")) {}
+                                  "Are you sure that you want to delete the group?")) {
+                            BlocProvider.of<MyGroupsCubit>(context).deleteGroup(
+                                context: context,
+                                groupKey: groupModel.groupKey);
+                          }
+                        } else if (newVal == StringManager.download) {
+                          BlocProvider.of<MyGroupsCubit>(context).cloneGroup(
+                              context: context,
+                              groupKey: groupModel.groupKey,
+                              name: groupModel.name);
                         }
                       },
                     ),

@@ -14,7 +14,6 @@ class BaseApiClient {
     'accept': _acceptHeader,
     'x-api-key':
         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
-
   };
 
   BaseApiClient() {
@@ -105,7 +104,7 @@ class BaseApiClient {
 
   static Future<Either<String, T>> put<T>(
       {required String url,
-       dynamic formData,
+      dynamic formData,
       Map<String, dynamic>? headers,
       Map<String, dynamic>? queryParameters,
       required Function(dynamic) converter,
@@ -114,7 +113,7 @@ class BaseApiClient {
       //
       client.options.headers.addAll({
         'Authorization':
-        "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
       });
       //
       var response = await client.put(
@@ -156,6 +155,7 @@ class BaseApiClient {
       {required String url,
       Map<String, dynamic>? queryParameters,
       Map<String, dynamic>? headers,
+      ResponseType? responseTypeValue,
       required Function(dynamic) converter}) async {
     try {
       //
@@ -168,8 +168,8 @@ class BaseApiClient {
         url,
         queryParameters: queryParameters,
         options: Options(
-          headers:headers?? defaultHeaders,
-        ),
+            headers: headers ?? defaultHeaders,
+            responseType: responseTypeValue ?? ResponseType.json),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {
@@ -203,7 +203,7 @@ class BaseApiClient {
       //
       client.options.headers.addAll({
         'Authorization':
-        "Bearer ${LocalResource.sharedPreferences.getString('token')}"
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
       });
       //
       // Add Token

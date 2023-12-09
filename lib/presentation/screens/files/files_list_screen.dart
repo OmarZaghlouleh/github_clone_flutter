@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
 import 'package:github_clone_flutter/presentation/screens/files/widgets/file_card.dart';
@@ -89,27 +91,32 @@ class _FilesListScreenState extends State<FilesListScreen> {
                 color: AppColors.secondaryColor),
           ),
           actions: [
-            ElevatedButtonWidget(
-              widget: Row(
-                children: [
-                  Text(
-                    'upload file',
-                    style: AppTextStyle.elevatedButtonTextStyle(),
-                  ),
-                  const Icon(Icons.file_upload),
-                ],
+            Padding(
+              padding:  EdgeInsets.only(right: 0.02.mqWidth(context)),
+              child: ElevatedButtonWidget(
+                widget: Row(
+
+                  children: [
+                    Text(
+                      'upload file',
+                      style: AppTextStyle.elevatedButtonTextStyle(),
+                    ),
+                    const Icon(Icons.file_upload),
+                  ],
+                ),
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return UploadFileWidget(
+                        Key: widget.groupKey,
+                        type: 'upload',
+                      );
+                    },
+                  );
+                },
+                buttonStyle: Theme.of(context).elevatedButtonTheme.style,
               ),
-              onPressed: () async {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return UploadFileWidget(
-                      groupKey: widget.groupKey,
-                    );
-                  },
-                );
-              },
-              buttonStyle: Theme.of(context).elevatedButtonTheme.style,
             ),
           ],
         ),

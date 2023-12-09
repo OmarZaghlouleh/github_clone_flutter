@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/constants.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
+import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_files_widget.dart';
 import '../../../../core/utils/strings_manager.dart';
 import '../../../../domain/models/file_model.dart';
 import '../../../common_widgets/confirm_dialog.dart';
@@ -60,7 +61,15 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                     ],
                     onSelected: (newVal) async {
                       if (newVal == StringManager.edit) {
-                        //TODO: wael
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return UploadFileWidget(
+                              Key: fileModel.fileKey,
+                              type: 'replace',
+                            );
+                          },
+                        );
                       } else if (newVal == StringManager.delete) {
                         if (await showConfirmDialog(
                             context: context,

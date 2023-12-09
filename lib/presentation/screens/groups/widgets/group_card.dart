@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/presentation/screens/groups/group_contributers_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/widgets/contributers_card.dart';
 
 import '../../../../core/utils/app_router.dart';
@@ -43,62 +44,86 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: PopupMenuButton(
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: AppColors.secondaryColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: PopupMenuButton(
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: AppColors.secondaryColor,
+                          ),
+                          color: AppColors.thirdColor.withOpacity(0.9),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: StringManager.download,
+                              child: Text(
+                                StringManager.download,
+                                style: const TextStyle(
+                                    color: AppColors.secondaryColor),
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: StringManager.edit,
+                              child: Text(
+                                StringManager.edit,
+                                style: const TextStyle(
+                                    color: AppColors.secondaryColor),
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: StringManager.delete,
+                              child: Text(
+                                StringManager.delete,
+                                style: const TextStyle(
+                                    color: AppColors.errorColor),
+                              ),
+                            ),
+                          ],
+                          onSelected: (newVal) async {
+                            if (newVal == StringManager.edit) {
+                              //TODO: wael
+                            } else if (newVal == StringManager.delete) {
+                              if (await showConfirmDialog(
+                                  context: context,
+                                  contentText:
+                                      "Are you sure that you want to delete the group?")) {
+                                BlocProvider.of<MyGroupsCubit>(context)
+                                    .deleteGroup(
+                                        context: context,
+                                        groupKey: groupModel.groupKey);
+                              }
+                            } else if (newVal == StringManager.download) {
+                              BlocProvider.of<MyGroupsCubit>(context)
+                                  .cloneGroup(
+                                      context: context,
+                                      groupKey: groupModel.groupKey,
+                                      name: groupModel.name);
+                            }
+                          },
+                        ),
                       ),
-                      color: AppColors.thirdColor.withOpacity(0.9),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: StringManager.download,
-                          child: Text(
-                            StringManager.download,
-                            style: const TextStyle(
-                                color: AppColors.secondaryColor),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: StringManager.edit,
-                          child: Text(
-                            StringManager.edit,
-                            style: const TextStyle(
-                                color: AppColors.secondaryColor),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: StringManager.delete,
-                          child: Text(
-                            StringManager.delete,
-                            style: const TextStyle(color: AppColors.errorColor),
-                          ),
-                        ),
-                      ],
-                      onSelected: (newVal) async {
-                        if (newVal == StringManager.edit) {
-                          //TODO: wael
-                        } else if (newVal == StringManager.delete) {
-                          if (await showConfirmDialog(
-                              context: context,
-                              contentText:
-                                  "Are you sure that you want to delete the group?")) {
-                            BlocProvider.of<MyGroupsCubit>(context).deleteGroup(
-                                context: context,
-                                groupKey: groupModel.groupKey);
-                          }
-                        } else if (newVal == StringManager.download) {
-                          BlocProvider.of<MyGroupsCubit>(context).cloneGroup(
-                              context: context,
-                              groupKey: groupModel.groupKey,
-                              name: groupModel.name);
-                        }
-                      },
                     ),
-                  ),
+                    Tooltip(
+                      message: "Contributers",
+                      child: IconButton(
+                        onPressed: () {
+                          AppRouter.navigateTo(
+                              context: context,
+                              destination: GroupContributersScreen(
+                                  groupName: groupModel.name,
+                                  groupKey: groupModel.groupKey));
+                        },
+                        icon: const Icon(
+                          Icons.group_rounded,
+                          color: AppColors.thirdColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

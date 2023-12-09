@@ -86,75 +86,73 @@ class GroupContributersScreen extends StatelessWidget {
                       padding: EdgeInsets.only(
                           bottom:
                               index == state.contributers.length - 1 ? 200 : 0),
-                      child: InkWell(
-                        onTap: () {
-                          AppRouter.navigateTo(
-                              context: context,
-                              destination: ProfileScreen(
-                                profileId: state.contributers[index].id,
-                              ));
-                        },
-                        child: Card(
-                          elevation: 5,
-                          color: AppColors.primaryColor.withOpacity(0.5),
-                          margin: const EdgeInsets.all(8),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        Links.baseUrl +
-                                            state.contributers[index].img),
-                                  ),
-                                  title: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          state.contributers[index].fullName,
-                                          style: AppTextStyle.headerTextStyle()
-                                              .copyWith(
-                                                  color: AppColors.thirdColor),
-                                        ),
-                                        10.space(),
-                                        if (state.contributers[index].role == 1)
-                                          Icon(
-                                            Icons.admin_panel_settings_rounded,
-                                            color: AppColors.lightGrey,
-                                          )
-                                      ],
-                                    ),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: Text(
-                                        "@${state.contributers[index].accountName}",
-                                        style: AppTextStyle.getSmallBoldStyle(
-                                            color: AppColors.lightGrey)),
+                      child: Card(
+                        elevation: 5,
+                        color: AppColors.primaryColor.withOpacity(0.5),
+                        margin: const EdgeInsets.all(8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                onTap: () {
+                                  AppRouter.navigateTo(
+                                      context: context,
+                                      destination: ProfileScreen(
+                                        profileId: state.contributers[index].id,
+                                      ));
+                                },
+                                leading: CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      Links.baseUrl +
+                                          state.contributers[index].img),
+                                ),
+                                title: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        state.contributers[index].fullName,
+                                        style: AppTextStyle.headerTextStyle()
+                                            .copyWith(
+                                                color: AppColors.thirdColor),
+                                      ),
+                                      10.space(),
+                                      if (state.contributers[index].role == 1)
+                                        Icon(
+                                          Icons.admin_panel_settings_rounded,
+                                          color: AppColors.lightGrey,
+                                        )
+                                    ],
                                   ),
                                 ),
-                                const CustomDivider(),
-                                CardRow(
-                                  title: "Contributions",
-                                  description: state
-                                      .contributers[index].contributionsNumber
-                                      .toString(),
-                                  textStyle: AppTextStyle.getMediumBoldStyle(
-                                      color: AppColors.lightGrey),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(
+                                      "@${state.contributers[index].accountName}",
+                                      style: AppTextStyle.getSmallBoldStyle(
+                                          color: AppColors.lightGrey)),
                                 ),
-                                CardRow(
-                                  title: "Last Contribution At",
-                                  description: state
-                                      .contributers[index].lastContributionAt,
-                                  textStyle: AppTextStyle.getMediumBoldStyle(
-                                      color: AppColors.lightGrey),
-                                ),
-                              ],
-                            ),
+                              ),
+                              const CustomDivider(),
+                              CardRow(
+                                title: "Contributions",
+                                description: state
+                                    .contributers[index].contributionsNumber
+                                    .toString(),
+                                textStyle: AppTextStyle.getMediumBoldStyle(
+                                    color: AppColors.lightGrey),
+                              ),
+                              CardRow(
+                                title: "Last Contribution At",
+                                description: state
+                                    .contributers[index].lastContributionAt,
+                                textStyle: AppTextStyle.getMediumBoldStyle(
+                                    color: AppColors.lightGrey),
+                              ),
+                            ],
                           ),
                         ),
                       ),

@@ -73,4 +73,26 @@ class FilesListCubit extends Cubit<FilesListState> {
       }
     });
   }
+
+  Future<void> deleteFile({
+    required BuildContext context,
+    required String fileKey,
+  }) async {
+    dprint("iiiiiiiiiiiiiiiiiiiiiiiddddddddddd   ");
+    dprint(fileKey);
+    final result = await getIt<FilesRepoImp>().deleteFile(fileKey: fileKey);
+    result.fold((l) {
+      showSnackBar(title: l, context: context, error: true);
+    }, (r) {
+      dprint("ssssssssssssssssssssss");
+      dprint(r);
+      dprint("aaaaaaaaaaaaaaaaaaaaa");
+      filesList.removeWhere((element) => element.fileKey == fileKey);
+      dprint(filesList);
+      emit(FilesListLoading());
+
+      emit(FilesListLoaded(filesList));
+      dprint(r);
+    });
+  }
 }

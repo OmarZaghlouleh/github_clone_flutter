@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/constants.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
-import 'package:github_clone_flutter/presentation/screens/groups/widgets/contributers_card.dart';
-
+import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
 import '../../../../core/utils/strings_manager.dart';
 import '../../../../domain/models/file_model.dart';
-import '../../../../domain/models/group_model.dart';
 import '../../../common_widgets/confirm_dialog.dart';
 import '../../../common_widgets/row_info_text_span.dart';
 import '../../../style/app_colors.dart';
@@ -66,7 +65,10 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                         if (await showConfirmDialog(
                             context: context,
                             contentText:
-                                "Are you sure that you want to delete the file?")) {}
+                                "Are you sure that you want to delete the file?")) {
+                          BlocProvider.of<FilesListCubit>(context).deleteFile(
+                              context: context, fileKey: fileModel.fileKey);
+                        }
                       }
                     },
                   ),
@@ -79,20 +81,16 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              fileModel.name,
-                              style: AppTextStyle.getMediumBoldStyle(
-                                  color: AppColors.lightGrey),
-                            ),
-                            Text(
-                              " ${fileModel.size} B",
-                              style: AppTextStyle.getMediumBoldStyle(
-                                  color: AppColors.secondaryColor),
-                            ),
-                          ],
+                        child: Text(
+                          fileModel.name,
+                          style: AppTextStyle.getMediumBoldStyle(
+                              color: AppColors.lightGrey),
                         ),
+                      ),
+                      Text(
+                        " ${fileModel.size}",
+                        style: AppTextStyle.getMediumBoldStyle(
+                            color: AppColors.secondaryColor),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(2.0),

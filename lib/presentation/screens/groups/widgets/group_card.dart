@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
-import 'package:github_clone_flutter/presentation/screens/groups/group_contributers_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/widgets/contributers_card.dart';
 
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/strings_manager.dart';
+import '../../../../cubit/group/my_groups_cubit.dart';
 import '../../../../domain/models/group_model.dart';
 import '../../../common_widgets/confirm_dialog.dart';
 import '../../../common_widgets/row_info_text_span.dart';
@@ -42,84 +43,75 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: PopupMenuButton(
-                          icon: const Icon(
-                            Icons.more_vert,
-                            color: AppColors.secondaryColor,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: PopupMenuButton(
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: AppColors.secondaryColor,
+                      ),
+                      color: AppColors.thirdColor.withOpacity(0.9),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: StringManager.download,
+                          child: Text(
+                            StringManager.download,
+                            style: const TextStyle(
+                                color: AppColors.secondaryColor),
                           ),
-                          color: AppColors.thirdColor.withOpacity(0.9),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: StringManager.edit,
-                              child: Text(
-                                StringManager.edit,
-                                style: const TextStyle(
-                                    color: AppColors.secondaryColor),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: StringManager.delete,
-                              child: Text(
-                                StringManager.delete,
-                                style: const TextStyle(
-                                    color: AppColors.errorColor),
-                              ),
-                            ),
-                          ],
-                          onSelected: (newVal) async {
-                            if (newVal == StringManager.edit) {
-                              //TODO: wael
-                            } else if (newVal == StringManager.delete) {
-                              if (await showConfirmDialog(
-                                  context: context,
-                                  contentText:
-                                      "Are you sure that you want to delete the group?")) {}
-                            }
-                          },
                         ),
-                      ),
-                    ),
-                    Tooltip(
-                      message: "Contributers",
-                      child: IconButton(
-                        onPressed: () {
-                          AppRouter.navigateTo(
+                        PopupMenuItem(
+                          value: StringManager.edit,
+                          child: Text(
+                            StringManager.edit,
+                            style: const TextStyle(
+                                color: AppColors.secondaryColor),
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: StringManager.delete,
+                          child: Text(
+                            StringManager.delete,
+                            style: const TextStyle(color: AppColors.errorColor),
+                          ),
+                        ),
+                      ],
+                      onSelected: (newVal) async {
+                        if (newVal == StringManager.edit) {
+                          //TODO: wael
+                        } else if (newVal == StringManager.delete) {
+                          if (await showConfirmDialog(
                               context: context,
-                              destination: GroupContributersScreen(
-                                  groupName: groupModel.name,
-                                  groupKey: groupModel.groupKey));
-                        },
-                        icon: const Icon(
-                          Icons.group_rounded,
-                          color: AppColors.thirdColor,
-                        ),
-                      ),
+                              contentText:
+                                  "Are you sure that you want to delete the group?")) {
+                            BlocProvider.of<MyGroupsCubit>(context).deleteGroup(
+                                context: context,
+                                groupKey: groupModel.groupKey);
+                          }
+                        } else if (newVal == StringManager.download) {
+                          BlocProvider.of<MyGroupsCubit>(context).cloneGroup(
+                              context: context,
+                              groupKey: groupModel.groupKey,
+                              name: groupModel.name);
+                        }
+                      },
                     ),
-                  ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Text(
-                                groupModel.name,
-                                style: AppTextStyle.getMediumBoldStyle(
-                                    color: AppColors.lightGrey),
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Text(
+                            groupModel.name,
+                            style: AppTextStyle.getMediumBoldStyle(
+                                color: AppColors.lightGrey),
+                          ),
                         ),
                         RowInfoTextSpan(
                             label1: "Files number",

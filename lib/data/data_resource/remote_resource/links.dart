@@ -73,6 +73,9 @@ abstract class Links {
     return url;
   }
 
+  static deleteGroup(String key) => "groups/$key";
+  static deleteFile(String fileKey) => "files/$fileKey";
+  static cloneGroup(String key) => "groups/clone/$key";
   static String getReportsUrl(GetReportsParams getReportsParams) {
     String url = "";
     if (getReportsParams.reportType.toLowerCase() == "file") {

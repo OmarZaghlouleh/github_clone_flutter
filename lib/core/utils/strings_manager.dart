@@ -16,6 +16,7 @@ class StringManager {
   static String noOtherData = "There is no other current data";
   static String edit = "Edit";
   static String delete = "Delete";
+  static String download = "Download";
   static String yes = "Yes";
   static String no = "No";
 }

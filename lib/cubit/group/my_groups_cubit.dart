@@ -115,28 +115,32 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
       dprint("ssssssssssssssssssssss");
       dprint(myGroups);
       dprint(r);
-      // base64Encode is from dart:convert
+      try {
+        // base64Encode is from dart:convert
 
-      final base64 = base64Encode(r);
+        final base64 = base64Encode(r);
 
 // Create the link with the file
 // AnchorElement comes from the
-      final anchor = html.AnchorElement(
-          href: 'data:application/octet-stream;base64,$base64')
-        ..target = 'blank';
+        final anchor = html.AnchorElement(
+            href: 'data:application/octet-stream;base64,$base64')
+          ..target = 'blank';
 
 // add the name and extension
-      anchor.download = '$name.rar';
+        anchor.download = '$name.rar';
 
 // add the anchor to the document body
-      html.document.body?.append(anchor);
+        html.document.body?.append(anchor);
 
 // trigger download
-      anchor.click();
+        anchor.click();
 
 // remove the anchor
-      anchor.remove();
-      dprint(r);
+        anchor.remove();
+        dprint(r);
+      } catch (e) {
+        dprint(e);
+      }
     });
   }
 }

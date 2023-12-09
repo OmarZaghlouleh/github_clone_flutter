@@ -31,6 +31,9 @@ class GroupsRepoImp {
         url: Links.baseUrl + Links.cloneGroup(groupKey),
         converter: (value) {
           return value;
+        });
+  }
+
   Future<Either<String, List<GroupModel>>> getAllGroups(
       {required GetGroupsParams getGroupsParams}) {
     return BaseApiClient.get<List<GroupModel>>(

@@ -7,6 +7,7 @@ class GetFilesParams extends Equatable {
   final String desc;
   final String name;
   final String key;
+  final int userId;
 
   const GetFilesParams({
     required this.page,
@@ -14,10 +15,11 @@ class GetFilesParams extends Equatable {
     required this.desc,
     required this.name,
     required this.key,
+    required this.userId,
   });
 
   @override
   List<Object> get props {
-    return [page, order, desc, name, key];
+    return [page, order, desc, name, key, userId];
   }
 }

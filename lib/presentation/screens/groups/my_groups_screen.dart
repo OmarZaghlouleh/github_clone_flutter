@@ -23,7 +23,8 @@ import '../../style/app_text_style.dart';
 import '../auth/widgets/text_field_component.dart';
 
 class MyGroupsScreen extends StatefulWidget {
-  const MyGroupsScreen({super.key});
+  const MyGroupsScreen({super.key, this.userId = -1});
+  final int userId;
 
   @override
   State<MyGroupsScreen> createState() => _MyGroupsScreenState();
@@ -39,6 +40,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
     Future.delayed(Duration.zero).then((value) {
       BlocProvider.of<MyGroupsCubit>(context).reset();
       BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+          userId: widget.userId,
           context: context,
           order: "",
           desc: "",
@@ -52,6 +54,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
             listViewController.position.maxScrollExtent ==
                 listViewController.offset) {
           BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+              userId: widget.userId,
               context: context,
               order: (orderSelectedOption == 1)
                   ? "name"
@@ -107,6 +110,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                         onFieldSubmitted: () {
                           BlocProvider.of<MyGroupsCubit>(context).reset();
                           BlocProvider.of<MyGroupsCubit>(context).getMyGroups(
+                              userId: widget.userId,
                               context: context,
                               order: (orderSelectedOption == 1)
                                   ? "name"
@@ -152,6 +156,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                         .reset();
                                     BlocProvider.of<MyGroupsCubit>(context)
                                         .getMyGroups(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -193,6 +198,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                         .reset();
                                     BlocProvider.of<MyGroupsCubit>(context)
                                         .getMyGroups(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -233,6 +239,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                         .reset();
                                     BlocProvider.of<MyGroupsCubit>(context)
                                         .getMyGroups(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -277,6 +284,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                         .reset();
                                     BlocProvider.of<MyGroupsCubit>(context)
                                         .getMyGroups(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -318,6 +326,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                         .reset();
                                     BlocProvider.of<MyGroupsCubit>(context)
                                         .getMyGroups(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -358,6 +367,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                         .reset();
                                     BlocProvider.of<MyGroupsCubit>(context)
                                         .getMyGroups(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -402,6 +412,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                               BlocProvider.of<MyGroupsCubit>(context).reset();
                               BlocProvider.of<MyGroupsCubit>(context)
                                   .getMyGroups(
+                                      userId: widget.userId,
                                       context: context,
                                       order: (orderSelectedOption == 1)
                                           ? "name"
@@ -441,6 +452,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                 onPressed: () {
                                   BlocProvider.of<MyGroupsCubit>(context)
                                       .getMyGroups(
+                                          userId: widget.userId,
                                           context: context,
                                           order: (orderSelectedOption == 1)
                                               ? "name"
@@ -488,6 +500,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                               BlocProvider.of<MyGroupsCubit>(context).reset();
                               BlocProvider.of<MyGroupsCubit>(context)
                                   .getMyGroups(
+                                      userId: widget.userId,
                                       context: context,
                                       order: (orderSelectedOption == 1)
                                           ? "name"

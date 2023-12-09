@@ -37,9 +37,11 @@ class UserModel {
   String fullName;
   String img;
   String createdAt;
+  String lastContributionAt;
   int groupsCount;
   int commitsCount;
   int commitsThisYear;
+  int contributionsNumber;
 
   UserModel(
       {required this.id,
@@ -54,6 +56,8 @@ class UserModel {
       required this.createdAt,
       required this.groupsCount,
       required this.commitsCount,
+      required this.contributionsNumber,
+      required this.lastContributionAt,
       required this.commitsThisYear});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -70,6 +74,8 @@ class UserModel {
         createdAt: json['created_at'] ?? "",
         groupsCount: json['groups_count'] ?? 0,
         commitsCount: json['commits_count'] ?? 0,
+        contributionsNumber: json['number_of_contributions'] ?? 0,
+        lastContributionAt: json['last_contribution_at'] ?? 0,
         commitsThisYear: json['commits_this_year'] ?? 0);
   }
 

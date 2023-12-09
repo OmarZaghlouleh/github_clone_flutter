@@ -30,6 +30,7 @@ class AllGroupsCubit extends Cubit<AllGroupsState> {
 
     final result = await getIt<GroupsRepoImp>().getAllGroups(
         getGroupsParams: GetGroupsParams(
+            userId: -1,
             page: page,
             order: BlocProvider.of<GroupOrderCubit>(context).state?.name ?? "",
             desc: BlocProvider.of<GroupDescCubit>(context).state?.name ?? "",

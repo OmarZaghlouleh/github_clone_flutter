@@ -29,6 +29,7 @@ class AllFilesCubit extends Cubit<AllFilesState> {
 
     final result = await getIt<FilesRepoImp>().getAllFiles(
         getFilesParams: GetFilesParams(
+            userId: -1,
             page: page,
             order: BlocProvider.of<FileOrderCubit>(context).state?.name ?? "",
             desc: BlocProvider.of<FileDescCubit>(context).state?.name ?? "",

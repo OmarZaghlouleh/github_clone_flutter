@@ -20,7 +20,15 @@ abstract class Links {
   static const getListUsers = "users?limit=1";
   static const addFilesToGroup = "files";
   static String getGroups(GetGroupsParams getGroupsParams) {
-    String url = "groups/user_groups?page=${getGroupsParams.page}&";
+    String url = "";
+    dprint("DDD: ${getGroupsParams.userId}");
+    if (getGroupsParams.userId == -1) {
+      url = "groups/user_groups?page=${getGroupsParams.page}&";
+    } else {
+      url =
+          "groups/user_groups/${getGroupsParams.userId}?page=${getGroupsParams.page}&";
+    }
+
     // limit=1&
     if (getGroupsParams.desc != "") {
       url += 'desc=${getGroupsParams.desc}&';
@@ -39,7 +47,12 @@ abstract class Links {
     String url = "";
     if (getFilesParams.key == "") {
       //user files
-      url = "files/user_files?page=${getFilesParams.page}&";
+      if (getFilesParams.userId == -1) {
+        url = "files/user_files?page=${getFilesParams.page}&";
+      } else {
+        url =
+            "files/user_files/${getFilesParams.userId}?page=${getFilesParams.page}&";
+      }
       //   {{URL}}/api/files/user_files?order=created_at&desc=asc&name=
     } else {
       url =
@@ -75,6 +88,10 @@ abstract class Links {
 
   static String getAllGroupsUrl(GetGroupsParams getGroupsParams) {
     return "groups?page=${getGroupsParams.page}&orderBy=${getGroupsParams.order == 'createdAt' ? 'created_at' : getGroupsParams.order}&desc=${getGroupsParams.desc}&name=${getGroupsParams.name}";
+  }
+
+  static String getGroupContributersUrl(String key) {
+    return "groups/group_contributers/$key";
   }
 
   static String getAllFilesUrl(GetFilesParams getFilesParams) {

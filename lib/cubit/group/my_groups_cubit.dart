@@ -32,6 +32,7 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
     required String order,
     required String desc,
     required String name,
+    int userId = -1,
   }) async {
     if (state is MyGroupsLoading) {
       return;
@@ -40,8 +41,8 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
     dprint(name);
     emit(MyGroupsLoading());
     final result = await getIt<GroupsRepoImp>().getGroups(
-        getGroupsParams:
-            GetGroupsParams(page: page, order: order, desc: desc, name: name));
+        getGroupsParams: GetGroupsParams(
+            page: page, order: order, desc: desc, name: name, userId: userId));
     result.fold((l) {
       // GroupErrorMessage = l;
       emit(MyGroupsError(l));

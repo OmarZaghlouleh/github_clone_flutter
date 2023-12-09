@@ -20,6 +20,8 @@ class LocalResource {
         sharedPreferences.getString('token')!.isNotEmpty &&
         sharedPreferences.getInt('roleId') != null &&
         sharedPreferences.getInt('roleId')! > 0 &&
+        sharedPreferences.getInt('userId') != null &&
+        sharedPreferences.getInt('userId')! > 0 &&
         sharedPreferences.getString('roleName') != null &&
         sharedPreferences.getString('roleName')!.isNotEmpty) {
       return true;
@@ -30,6 +32,7 @@ class LocalResource {
   static Future<void> saveUserData(AuthModel authModel) async {
     await sharedPreferences.setString('token', authModel.token);
     await sharedPreferences.setInt('roleId', authModel.roleId);
+    await sharedPreferences.setInt('userId', authModel.userId);
     await sharedPreferences.setString('roleName', authModel.roleName);
     dprint(sharedPreferences.getString('token'));
   }
@@ -45,7 +48,7 @@ class LocalResource {
   }
 
   static saveGroupData(CreateUpdateGroupModel createUpdateGroupModel) {
-    LocalResource.sharedPreferences
-        .setString(createUpdateGroupModel.name, createUpdateGroupModel.groupKey);
+    LocalResource.sharedPreferences.setString(
+        createUpdateGroupModel.name, createUpdateGroupModel.groupKey);
   }
 }

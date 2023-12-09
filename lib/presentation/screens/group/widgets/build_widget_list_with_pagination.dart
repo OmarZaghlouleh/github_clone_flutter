@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
+import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../../../domain/models/user_model.dart';
@@ -41,31 +42,35 @@ class _BuildWidgetListWithPaginationState
         ),
         pagingController: widget.pagingController,
         builderDelegate: PagedChildBuilderDelegate<UserModel>(
-          itemBuilder: (context, item, index) => Column(
-            children: [
-              if (index != 0)
-                const Divider(
-                  color: AppColors.textFieldValueColor,
-                  thickness: 1.0,
+          itemBuilder: (context, item, index) => item.id ==
+                  LocalResource.sharedPreferences.getInt('userId')
+              ? const SizedBox.shrink()
+              : Column(
+                  children: [
+                    if (index != 0)
+                      const Divider(
+                        color: AppColors.textFieldValueColor,
+                        thickness: 1.0,
+                      ),
+                    CheckboxListTile(
+                      title: Text('${item.accountName}$index'),
+                      subtitle: Text(item.email),
+                      value: widget.delete == true
+                          ? GetListUsersCubit.listUsersDeletedFromGroup[item]
+                          : GetListUsersCubit
+                              .listUsersWithVariableBoolean[item],
+                      onChanged: (bool? value) {
+                        setState(() {
+                          widget.delete == true
+                              ? GetListUsersCubit
+                                  .listUsersDeletedFromGroup[item] = value!
+                              : GetListUsersCubit
+                                  .listUsersWithVariableBoolean[item] = value!;
+                        });
+                      },
+                    ),
+                  ],
                 ),
-              CheckboxListTile(
-                title: Text('${item.accountName}$index'),
-                subtitle: Text(item.email),
-                value: widget.delete == true
-                    ? GetListUsersCubit.listUsersDeletedFromGroup[item]
-                    : GetListUsersCubit.listUsersWithVariableBoolean[item],
-                onChanged: (bool? value) {
-                  setState(() {
-                    widget.delete == true
-                        ? GetListUsersCubit.listUsersDeletedFromGroup[item] =
-                            value!
-                        : GetListUsersCubit.listUsersWithVariableBoolean[item] =
-                            value!;
-                  });
-                },
-              ),
-            ],
-          ),
         ),
       ),
     );

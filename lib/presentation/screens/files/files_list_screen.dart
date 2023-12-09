@@ -89,28 +89,29 @@ class _FilesListScreenState extends State<FilesListScreen> {
                 color: AppColors.secondaryColor),
           ),
           actions: [
-            ElevatedButtonWidget(
-              widget: Row(
-                children: [
-                  Text(
-                    'upload file',
-                    style: AppTextStyle.elevatedButtonTextStyle(),
-                  ),
-                  const Icon(Icons.file_upload),
-                ],
+            if (widget.groupKey.isNotEmpty)
+              ElevatedButtonWidget(
+                widget: Row(
+                  children: [
+                    Text(
+                      'upload file',
+                      style: AppTextStyle.elevatedButtonTextStyle(),
+                    ),
+                    const Icon(Icons.file_upload),
+                  ],
+                ),
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return UploadFileWidget(
+                        groupKey: widget.groupKey,
+                      );
+                    },
+                  );
+                },
+                buttonStyle: Theme.of(context).elevatedButtonTheme.style,
               ),
-              onPressed: () async {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return UploadFileWidget(
-                      groupKey: widget.groupKey,
-                    );
-                  },
-                );
-              },
-              buttonStyle: Theme.of(context).elevatedButtonTheme.style,
-            ),
           ],
         ),
         body: SingleChildScrollView(

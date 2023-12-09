@@ -8,6 +8,7 @@ import 'package:github_clone_flutter/presentation/common_widgets/custom_text_for
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
 import 'package:github_clone_flutter/presentation/screens/files/files_list_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/groups/group_contributers_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/widgets/filters.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/card_row.dart';
 import 'package:github_clone_flutter/presentation/screens/reports/reports_screen.dart';
@@ -157,12 +158,16 @@ class AllGroupsScreen extends StatelessWidget {
                                               message: "Contributers",
                                               child: IconButton(
                                                 onPressed: () {
-                                                  // AppRouter.navigateTo(
-                                                  //     context: context,
-                                                  //     destination: ReportsScreen(
-                                                  //         keyString: state
-                                                  //             .groups[index]
-                                                  //             .groupKey));
+                                                  AppRouter.navigateTo(
+                                                      context: context,
+                                                      destination:
+                                                          GroupContributersScreen(
+                                                              groupName: state
+                                                                  .groups[index]
+                                                                  .name,
+                                                              groupKey: state
+                                                                  .groups[index]
+                                                                  .groupKey));
                                                 },
                                                 icon: const Icon(
                                                   Icons.group_rounded,

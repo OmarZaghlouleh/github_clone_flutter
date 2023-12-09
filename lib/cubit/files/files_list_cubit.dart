@@ -33,6 +33,7 @@ class FilesListCubit extends Cubit<FilesListState> {
     required String desc,
     required String name,
     required String key,
+    int userId = -1,
   }) async {
     if (state is FilesListLoading) {
       return;
@@ -42,7 +43,12 @@ class FilesListCubit extends Cubit<FilesListState> {
     emit(FilesListLoading());
     final result = await getIt<FilesRepoImp>().getFiles(
         getFilesParams: GetFilesParams(
-            page: page, order: order, desc: desc, name: name, key: key));
+            page: page,
+            order: order,
+            desc: desc,
+            name: name,
+            key: key,
+            userId: userId));
     result.fold((l) {
       // FileErrorMessage = l;
       emit(FilesListError(l));
@@ -65,6 +71,28 @@ class FilesListCubit extends Cubit<FilesListState> {
         showSnackBar(
             title: StringManager.noOtherData, context: context, error: false);
       }
+    });
+  }
+
+  Future<void> deleteFile({
+    required BuildContext context,
+    required String fileKey,
+  }) async {
+    dprint("iiiiiiiiiiiiiiiiiiiiiiiddddddddddd   ");
+    dprint(fileKey);
+    final result = await getIt<FilesRepoImp>().deleteFile(fileKey: fileKey);
+    result.fold((l) {
+      showSnackBar(title: l, context: context, error: true);
+    }, (r) {
+      dprint("ssssssssssssssssssssss");
+      dprint(r);
+      dprint("aaaaaaaaaaaaaaaaaaaaa");
+      filesList.removeWhere((element) => element.fileKey == fileKey);
+      dprint(filesList);
+      emit(FilesListLoading());
+
+      emit(FilesListLoaded(filesList));
+      dprint(r);
     });
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
@@ -15,7 +14,9 @@ import '../../style/app_text_style.dart';
 import '../auth/widgets/text_field_component.dart';
 
 class FilesListScreen extends StatefulWidget {
-  const FilesListScreen({super.key, required this.groupKey});
+  const FilesListScreen({super.key, required this.groupKey, this.userId = -1});
+
+  final int userId;
 
   final String groupKey;
 
@@ -33,6 +34,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
     Future.delayed(Duration.zero).then((value) {
       BlocProvider.of<FilesListCubit>(context).reset();
       BlocProvider.of<FilesListCubit>(context).getFilesList(
+          userId: widget.userId,
           context: context,
           order: "",
           desc: "",
@@ -47,6 +49,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
             listViewController.position.maxScrollExtent ==
                 listViewController.offset) {
           BlocProvider.of<FilesListCubit>(context).getFilesList(
+              userId: widget.userId,
               context: context,
               order: (orderSelectedOption == 1)
                   ? "name"
@@ -100,7 +103,9 @@ class _FilesListScreenState extends State<FilesListScreen> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return  UploadFileWidget(groupKey: widget.groupKey,);
+                    return UploadFileWidget(
+                      groupKey: widget.groupKey,
+                    );
                   },
                 );
               },
@@ -126,6 +131,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                         onFieldSubmitted: () {
                           BlocProvider.of<FilesListCubit>(context).reset();
                           BlocProvider.of<FilesListCubit>(context).getFilesList(
+                              userId: widget.userId,
                               context: context,
                               order: (orderSelectedOption == 1)
                                   ? "name"
@@ -172,6 +178,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                         .reset();
                                     BlocProvider.of<FilesListCubit>(context)
                                         .getFilesList(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -214,6 +221,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                         .reset();
                                     BlocProvider.of<FilesListCubit>(context)
                                         .getFilesList(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -255,6 +263,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                         .reset();
                                     BlocProvider.of<FilesListCubit>(context)
                                         .getFilesList(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -300,6 +309,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                         .reset();
                                     BlocProvider.of<FilesListCubit>(context)
                                         .getFilesList(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -342,6 +352,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                         .reset();
                                     BlocProvider.of<FilesListCubit>(context)
                                         .getFilesList(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -383,6 +394,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                         .reset();
                                     BlocProvider.of<FilesListCubit>(context)
                                         .getFilesList(
+                                            userId: widget.userId,
                                             context: context,
                                             order: (orderSelectedOption == 1)
                                                 ? "name"
@@ -428,6 +440,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                               BlocProvider.of<FilesListCubit>(context).reset();
                               BlocProvider.of<FilesListCubit>(context)
                                   .getFilesList(
+                                      userId: widget.userId,
                                       context: context,
                                       order: (orderSelectedOption == 1)
                                           ? "name"
@@ -468,6 +481,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                 onPressed: () {
                                   BlocProvider.of<FilesListCubit>(context)
                                       .getFilesList(
+                                          userId: widget.userId,
                                           context: context,
                                           order: (orderSelectedOption == 1)
                                               ? "name"
@@ -516,6 +530,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                               BlocProvider.of<FilesListCubit>(context).reset();
                               BlocProvider.of<FilesListCubit>(context)
                                   .getFilesList(
+                                      userId: widget.userId,
                                       context: context,
                                       order: (orderSelectedOption == 1)
                                           ? "name"

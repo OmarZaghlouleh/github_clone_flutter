@@ -133,6 +133,7 @@ class BaseApiClient {
       {required String url,
       Map<String, dynamic>? queryParameters,
       Map<String, dynamic>? headers,
+      ResponseType? responseTypeValue,
       required Function(dynamic) converter}) async {
     try {
       if(LocalResource.sharedPreferences.getString('token')!=null) {
@@ -145,8 +146,9 @@ class BaseApiClient {
         url,
         queryParameters: queryParameters,
         options: Options(
-          headers: headers ?? defaultHeaders,
-        ),
+            headers: headers ?? defaultHeaders,
+            responseType: responseTypeValue ?? ResponseType.json),
+
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {

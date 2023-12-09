@@ -21,6 +21,7 @@ import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.d
 import 'package:github_clone_flutter/cubit/group/all_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/filters/group_desc_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/filters/group_order_cubit.dart';
+import 'package:github_clone_flutter/cubit/group/group_contributers_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/my_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_action_cubit.dart';
@@ -79,6 +80,7 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => AllFilesCubit()),
         BlocProvider(create: (context) => FileOrderCubit()),
         BlocProvider(create: (context) => FileDescCubit()),
+        BlocProvider(create: (context) => GroupContributersCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(

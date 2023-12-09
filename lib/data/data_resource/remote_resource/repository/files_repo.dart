@@ -15,6 +15,14 @@ class FilesRepoImp {
         });
   }
 
+  Future<Either<String, bool>> deleteFile({required String fileKey}) {
+    return BaseApiClient.delete<bool>(
+        url: Links.baseUrl + Links.deleteFile(fileKey),
+        converter: (value) {
+          return value["success"];
+        });
+  }
+
   Future<Either<String, List<FileModel>>> getAllFiles(
       {required GetFilesParams getFilesParams}) {
     return BaseApiClient.get<List<FileModel>>(

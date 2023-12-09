@@ -13,10 +13,12 @@ class AddFilesToGroupParams {
       required this.filesDesc,
       required this.groupKey});
   Map<String, dynamic> toJson() {
+
+
     return {
       "commit": commit,
-      "files_array": filesArray.length == 1 ? [filesArray] : filesArray,
-      "files_desc": filesDesc.length == 1 ? [filesDesc] : filesDesc,
+      "files_array":  [filesArray] ,
+      "files_desc":  [filesDesc] ,
       "group_key": groupKey,
     };
   }

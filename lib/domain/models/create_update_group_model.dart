@@ -7,6 +7,7 @@ class CreateUpdateGroupModel extends Equatable {
   final String desc;
   final String groupKey;
   final String createdAt;
+  final String createdBy;
   final int numberFiles;
   final int numberContributers;
   final int numberCommits;
@@ -15,40 +16,43 @@ class CreateUpdateGroupModel extends Equatable {
 
   const CreateUpdateGroupModel(
       {required this.id,
-        required this.name,
-        required this.desc,
-        required this.groupKey,
-        required this.createdAt,
-        required this.numberFiles,
-        required this.numberContributers,
-        required this.numberCommits,
-        required this.lastCommit,
-        required this.lastCommitBy});
+      required this.name,
+      required this.desc,
+      required this.groupKey,
+      required this.createdAt,
+      required this.numberFiles,
+      required this.numberContributers,
+      required this.numberCommits,
+      required this.lastCommit,
+      required this.createdBy,
+      required this.lastCommitBy});
 
-  factory CreateUpdateGroupModel.fromJson(Map<String, dynamic> json) => CreateUpdateGroupModel(
-    id: json['id'] ?? -1,
-    name: json['name'] ?? "",
-    desc: json['desc'] ?? "",
-    groupKey: json['group_key'] ?? "",
-    createdAt: json['created_at'] ?? "",
-    numberFiles: json['files'] ?? 0,
-    numberContributers: json['contributers_count'],
-    numberCommits: json['commits'] ?? 0,
-    lastCommit: json['last_commit'] ?? "",
-    lastCommitBy: json['last_commit_By'] ?? "",
-  );
+  factory CreateUpdateGroupModel.fromJson(Map<String, dynamic> json) =>
+      CreateUpdateGroupModel(
+          id: json['id'] ?? -1,
+          name: json['name'] ?? "",
+          desc: json['desc'] ?? "",
+          groupKey: json['group_key'] ?? "",
+          createdAt: json['created_at'] ?? "",
+          numberFiles: json['files'] ?? 0,
+          numberContributers: json['contributers_count'],
+          numberCommits: json['commits'] ?? 0,
+          lastCommit: json['last_commit'] ?? "",
+          lastCommitBy: json['last_commit_By'] ?? "",
+          createdBy: json["created_by"]);
 
   @override
   List<Object?> get props => [
-    id,
-    name,
-    desc,
-    groupKey,
-    createdAt,
-    numberFiles,
-    numberCommits,
-    numberContributers,
-    lastCommit,
-    lastCommitBy
-  ];
+        id,
+        name,
+        desc,
+        groupKey,
+        createdAt,
+        numberFiles,
+        numberCommits,
+        numberContributers,
+        lastCommit,
+        lastCommitBy,
+        createdBy
+      ];
 }

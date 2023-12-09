@@ -1,5 +1,6 @@
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/domain/models/params/get_files_params.dart';
+import 'package:github_clone_flutter/domain/models/params/get_reports_params.dart';
 
 import '../../../domain/models/params/get_groups_params.dart';
 
@@ -17,8 +18,17 @@ abstract class Links {
   static const updateUserProfile = "update_profile";
   static const createGroup = "groups";
   static const getListUsers = "users?limit=1";
+  static const addFilesToGroup = "files";
   static String getGroups(GetGroupsParams getGroupsParams) {
-    String url = "groups/user_groups?page=${getGroupsParams.page}&";
+    String url = "";
+    dprint("DDD: ${getGroupsParams.userId}");
+    if (getGroupsParams.userId == -1) {
+      url = "groups/user_groups?page=${getGroupsParams.page}&";
+    } else {
+      url =
+          "groups/user_groups/${getGroupsParams.userId}?page=${getGroupsParams.page}&";
+    }
+
     // limit=1&
     if (getGroupsParams.desc != "") {
       url += 'desc=${getGroupsParams.desc}&';
@@ -37,7 +47,12 @@ abstract class Links {
     String url = "";
     if (getFilesParams.key == "") {
       //user files
-      url = "files/user_files?page=${getFilesParams.page}&";
+      if (getFilesParams.userId == -1) {
+        url = "files/user_files?page=${getFilesParams.page}&";
+      } else {
+        url =
+            "files/user_files/${getFilesParams.userId}?page=${getFilesParams.page}&";
+      }
       //   {{URL}}/api/files/user_files?order=created_at&desc=asc&name=
     } else {
       url =
@@ -61,5 +76,30 @@ abstract class Links {
   static deleteGroup(String key) => "groups/$key";
   static deleteFile(String fileKey) => "files/$fileKey";
   static cloneGroup(String key) => "groups/clone/$key";
+  static String getReportsUrl(GetReportsParams getReportsParams) {
+    String url = "";
+    if (getReportsParams.reportType.toLowerCase() == "file") {
+      url =
+          "files_log?page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&file_key=${getReportsParams.key}";
+    } else {
+      url =
+          "groups_log?page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&group_key=${getReportsParams.key}";
+    }
+    dprint(url);
+    return url;
+  }
+
+  static String getAllGroupsUrl(GetGroupsParams getGroupsParams) {
+    return "groups?page=${getGroupsParams.page}&orderBy=${getGroupsParams.order == 'createdAt' ? 'created_at' : getGroupsParams.order}&desc=${getGroupsParams.desc}&name=${getGroupsParams.name}";
+  }
+
+  static String getGroupContributersUrl(String key) {
+    return "groups/group_contributers/$key";
+  }
+
+  static String getAllFilesUrl(GetFilesParams getFilesParams) {
+    return "files?page=${getFilesParams.page}&orderBy=${getFilesParams.order == 'createdAt' ? 'created_at' : getFilesParams.order}&desc=${getFilesParams.desc}&name=${getFilesParams.name}";
+  }
+
   //endregion
 }

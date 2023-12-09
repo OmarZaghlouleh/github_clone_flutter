@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:github_clone_flutter/core/utils/extensions/print.dart';
 import 'package:github_clone_flutter/domain/models/auth_model.dart';
+import 'package:github_clone_flutter/domain/models/create_update_group_model.dart';
 import 'package:github_clone_flutter/domain/models/group_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,13 +34,18 @@ class LocalResource {
     dprint(sharedPreferences.getString('token'));
   }
 
+  static getIfAdmin() {
+    return sharedPreferences.getInt('roleId') == 1;
+  }
+
   static deleteUserData() {
     sharedPreferences.remove('token');
     sharedPreferences.remove('roleId');
     sharedPreferences.remove('roleName');
   }
-  static saveGroupData(GroupModel groupModel){
-    LocalResource.sharedPreferences.setString(groupModel.name, groupModel.groupKey);
-  }
 
+  static saveGroupData(CreateUpdateGroupModel createUpdateGroupModel) {
+    LocalResource.sharedPreferences
+        .setString(createUpdateGroupModel.name, createUpdateGroupModel.groupKey);
+  }
 }

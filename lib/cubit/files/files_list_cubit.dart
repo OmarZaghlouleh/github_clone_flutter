@@ -33,6 +33,7 @@ class FilesListCubit extends Cubit<FilesListState> {
     required String desc,
     required String name,
     required String key,
+    int userId = -1,
   }) async {
     if (state is FilesListLoading) {
       return;
@@ -42,7 +43,12 @@ class FilesListCubit extends Cubit<FilesListState> {
     emit(FilesListLoading());
     final result = await getIt<FilesRepoImp>().getFiles(
         getFilesParams: GetFilesParams(
-            page: page, order: order, desc: desc, name: name, key: key));
+            page: page,
+            order: order,
+            desc: desc,
+            name: name,
+            key: key,
+            userId: userId));
     result.fold((l) {
       // FileErrorMessage = l;
       emit(FilesListError(l));

@@ -20,6 +20,13 @@ class FilesRepoImp {
         url: Links.baseUrl + Links.deleteFile(fileKey),
         converter: (value) {
           return value["success"];
+  Future<Either<String, List<FileModel>>> getAllFiles(
+      {required GetFilesParams getFilesParams}) {
+    return BaseApiClient.get<List<FileModel>>(
+        url: Links.baseUrl + Links.getAllFilesUrl(getFilesParams),
+        converter: (value) {
+          return List<FileModel>.from(
+              value["data"]["items"].map((x) => FileModel.fromJson(x)));
         });
   }
 }

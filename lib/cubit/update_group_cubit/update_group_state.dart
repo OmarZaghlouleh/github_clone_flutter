@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:github_clone_flutter/domain/models/create_update_group_model.dart';
 import 'package:github_clone_flutter/domain/models/group_model.dart';
 
 abstract class UpdateGroupState extends Equatable{
@@ -9,9 +10,9 @@ abstract class UpdateGroupState extends Equatable{
 class UpdateGroupStateInitial extends UpdateGroupState{}
 class UpdateGroupStateLoading extends UpdateGroupState{}
 class UpdateGroupStateLoaded extends UpdateGroupState{
-  final GroupModel updateGroupModel;
+  final CreateUpdateGroupModel createUpdateGroupModel;
 
-  const UpdateGroupStateLoaded({required this.updateGroupModel});
+  const UpdateGroupStateLoaded({required this.createUpdateGroupModel});
 }
 class UpdateGroupStateError extends UpdateGroupState{
   final String messageError;

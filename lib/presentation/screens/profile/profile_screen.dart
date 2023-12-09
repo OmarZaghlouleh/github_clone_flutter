@@ -1,13 +1,19 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/core/utils/extensions/space.dart';
+import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/empty_widget.dart';
+import 'package:github_clone_flutter/presentation/screens/files/files_list_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/groups/my_groups_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/home/widgets/home_drawer_component.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 
@@ -129,6 +135,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 label2: (state).profile.createdAt,
                 // label2Color: AppColors.secondaryColor,
               ),
+              if (widget.profileId != -1)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      height: 50,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            AppRouter.navigateTo(
+                                context: context,
+                                destination: MyGroupsScreen(
+                                  userId: widget.profileId,
+                                ));
+                          },
+                          child: Text(
+                            "Groups",
+                            style: AppTextStyle.getMediumBoldStyle(
+                                color: AppColors.thirdColor),
+                          )),
+                    ),
+                    // 10.space(),
+                    // SizedBox(
+                    //   width: 150,
+                    //   height: 50,
+                    //   child: ElevatedButton(
+                    //       onPressed: () {
+                    //         AppRouter.navigateTo(
+                    //             context: context,
+                    //             destination: FilesListScreen(
+                    //               groupKey: "",
+                    //               userId: widget.profileId,
+                    //             ));
+                    //       },
+                    //       child: Text(
+                    //         "Files",
+                    //         style: AppTextStyle.getMediumBoldStyle(
+                    //             color: AppColors.thirdColor),
+                    //       )),
+                    // )
+                  ],
+                )
             ]),
           );
         }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/cubit/create_group/create_group_cubit.dart';
-import 'package:github_clone_flutter/cubit/create_group/create_group_state.dart';
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_state.dart';
 import 'package:github_clone_flutter/domain/models/params/create_group_params.dart';
@@ -79,7 +78,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: BuildBody(
         pagingController: _pagingController,
       ),

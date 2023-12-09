@@ -8,15 +8,17 @@ class GetGroupsParams extends Equatable {
   final String order;
   final String desc;
   final String name;
+  final int userId;
 
   const GetGroupsParams(
       {required this.page,
       required this.order,
+      required this.userId,
       required this.desc,
       required this.name});
 
   @override
   List<Object> get props {
-    return [page, order, desc, name];
+    return [page, order, desc, name, userId];
   }
 }

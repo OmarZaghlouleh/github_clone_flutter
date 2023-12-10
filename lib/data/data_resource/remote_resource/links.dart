@@ -19,6 +19,8 @@ abstract class Links {
   static const createGroup = "groups";
   static const getListUsers = "users?limit=1";
   static const addFilesToGroup = "files";
+  static const downloadFiles = "files/download";
+
   static String getGroups(GetGroupsParams getGroupsParams) {
     String url = "";
     dprint("DDD: ${getGroupsParams.userId}");

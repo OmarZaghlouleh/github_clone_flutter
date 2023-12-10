@@ -7,7 +7,7 @@ class FileModel extends Equatable {
   final String fileKey;
   final int groupId;
   final String groupName;
-  final String reservedBy;
+  final int reservedBy;
   final String reservedByName;
   final String size;
   final String type;
@@ -36,7 +36,7 @@ class FileModel extends Equatable {
         fileKey: json['file_key'] ?? "",
         groupId: json['group_id'] ?? 0,
         groupName: json['group_name'] ?? "",
-        reservedBy: json['reserved_by'] ?? "",
+        reservedBy: json['reserved_by'] ?? 0,
         reservedByName: json['reserved_by_name'] ?? "",
         size: json['size'] ?? "",
         type: json['type'] ?? "",

@@ -50,6 +50,7 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       dynamic formData,
       Map<String, dynamic>? queryParameters,
+      ResponseType? responseTypeValue,
       required Function(dynamic) converter,
       Function(String)? saveToken,
       dynamic returnOnError}) async {
@@ -72,6 +73,7 @@ class BaseApiClient {
         },
         options: Options(
           headers: headers ?? defaultHeaders,
+          responseType: responseTypeValue ?? ResponseType.json,
         ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
@@ -167,9 +169,9 @@ class BaseApiClient {
         url,
         queryParameters: queryParameters,
         options: Options(
-            headers: headers ?? defaultHeaders,
-            responseType: responseTypeValue ?? ResponseType.json),
-
+          headers: headers ?? defaultHeaders,
+          responseType: responseTypeValue ?? ResponseType.json,
+        ),
       );
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {

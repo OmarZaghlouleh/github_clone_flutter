@@ -19,10 +19,10 @@ class UsersModel {
     });
     return UsersModel(
         items: items,
-        lastPage: json['last_page'],
-        total: json['total'],
-        perPage: json['perPage'],
-        currentPage: json['currentPage']);
+        lastPage: json['last_page'] ?? 0,
+        total: json['total'] ?? 0,
+        perPage: json['perPage'] ?? 0,
+        currentPage: json['currentPage'] ?? 0);
   }
 }
 

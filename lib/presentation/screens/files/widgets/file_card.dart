@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/constants.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/cubit/check_out/check_out_cubit.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
 import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_files_widget.dart';
 import '../../../../core/utils/strings_manager.dart';
@@ -52,6 +53,14 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                         ),
                       ),
                       PopupMenuItem(
+                        value: StringManager.cancelFileReservation,
+                        child: Text(
+                          StringManager.cancelFileReservation,
+                          style:
+                          const TextStyle(color: AppColors.secondaryColor),
+                        ),
+                      ),
+                      PopupMenuItem(
                         value: StringManager.delete,
                         child: Text(
                           StringManager.delete,
@@ -70,7 +79,12 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                             );
                           },
                         );
-                      } else if (newVal == StringManager.delete) {
+                      }
+                      else if(newVal==StringManager.cancelFileReservation)
+                        {
+                          BlocProvider.of<CheckOutCubit>(context).checkOut(fileKey: fileModel.fileKey,context:  context);
+                        }
+                      else if (newVal == StringManager.delete) {
                         if (await showConfirmDialog(
                             context: context,
                             contentText:

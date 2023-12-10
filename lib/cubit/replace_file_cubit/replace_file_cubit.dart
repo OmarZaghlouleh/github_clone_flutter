@@ -36,6 +36,7 @@ class ReplaceFileCubit extends Cubit<ReplaceFileState> {
       emit(ReplaceFileErrorState(messageError: l.toString()));
     }, (r) {
       uploadFileCardWidget.description!.clear();
+      uploadFileCardWidget.file=null;
       result = null;
       Navigator.of(context).pop();
       showToastWidget(r.message);

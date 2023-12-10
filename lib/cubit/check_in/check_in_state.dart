@@ -19,3 +19,11 @@ class CheckInErrorState extends CheckInState {
   CheckInErrorState({required this.messageError});
 
 }
+class CheckInFile extends CheckInState{
+
+
+}
+class CheckOutFile extends CheckInState{
+
+
+}

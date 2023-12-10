@@ -13,11 +13,23 @@ class AddFilesToGroupParams {
       required this.groupKey});
 
   Map<String, dynamic> toJson() {
-    return {
+    Map<String, dynamic> json = {};
+    json = {
       "commit": commit,
-      "files_array": [filesArray],
-      "files_desc": [filesDesc],
       "group_key": groupKey,
     };
+
+    json.addEntries(
+      filesArray
+          .map((e) => MapEntry('files_array[${filesArray.indexOf(e)}]', e))
+          .toList(),
+    );
+    json.addEntries(
+      filesDesc
+          .map((e) => MapEntry('files_desc[${filesDesc.indexOf(e)}]', e))
+          .toList(),
+    );
+
+    return json;
   }
 }

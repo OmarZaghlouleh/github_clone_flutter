@@ -18,13 +18,14 @@ class UpdateGroupCubit extends Cubit<UpdateGroupState> {
 
   Future<void> updateGroup(
       {required UpdateGroupParams updateGroupObject,
-      required BuildContext context}) async {
+      required BuildContext context,required String groupKey}) async {
     emit(UpdateGroupStateLoading());
     final result = await getIt<UpdateGroupRepoImpl>()
-        .updateGroup(updateGroupParams: updateGroupObject);
+        .updateGroup(updateGroupParams: updateGroupObject,groupKey:groupKey);
     result.fold((l) {
       emit(UpdateGroupStateError(messageError: l.toString()));
       showSnackBar(title: l, context: context, error: true);
+      CreateGroupControllers.clearControllers();
     }, (r) async {
       await LocalResource.saveGroupData(r);
       emit(UpdateGroupStateLoaded(createUpdateGroupModel: r));

@@ -82,37 +82,19 @@ class _FilesListScreenState extends State<FilesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BlocBuilder<FilesListCubit, FilesListState>(
-            builder: (context, state) {
-          if (state is FilesListLoaded) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              // ignore: prefer_is_empty
-              child: (state.selectedFilesMapToDownload.length > 0)
-                  ? ElevatedButton(
-                      onPressed: () {
-                        BlocProvider.of<FilesListCubit>(context)
-                            .downloadFiles(context: context);
-                      },
-                      child: Text(
-                        "Download",
-                        style: AppTextStyle.getMediumBoldStyle(
-                            color: AppColors.secondaryColor),
-                      ))
-                  : const EmptyWidget(),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Download",
-                  style: AppTextStyle.getMediumBoldStyle(
-                      color: AppColors.secondaryColor),
-                )),
-          );
-        }),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<FilesListCubit>(context)
+                    .downloadFiles(context: context);
+              },
+              child: Text(
+                "Download",
+                style: AppTextStyle.getMediumBoldStyle(
+                    color: AppColors.secondaryColor),
+              )),
+        ),
         appBar: AppBar(
           title: Text(
             "Files",

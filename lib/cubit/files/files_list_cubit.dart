@@ -126,6 +126,10 @@ class FilesListCubit extends Cubit<FilesListState> {
     // required String name,
   }) async {
     addToselectedFilesList();
+    if (selectedFilesListToDownload.isEmpty) {
+      showSnackBar(title: "No selected files", context: context, error: false);
+      return;
+    }
     final result = await getIt<FilesRepoImp>().downloadFiles(
         downloadFilesParams:
             DownloadFilesParams(filesKeys: selectedFilesListToDownload));

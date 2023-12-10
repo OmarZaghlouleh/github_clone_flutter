@@ -13,6 +13,8 @@ import 'package:github_clone_flutter/cubit/auth/sign_up/signup_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_password_visibility_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_profile_image_hover_cubit.dart';
+import 'package:github_clone_flutter/cubit/check_in/check_in_cubit.dart';
+import 'package:github_clone_flutter/cubit/check_out/check_out_cubit.dart';
 import 'package:github_clone_flutter/cubit/create_group/create_group_cubit.dart';
 import 'package:github_clone_flutter/cubit/files/all_files_cubit.dart';
 import 'package:github_clone_flutter/cubit/files/filters/file_desc_cubit.dart';
@@ -24,6 +26,7 @@ import 'package:github_clone_flutter/cubit/group/filters/group_order_cubit.dart'
 import 'package:github_clone_flutter/cubit/group/group_contributers_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/my_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
+import 'package:github_clone_flutter/cubit/replace_file_cubit/replace_file_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_action_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_desc_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_order_cubit.dart';
@@ -81,6 +84,9 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => FileOrderCubit()),
         BlocProvider(create: (context) => FileDescCubit()),
         BlocProvider(create: (context) => GroupContributersCubit()),
+        BlocProvider(create: (context)=>ReplaceFileCubit(),),
+        BlocProvider(create: (context)=>CheckInCubit()),
+        BlocProvider(create: (context)=>CheckOutCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(

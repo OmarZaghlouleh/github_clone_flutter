@@ -30,6 +30,7 @@ class CreateGroupCubit extends Cubit<CreateGroupState> {
     result.fold((l) {
       emit(CreateGroupStateError(messageError: l.toString()));
       showSnackBar(title: l, context: context, error: true);
+      CreateGroupControllers.clearControllers();
     }, (r) async {
       await LocalResource.saveGroupData(r);
       emit(CreateGroupStateLoaded(createUpdateGroupModel: r));

@@ -13,6 +13,7 @@ import '../../../common_widgets/row_info_text_span.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_text_style.dart';
 import '../../files/files_list_screen.dart';
+import '../../group/update_group_screen.dart';
 
 Widget groupCard(BuildContext context, GroupModel groupModel) {
   return InkWell(
@@ -85,7 +86,9 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
                           ],
                           onSelected: (newVal) async {
                             if (newVal == StringManager.edit) {
-                              //TODO: wael
+                              AppRouter.navigateTo(
+                                  context: context,
+                                  destination:  UpdateGroupScreen(groupKey:groupModel.groupKey ,));
                             } else if (newVal == StringManager.delete) {
                               if (await showConfirmDialog(
                                   context: context,

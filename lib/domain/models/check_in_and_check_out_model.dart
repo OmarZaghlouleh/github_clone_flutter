@@ -1,19 +1,19 @@
 import 'package:equatable/equatable.dart';
 
-class AddFilesToGroupModel extends Equatable{
+class CheckInAndCheckOutModel extends Equatable{
   final bool success;
   final int status;
   final String message;
   final List<dynamic> data;
 
-  const AddFilesToGroupModel(
+  const CheckInAndCheckOutModel(
       {required this.success,
-      required this.status,
-      required this.message,
-      required this.data});
+        required this.status,
+        required this.message,
+        required this.data});
 
-  factory AddFilesToGroupModel.fromJson(Map<String, dynamic> json) =>
-      AddFilesToGroupModel(
+  factory CheckInAndCheckOutModel.fromJson(Map<String, dynamic> json) =>
+      CheckInAndCheckOutModel(
           success: json["success"],
           status: json["status"],
           message: json["message"],

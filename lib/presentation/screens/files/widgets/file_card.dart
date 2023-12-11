@@ -4,7 +4,9 @@ import 'package:github_clone_flutter/core/utils/constants.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
+import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_files_widget.dart';
 import '../../../../core/utils/strings_manager.dart';
+import '../../../../cubit/check_out/check_out_cubit.dart';
 import '../../../../domain/models/file_model.dart';
 import '../../../common_widgets/confirm_dialog.dart';
 import '../../../common_widgets/row_info_text_span.dart';
@@ -67,8 +69,16 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                             value: StringManager.edit,
                             child: Text(
                               StringManager.edit,
-                              style: const TextStyle(
-                                  color: AppColors.secondaryColor),
+                              style:
+                              const TextStyle(color: AppColors.secondaryColor),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: StringManager.cancelFileReservation,
+                            child: Text(
+                              StringManager.cancelFileReservation,
+                              style:
+                              const TextStyle(color: AppColors.secondaryColor),
                             ),
                           ),
                           PopupMenuItem(
@@ -76,22 +86,34 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                             child: Text(
                               StringManager.delete,
                               style:
-                              const TextStyle(color: AppColors.errorColor),
+                                  const TextStyle(color: AppColors.errorColor),
                             ),
                           ),
                         ],
                         onSelected: (newVal) async {
                           if (newVal == StringManager.edit) {
-                            //TODO: wael
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return UploadFileWidget(
+                                  Key: fileModel.fileKey,
+                                  type: 'replace',
+                                );
+                              },
+                            );
+                          } else if (newVal ==
+                              StringManager.cancelFileReservation) {
+                            BlocProvider.of<CheckOutCubit>(context).checkOut(
+                                fileKey: fileModel.fileKey, context: context);
                           } else if (newVal == StringManager.delete) {
                             if (await showConfirmDialog(
                                 context: context,
                                 contentText:
-                                "Are you sure that you want to delete the file?")) {
+                                    "Are you sure that you want to delete the file?")) {
                               BlocProvider.of<FilesListCubit>(context)
                                   .deleteFile(
-                                  context: context,
-                                  fileKey: fileModel.fileKey);
+                                      context: context,
+                                      fileKey: fileModel.fileKey);
                             }
                           }
                         },
@@ -137,17 +159,17 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                               ),
                               (1.mqWidth(context) >= bigScreen)
                                   ? RowInfoTextSpan(
-                                label1: "Updated at",
-                                label2: fileModel.lastUpdate,
-                              )
+                                      label1: "Updated at",
+                                      label2: fileModel.lastUpdate,
+                                    )
                                   : Container(),
                             ],
                           ),
                           (1.mqWidth(context) < bigScreen)
                               ? RowInfoTextSpan(
-                            label1: "Updated at",
-                            label2: fileModel.lastUpdate,
-                          )
+                                  label1: "Updated at",
+                                  label2: fileModel.lastUpdate,
+                                )
                               : Container(),
                         ],
                       ),

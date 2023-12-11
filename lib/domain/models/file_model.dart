@@ -7,7 +7,7 @@ class FileModel extends Equatable {
   final String fileKey;
   final int groupId;
   final String groupName;
-  final String reservedBy;
+  final int reservedBy;
   final String reservedByName;
   final String size;
   final String type;
@@ -30,20 +30,20 @@ class FileModel extends Equatable {
         required this.lastUpdate});
 
   factory FileModel.fromJson(Map<String, dynamic> json) => FileModel(
-    id: json['id'] ?? 0,
-    name: json['name'] ?? "",
-    desc: json['desc'] ?? "",
-    fileKey: json['file_key'] ?? "",
-    groupId: json['group_id'] ?? 0,
-    groupName: json['group_name'] ?? "",
-    reservedBy: json['reserved_by'] ?? "",
-    reservedByName: json['reserved_by_name'] ?? "",
-    size: json['size'] ?? "",
-    type: json['type'] ?? "",
-    createdAt: json['created_at'] ?? "",
-    createdBy: json['created_by'] ?? "",
-    lastUpdate: json['last_update'] ?? "",
-  );
+         id: json['id'] ?? 0,
+        name: json['name'] ?? "",
+        desc: json['desc'] ?? "",
+        fileKey: json['file_key'] ?? "",
+        groupId: json['group_id'] ?? 0,
+        groupName: json['group_name'] ?? "",
+        reservedBy: json['reserved_by'] ?? 0,
+        reservedByName: json['reserved_by_name'] ?? "",
+        size: json['size'] ?? "",
+        type: json['type'] ?? "",
+        createdAt: json['created_at'] ?? "",
+        createdBy: json['created_by'] ?? "",
+        lastUpdate: json['last_update'] ?? "",
+      );
 
   @override
   List<Object?> get props => [

@@ -127,7 +127,7 @@ class MyGroupsCubit extends Cubit<MyGroupsState> {
           ..target = 'blank';
 
 // add the name and extension
-        anchor.download = '$name.rar';
+        anchor.download = '$name.zip';
 
 // add the anchor to the document body
         html.document.body?.append(anchor);

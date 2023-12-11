@@ -18,7 +18,9 @@ final class FilesListError extends FilesListState {
 
 class FilesListLoaded extends FilesListState {
   List<FileModel> filesList = [];
-  FilesListLoaded(this.filesList);
+  Map<String, bool> selectedFilesMapToDownload = {};
+
+  FilesListLoaded(this.filesList, this.selectedFilesMapToDownload);
   // FilesListLoaded(List<FileModel> newfiles) {
   //   filesList.addAll(newfiles);
   // }

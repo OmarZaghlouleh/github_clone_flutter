@@ -83,6 +83,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final CheckInCubit checkInCubit = BlocProvider.of<CheckInCubit>(context);
     return BlocBuilder<CheckInCubit, CheckInState>(
       builder: (context, state) {
@@ -95,6 +96,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                       "Files",
                       style: AppTextStyle.getMediumBoldStyle(
                           color: AppColors.secondaryColor),
+
                     ),
               leading: checkInCubit.selectFileKeys.isNotEmpty
                   ? IconButton(

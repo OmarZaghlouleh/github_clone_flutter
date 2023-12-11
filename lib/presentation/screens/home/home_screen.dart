@@ -31,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           if (1.mqWidth(context) >= bigScreen) const HomeDrawer(),
           // const Expanded(child: MyGroupsScreen()),
-          const Expanded(child: ProfileScreen(profileId: -1)),
+          // ignore: prefer_const_constructors
+          Expanded(child: ProfileScreen(profileId: -1)),
         ],
       ),
     );

@@ -83,7 +83,6 @@ class _FilesListScreenState extends State<FilesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final CheckInCubit checkInCubit = BlocProvider.of<CheckInCubit>(context);
     return BlocBuilder<CheckInCubit, CheckInState>(
       builder: (context, state) {
@@ -96,7 +95,6 @@ class _FilesListScreenState extends State<FilesListScreen> {
                       "Files",
                       style: AppTextStyle.getMediumBoldStyle(
                           color: AppColors.secondaryColor),
-
                     ),
               leading: checkInCubit.selectFileKeys.isNotEmpty
                   ? IconButton(
@@ -104,30 +102,30 @@ class _FilesListScreenState extends State<FilesListScreen> {
                       onPressed: () {
                         checkInCubit.selectFileKeys.clear();
                         checkInCubit.selectLongTab = false;
-                       checkInCubit.emit(CheckInInitialState());
+                        checkInCubit.emit(CheckInInitialState());
                       },
                     )
                   : null,
               actions: checkInCubit.selectFileKeys.isNotEmpty
                   ? [
-                ElevatedButtonWidget(
-                  widget: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Reserve Files',
-                        style: AppTextStyle.elevatedButtonTextStyle(),
+                      ElevatedButtonWidget(
+                        widget: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Reserve Files',
+                              style: AppTextStyle.elevatedButtonTextStyle(),
+                            ),
+                            const Icon(Icons.check),
+                          ],
+                        ),
+                        onPressed: () async {
+                          await checkInCubit.checkIn(context: context);
+                        },
+                        buttonStyle:
+                            Theme.of(context).elevatedButtonTheme.style,
                       ),
-                      const Icon(Icons.check),
-                    ],
-                  ),
-                  onPressed: () async {
-                   await checkInCubit.checkIn(context: context);
-                  },
-                  buttonStyle:
-                  Theme.of(context).elevatedButtonTheme.style,
-                ),
-              ]
+                    ]
                   : [
                       if (widget.groupKey.isNotEmpty)
                         ElevatedButtonWidget(
@@ -155,6 +153,19 @@ class _FilesListScreenState extends State<FilesListScreen> {
                               Theme.of(context).elevatedButtonTheme.style,
                         ),
                     ],
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<FilesListCubit>(context)
+                        .downloadFiles(context: context);
+                  },
+                  child: Text(
+                    "Download",
+                    style: AppTextStyle.getMediumBoldStyle(
+                        color: AppColors.secondaryColor),
+                  )),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -528,7 +539,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                     if (index < files.length) {
                                       return GestureDetector(
                                         onLongPress: () {
-                                          checkInCubit.selectLongTab=true;
+                                          checkInCubit.selectLongTab = true;
                                           checkInCubit
                                               .checkSelectedOrNotSelected(
                                                   selectFile: true,
@@ -537,20 +548,32 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                                       files[index].fileKey);
                                         },
                                         onTap: () {
-                                          if(checkInCubit.selectLongTab) {
+                                          if (checkInCubit.selectLongTab) {
                                             if (checkInCubit
-                                                  .selectFileKeys.length >
-                                              index ) {
-                                            if (checkInCubit
-                                                .selectFileKeys[index]!.keys.first) {
-                                              checkInCubit
-                                                  .checkSelectedOrNotSelected(
-                                                      selectFile: false,
-                                                      index: index,
-                                                      fileKey:
-                                                          files[index].fileKey);
-                                            } else if (!checkInCubit
-                                                .selectFileKeys[index]!.keys.first) {
+                                                    .selectFileKeys.length >
+                                                index) {
+                                              if (checkInCubit
+                                                  .selectFileKeys[index]!
+                                                  .keys
+                                                  .first) {
+                                                checkInCubit
+                                                    .checkSelectedOrNotSelected(
+                                                        selectFile: false,
+                                                        index: index,
+                                                        fileKey: files[index]
+                                                            .fileKey);
+                                              } else if (!checkInCubit
+                                                  .selectFileKeys[index]!
+                                                  .keys
+                                                  .first) {
+                                                checkInCubit
+                                                    .checkSelectedOrNotSelected(
+                                                        selectFile: true,
+                                                        index: index,
+                                                        fileKey: files[index]
+                                                            .fileKey);
+                                              }
+                                            } else {
                                               checkInCubit
                                                   .checkSelectedOrNotSelected(
                                                       selectFile: true,
@@ -558,14 +581,6 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                                       fileKey:
                                                           files[index].fileKey);
                                             }
-                                          } else {
-                                            checkInCubit
-                                                .checkSelectedOrNotSelected(
-                                                    selectFile: true,
-                                                    index: index,
-                                                    fileKey:
-                                                        files[index].fileKey);
-                                          }
                                           }
                                         },
                                         child: Container(
@@ -579,7 +594,11 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                                 builder: (context, state) {
                                                   return Visibility(
                                                     visible: checkInCubit
-                                                        .selectFileKeys[index]?.keys.first?? false,
+                                                            .selectFileKeys[
+                                                                index]
+                                                            ?.keys
+                                                            .first ??
+                                                        false,
                                                     child: CircleAvatar(
                                                       backgroundColor:
                                                           AppColors.darkGrey,

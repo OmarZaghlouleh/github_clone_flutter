@@ -12,6 +12,7 @@ abstract class Links {
       // "http://192.168.43.225:8000/api/";
       "http://192.168.43.113:8000/";
 
+
   //region auth
   static const register = "register";
   static const logout = "logout";

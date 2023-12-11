@@ -61,7 +61,7 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                     ],
                     onSelected: (newVal) async {
                       if (newVal == StringManager.edit) {
-                        //TODO: wael
+
                       } else if (newVal == StringManager.delete) {
                         if (await showConfirmDialog(
                             context: context,

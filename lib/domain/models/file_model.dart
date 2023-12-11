@@ -16,21 +16,21 @@ class FileModel extends Equatable {
   final String lastUpdate;
   const FileModel(
       {required this.id,
-      required this.name,
-      required this.desc,
-      required this.fileKey,
-      required this.groupId,
-      required this.groupName,
-      required this.reservedBy,
-      required this.reservedByName,
-      required this.size,
-      required this.type,
-      required this.createdBy,
-      required this.createdAt,
-      required this.lastUpdate});
+        required this.name,
+        required this.desc,
+        required this.fileKey,
+        required this.groupId,
+        required this.groupName,
+        required this.reservedBy,
+        required this.reservedByName,
+        required this.size,
+        required this.type,
+        required this.createdBy,
+        required this.createdAt,
+        required this.lastUpdate});
 
   factory FileModel.fromJson(Map<String, dynamic> json) => FileModel(
-        id: json['id'] ?? 0,
+         id: json['id'] ?? 0,
         name: json['name'] ?? "",
         desc: json['desc'] ?? "",
         fileKey: json['file_key'] ?? "",
@@ -47,17 +47,17 @@ class FileModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        desc,
-        fileKey,
-        groupId,
-        groupName,
-        reservedBy,
-        reservedByName,
-        size,
-        type,
-        createdAt,
-        lastUpdate
-      ];
+    id,
+    name,
+    desc,
+    fileKey,
+    groupId,
+    groupName,
+    reservedBy,
+    reservedByName,
+    size,
+    type,
+    createdAt,
+    lastUpdate
+  ];
 }

@@ -19,10 +19,10 @@ class UsersModel {
     });
     return UsersModel(
         items: items,
-        lastPage: json['last_page'],
-        total: json['total'],
-        perPage: json['perPage'],
-        currentPage: json['currentPage']);
+        lastPage: json['last_page'] ?? 0,
+        total: json['total'] ?? 0,
+        perPage: json['perPage'] ?? 0,
+        currentPage: json['currentPage'] ?? 0);
   }
 }
 
@@ -75,21 +75,8 @@ class UserModel {
         groupsCount: json['groups_count'] ?? 0,
         commitsCount: json['commits_count'] ?? 0,
         contributionsNumber: json['number_of_contributions'] ?? 0,
-        lastContributionAt: json['last_contribution_at'] ?? 0,
+        lastContributionAt: json['last_contribution_at'] ?? "",
         commitsThisYear: json['commits_this_year'] ?? 0);
   }
 
-  // factory UserModel.empty() => UserModel(
-  //     id: -1,
-  //     role: -1,
-  //     roleName: "",
-  //     accountName: "",
-  //     email: "",
-  //     firstName: "",
-  //     lastName: "",
-  //     img: "",
-  //     createdAt: "",
-  //     groupsCount: 0,
-  //     commitsCount: 0,
-  //     commitsThisYear: 0);
 }

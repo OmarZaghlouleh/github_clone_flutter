@@ -27,21 +27,6 @@ class BaseApiClient {
         request: true,
       ));
     }
-    //
-
-    // BaseOptions baseOptions = BaseOptions(
-    //   baseUrl: Links.baseUrl,
-    //   receiveDataWhenStatusError: true,
-    //   headers: {
-    //     'accept': _acceptHeader,
-    //     'x-api-key':
-    //         "2dyJLjdiqyJ9c5qKYGjmPAkdkaxa93vO2UtP8V9tQDt4X3mUdQVfkCqd5Ju3Q65X",
-    //   },
-    // );
-    // client = Dio(baseOptions);
-
-    //
-    //  client.interceptors.add(ClientInterceptor());
     client.options.baseUrl = Links.baseUrl;
   }
 
@@ -55,12 +40,6 @@ class BaseApiClient {
       Function(String)? saveToken,
       dynamic returnOnError}) async {
     try {
-      //
-      client.options.headers.addAll({
-        'Authorization':
-            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
-      });
-      //
       var response = await client.post(
         url,
         queryParameters: queryParameters,
@@ -111,12 +90,12 @@ class BaseApiClient {
       required Function(dynamic) converter,
       dynamic returnOnError}) async {
     try {
-      //
-      client.options.headers.addAll({
-        'Authorization':
-            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
-      });
-      //
+      if(LocalResource.sharedPreferences.getString('token')!=null) {
+        client.options.headers.addAll({
+          'Authorization':
+          "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+        });
+      }
       var response = await client.put(
         url,
         data: formData,
@@ -159,12 +138,12 @@ class BaseApiClient {
       ResponseType? responseTypeValue,
       required Function(dynamic) converter}) async {
     try {
-      //
-      client.options.headers.addAll({
-        'Authorization':
-            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
-      });
-      //
+      if(LocalResource.sharedPreferences.getString('token')!=null) {
+        client.options.headers.addAll({
+          'Authorization':
+          "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+        });
+      }
       var response = await client.get(
         url,
         queryParameters: queryParameters,
@@ -202,12 +181,12 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
-      //
-      client.options.headers.addAll({
-        'Authorization':
-            "Bearer ${LocalResource.sharedPreferences.getString('token')}"
-      });
-      //
+      if(LocalResource.sharedPreferences.getString('token')!=null) {
+        client.options.headers.addAll({
+          'Authorization':
+          "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+        });
+      }
       // Add Token
       // MapEntry<String, dynamic> token = MapEntry('authorization',
       //     'Bearer ${LocalResource.sharedPreferences.getString('token') ?? ""}');

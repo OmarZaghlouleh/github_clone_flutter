@@ -1,9 +1,7 @@
 part of 'add_files_to_group_cubit.dart';
-sealed class AddFilesToGroupState extends Equatable {
+sealed class AddFilesToGroupState{
   const AddFilesToGroupState();
 
-  @override
-  List<Object> get props => [];
 }
 
  class AddFilesToGroupStateInitial extends AddFilesToGroupState {}
@@ -20,4 +18,11 @@ sealed class AddFilesToGroupState extends Equatable {
   final String messageError;
 
  const AddFilesToGroupStateError({required this.messageError});
+}
+class AddFilesToGroupStatePickedFile extends AddFilesToGroupState{
+  final FilePickerResult? result;
+  final int index;
+
+  AddFilesToGroupStatePickedFile({required this.result, required this.index});
+
 }

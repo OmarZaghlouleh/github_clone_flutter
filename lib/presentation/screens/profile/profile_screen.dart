@@ -55,6 +55,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ? const HomeDrawer()
               : null
           : null,
+      // onDrawerChanged: (value) {
+      //   dprint("ggggggggggggggggggggggggggggggggggggggg");
+      //   dprint(value);
+      //   if (widget.profileId == -1) {
+      //     BlocProvider.of<ProfileCubit>(context)
+      //         .getProfile(context: context, id: widget.profileId);
+      //   }
+      // },
       appBar: AppBar(),
       body: BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
         if (state is ProfileLoading) {

@@ -24,7 +24,8 @@ import '../../common_widgets/loader.dart';
 import '../../style/app_text_style.dart';
 
 class UpdateGroupScreen extends StatefulWidget {
-  const UpdateGroupScreen({super.key});
+  final String groupKey;
+  const UpdateGroupScreen({super.key, required this.groupKey});
 
   @override
   State<UpdateGroupScreen> createState() => _UpdateGroupScreenState();
@@ -95,6 +96,7 @@ class _UpdateGroupScreenState extends State<UpdateGroupScreen> {
       backgroundColor: AppColors.primaryColor,
       appBar: AppBar(),
       body: BuildBody(
+        groupKey: widget.groupKey,
         pagingControllerForUsersAddedToGroup:
             _pagingControllerForUsersAddedToGroup,
         pagingControllerForUsersDeletedFromGroup:
@@ -105,6 +107,7 @@ class _UpdateGroupScreenState extends State<UpdateGroupScreen> {
 }
 
 class BuildBody extends StatelessWidget {
+  final String groupKey;
   final PagingController<int, UserModel> pagingControllerForUsersAddedToGroup;
 
   final PagingController<int, UserModel>
@@ -113,7 +116,7 @@ class BuildBody extends StatelessWidget {
   const BuildBody({
     super.key,
     required this.pagingControllerForUsersAddedToGroup,
-    required this.pagingControllerForUsersDeletedFromGroup,
+    required this.pagingControllerForUsersDeletedFromGroup, required this.groupKey,
   });
 
   @override
@@ -253,7 +256,7 @@ class BuildBody extends StatelessWidget {
                                           listUsers:
                                               listUsersSelectedToJoinGroup,
                                           deletedUsersList: listUsersDeleted),
-                                      context: context);
+                                      context: context, groupKey:groupKey );
                             },
                             widget: const Text('update group'),
                             buttonStyle:

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 
 class AddFilesToGroupParams {
   final String commit;
@@ -12,12 +11,25 @@ class AddFilesToGroupParams {
       required this.filesArray,
       required this.filesDesc,
       required this.groupKey});
+
   Map<String, dynamic> toJson() {
-    return {
+    Map<String, dynamic> json = {};
+    json = {
       "commit": commit,
-      "files_array": filesArray.length == 1 ? [filesArray] : filesArray,
-      "files_desc": filesDesc.length == 1 ? [filesDesc] : filesDesc,
       "group_key": groupKey,
     };
+
+    json.addEntries(
+      filesArray
+          .map((e) => MapEntry('files_array[${filesArray.indexOf(e)}]', e))
+          .toList(),
+    );
+    json.addEntries(
+      filesDesc
+          .map((e) => MapEntry('files_desc[${filesDesc.indexOf(e)}]', e))
+          .toList(),
+    );
+
+    return json;
   }
 }

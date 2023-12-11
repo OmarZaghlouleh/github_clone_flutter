@@ -75,21 +75,7 @@ class HomeDrawer extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      ListTile(
-                        onTap: () async {
-                          AppRouter.navigateTo(
-                              context: context,
-                              destination: const UpdateGroupScreen());
-                        },
-                        title: Text(
-                          'Update Group',
-                          style: AppTextStyle.headerTextStyle(),
-                        ),
-                        leading: const Icon(
-                          Icons.update_outlined,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
+
                       ListTile(
                         onTap: () async {
                           AppRouter.navigateTo(

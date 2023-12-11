@@ -12,7 +12,7 @@ class AddFilesToGroupRepoImpl {
   Future<Either<String, AddFilesToGroupModel>> addFilesToGroup(
       {required AddFilesToGroupParams addFilesToGroupParams}) async {
     return await BaseApiClient.post(
-        url: Links.baseUrl + Links.addFilesToGroup,
+        url:  Links.addFilesToGroup,
         converter: (value) {
           return AddFilesToGroupModel.fromJson(value);
         },

@@ -15,6 +15,7 @@ class StringManager {
   static String loadMoreData = "Load more data";
   static String noOtherData = "There is no other current data";
   static String edit = "Edit";
+  static String cancelFileReservation="cancel reservation";
   static String delete = "Delete";
   static String download = "Download";
   static String yes = "Yes";

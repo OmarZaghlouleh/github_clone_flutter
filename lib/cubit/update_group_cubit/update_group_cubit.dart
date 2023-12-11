@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/cubit/update_group_cubit/update_group_state.dart';
@@ -18,10 +16,11 @@ class UpdateGroupCubit extends Cubit<UpdateGroupState> {
 
   Future<void> updateGroup(
       {required UpdateGroupParams updateGroupObject,
-      required BuildContext context,required String groupKey}) async {
+      required BuildContext context,
+      required String groupKey}) async {
     emit(UpdateGroupStateLoading());
     final result = await getIt<UpdateGroupRepoImpl>()
-        .updateGroup(updateGroupParams: updateGroupObject,groupKey:groupKey);
+        .updateGroup(updateGroupParams: updateGroupObject, groupKey: groupKey);
     result.fold((l) {
       emit(UpdateGroupStateError(messageError: l.toString()));
       showSnackBar(title: l, context: context, error: true);

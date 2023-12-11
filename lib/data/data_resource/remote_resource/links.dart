@@ -7,7 +7,7 @@ import '../../../domain/models/params/get_groups_params.dart';
 abstract class Links {
   static const baseUrl =
       // "http://192.168.43.225:8000/api/";
-      "http://127.0.0.1:8000/api/";
+      "http://192.168.43.113:8000/api/";
 
   //region auth
   static const register = "register";
@@ -19,12 +19,12 @@ abstract class Links {
   static const createGroup = "groups";
   static const getListUsers = "users?limit=1";
   static const addFilesToGroup = "files";
-   static const downloadFiles = "files/download";
+  static const downloadFiles = "files/download";
 
-   static const replaceFile="files/replace";
-  static const checkIn="files/check";
-  static const checkOut="files/checkout/";
-   static String getGroups(GetGroupsParams getGroupsParams) {
+  static const replaceFile = "files/replace";
+  static const checkIn = "files/check";
+  static const checkOut = "files/checkout/";
+  static String getGroups(GetGroupsParams getGroupsParams) {
     String url = "";
     dprint("DDD: ${getGroupsParams.userId}");
     if (getGroupsParams.userId == -1) {

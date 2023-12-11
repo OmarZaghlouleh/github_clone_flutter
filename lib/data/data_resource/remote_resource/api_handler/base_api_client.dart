@@ -90,10 +90,10 @@ class BaseApiClient {
       required Function(dynamic) converter,
       dynamic returnOnError}) async {
     try {
-      if(LocalResource.sharedPreferences.getString('token')!=null) {
+      if (LocalResource.sharedPreferences.getString('token') != null) {
         client.options.headers.addAll({
           'Authorization':
-          "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+              "Bearer ${LocalResource.sharedPreferences.getString('token')}",
         });
       }
       var response = await client.put(
@@ -137,42 +137,46 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       ResponseType? responseTypeValue,
       required Function(dynamic) converter}) async {
-    try {
-      if(LocalResource.sharedPreferences.getString('token')!=null) {
-        client.options.headers.addAll({
-          'Authorization':
-          "Bearer ${LocalResource.sharedPreferences.getString('token')}",
-        });
-      }
-      var response = await client.get(
-        url,
-        queryParameters: queryParameters,
-        options: Options(
-          headers: headers ?? defaultHeaders,
-          responseType: responseTypeValue ?? ResponseType.json,
-        ),
-      );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
-        if (kDebugMode) {
-          print(response.data);
-        }
-        return Right(converter(response.data));
-      } else {
-        return left(response.data['message']);
-      }
-    } on DioException catch (e) {
-      Map dioError = DioErrorsHandler.onError(e);
-
-      if (kDebugMode) {
-        print(e);
-      }
-      return left(e.response?.data['message'] ?? dioError['message']);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      return left(e.toString());
+    // try {
+    if (LocalResource.sharedPreferences.getString('token') != null) {
+      client.options.headers.addAll({
+        'Authorization':
+            "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+      });
     }
+    var response = await client.get(
+      url,
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers ?? defaultHeaders,
+        responseType: responseTypeValue ?? ResponseType.json,
+      ),
+    );
+    if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (kDebugMode) {
+        print(response.data);
+      }
+      return Right(converter(response.data));
+    } else {
+      dprint(
+          "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+      dprint(response.data);
+      // return left(response.data['message']);
+      return left("dzf");
+    }
+    // } on DioException catch (e) {
+    //   Map dioError = DioErrorsHandler.onError(e);
+
+    //   if (kDebugMode) {
+    //     print(e);
+    //   }
+    //   return left(e.response?.data['message'] ?? dioError['message']);
+    // } catch (e) {
+    //   if (kDebugMode) {
+    //     print(e);
+    //   }
+    //   return left(e.toString());
+    // }
   }
 
   static Future<Either<String, T>> delete<T>(
@@ -181,10 +185,10 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       required Function(dynamic) converter}) async {
     try {
-      if(LocalResource.sharedPreferences.getString('token')!=null) {
+      if (LocalResource.sharedPreferences.getString('token') != null) {
         client.options.headers.addAll({
           'Authorization':
-          "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+              "Bearer ${LocalResource.sharedPreferences.getString('token')}",
         });
       }
       // Add Token

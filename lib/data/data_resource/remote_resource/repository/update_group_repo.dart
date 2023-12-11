@@ -7,10 +7,10 @@ import '../links.dart';
 
 class UpdateGroupRepoImpl {
   Future<Either<String, CreateUpdateGroupModel>> updateGroup(
-      {required UpdateGroupParams updateGroupParams, required String groupKey}) async {
+      {required UpdateGroupParams updateGroupParams,
+      required String groupKey}) async {
     return await BaseApiClient.put<CreateUpdateGroupModel>(
-        url:
-            '${Links.createGroup}/$groupKey',
+        url: '${Links.createGroup}/$groupKey',
         formData: updateGroupParams.toJson(),
         converter: (value) {
           return CreateUpdateGroupModel.fromJson(value["data"]);

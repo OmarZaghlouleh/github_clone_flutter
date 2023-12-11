@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   backgroundColor: AppColors.lightGrey,
                   radius: 100,
                   backgroundImage: CachedNetworkImageProvider(
-                    Links.baseUrl + (state).profile.img,
+                    Links.baseUrlForImage + (state).profile.img,
                   ),
                   onBackgroundImageError: (exception, stackTrace) {
                     setState(() {

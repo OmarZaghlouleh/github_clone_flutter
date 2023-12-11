@@ -45,9 +45,9 @@ class GroupsRepoImp {
   }
 
   Future<Either<String, List<UserModel>>> getGroupContributers(
-      {required String key}) {
+      {required String key, required int page}) {
     return BaseApiClient.get<List<UserModel>>(
-        url: Links.baseUrl + Links.getGroupContributersUrl(key),
+        url: Links.baseUrl + Links.getGroupContributersUrl(key, page),
         converter: (value) {
           return List<UserModel>.from(
               value["data"]["items"].map((x) => UserModel.fromJson(x)));

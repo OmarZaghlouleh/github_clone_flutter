@@ -105,7 +105,7 @@ class GroupContributersScreen extends StatelessWidget {
                                 },
                                 leading: CircleAvatar(
                                   backgroundImage: CachedNetworkImageProvider(
-                                      Links.baseUrl +
+                                      Links.baseUrlForImage +
                                           state.contributers[index].img),
                                 ),
                                 title: Padding(

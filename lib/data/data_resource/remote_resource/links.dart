@@ -7,7 +7,10 @@ import '../../../domain/models/params/get_groups_params.dart';
 abstract class Links {
   static const baseUrl =
       // "http://192.168.43.225:8000/api/";
-      "http://127.0.0.1:8000/api/";
+      "http://192.168.43.113:8000/api/";
+  static const baseUrlForImage =
+      // "http://192.168.43.225:8000/api/";
+      "http://192.168.43.113:8000/";
 
   //region auth
   static const register = "register";
@@ -19,12 +22,12 @@ abstract class Links {
   static const createGroup = "groups";
   static const getListUsers = "users?limit=1";
   static const addFilesToGroup = "files";
-   static const downloadFiles = "files/download";
+  static const downloadFiles = "files/download";
 
-   static const replaceFile="files/replace";
-  static const checkIn="files/check";
-  static const checkOut="files/checkout/";
-   static String getGroups(GetGroupsParams getGroupsParams) {
+  static const replaceFile = "files/replace";
+  static const checkIn = "files/check";
+  static const checkOut = "files/checkout/";
+  static String getGroups(GetGroupsParams getGroupsParams) {
     String url = "";
     dprint("DDD: ${getGroupsParams.userId}");
     if (getGroupsParams.userId == -1) {
@@ -98,8 +101,8 @@ abstract class Links {
     return "groups?page=${getGroupsParams.page}&orderBy=${getGroupsParams.order == 'createdAt' ? 'created_at' : getGroupsParams.order}&desc=${getGroupsParams.desc}&name=${getGroupsParams.name}";
   }
 
-  static String getGroupContributersUrl(String key) {
-    return "groups/group_contributers/$key";
+  static String getGroupContributersUrl(String key, int page) {
+    return "groups/group_contributers/$key?page=$page";
   }
 
   static String getAllFilesUrl(GetFilesParams getFilesParams) {

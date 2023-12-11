@@ -23,13 +23,16 @@ class GroupContributersCubit extends Cubit<GroupContributersState> {
       page = 1;
       loadedData.clear();
     }
-    final result = await getIt<GroupsRepoImp>().getGroupContributers(key: key);
+    final result =
+        await getIt<GroupsRepoImp>().getGroupContributers(key: key, page: page);
 
     result.fold((l) {
       showSnackBar(title: l, context: context, error: true);
     }, (r) {
-      if (r.isNotEmpty) page++;
-      loadedData.addAll(r);
+      if (r.isNotEmpty) {
+        page++;
+        loadedData.addAll(r);
+      }
       emit(GroupContributersLoaded(loadedData));
     });
   }

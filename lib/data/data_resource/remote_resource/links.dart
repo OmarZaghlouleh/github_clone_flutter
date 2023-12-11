@@ -8,6 +8,10 @@ abstract class Links {
   static const baseUrl =
       // "http://192.168.43.225:8000/api/";
       "http://192.168.43.113:8000/api/";
+  static const baseUrlForImage =
+      // "http://192.168.43.225:8000/api/";
+      "http://192.168.43.113:8000/";
+
 
   //region auth
   static const register = "register";
@@ -98,8 +102,8 @@ abstract class Links {
     return "groups?page=${getGroupsParams.page}&orderBy=${getGroupsParams.order == 'createdAt' ? 'created_at' : getGroupsParams.order}&desc=${getGroupsParams.desc}&name=${getGroupsParams.name}";
   }
 
-  static String getGroupContributersUrl(String key) {
-    return "groups/group_contributers/$key";
+  static String getGroupContributersUrl(String key, int page) {
+    return "groups/group_contributers/$key?page=$page";
   }
 
   static String getAllFilesUrl(GetFilesParams getFilesParams) {

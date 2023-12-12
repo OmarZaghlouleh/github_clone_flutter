@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/presentation/screens/home/widgets/home_drawer_component.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/global.dart';
+import '../../../cubit/profile/profile_cubit.dart';
 import '../groups/my_groups_screen.dart';
 import '../profile/profile_screen.dart';
 
@@ -18,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // BlocProvider.of<ProfileCubit>(context).getProfile(context: context, id: -1);
     // Timer.run(() => scaffoldkey.currentState?.openDrawer());
   }
 

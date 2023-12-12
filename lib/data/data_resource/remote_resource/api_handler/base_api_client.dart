@@ -55,7 +55,7 @@ class BaseApiClient {
           responseType: responseTypeValue ?? ResponseType.json,
         ),
       );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
         }
@@ -110,7 +110,7 @@ class BaseApiClient {
           headers: headers ?? defaultHeaders,
         ),
       );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
         }
@@ -152,7 +152,7 @@ class BaseApiClient {
         responseType: responseTypeValue ?? ResponseType.json,
       ),
     );
-    if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+    if (response.statusCode! >= 200 && response.statusCode! <= 205) {
       if (kDebugMode) {
         print(response.data);
       }
@@ -204,7 +204,7 @@ class BaseApiClient {
           headers: headers ?? defaultHeaders,
         ),
       );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
         }

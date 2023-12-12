@@ -13,6 +13,7 @@ import 'package:github_clone_flutter/presentation/screens/reports/reports_screen
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 import '../../../../core/utils/strings_manager.dart';
+import '../../../../cubit/profile/profile_cubit.dart';
 import '../../../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../../common_widgets/divider.dart';
 import '../../auth/auth_screen.dart';
@@ -25,6 +26,8 @@ class HomeDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // BlocProvider.of<ProfileCubit>(context).getProfile(context: context, id: -1);
+
     return SafeArea(
       child: Drawer(
         // clipBehavior: Clip.hardEdge,
@@ -47,9 +50,11 @@ class HomeDrawer extends StatelessWidget {
                     children: [
                       ListTile(
                         onTap: () async {
-                          AppRouter.navigateTo(
+                          await AppRouter.navigateTo(
                               context: context,
                               destination: const MyGroupsScreen());
+                          BlocProvider.of<ProfileCubit>(context)
+                              .getProfile(context: context, id: -1);
                         },
                         title: Text(
                           "My groups",
@@ -62,7 +67,7 @@ class HomeDrawer extends StatelessWidget {
                       ),
                       ListTile(
                         onTap: () async {
-                          AppRouter.navigateTo(
+                          await AppRouter.navigateTo(
                               context: context,
                               destination: const CreateGroupScreen());
                         },
@@ -75,7 +80,6 @@ class HomeDrawer extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                       ),
-
                       ListTile(
                         onTap: () async {
                           AppRouter.navigateTo(
@@ -123,9 +127,11 @@ class HomeDrawer extends StatelessWidget {
                             ),
                             ListTile(
                               onTap: () async {
-                                AppRouter.navigateTo(
+                                await AppRouter.navigateTo(
                                     context: context,
                                     destination: AllGroupsScreen());
+                                BlocProvider.of<ProfileCubit>(context)
+                                    .getProfile(context: context, id: -1);
                               },
                               title: Text(
                                 "All Groups",

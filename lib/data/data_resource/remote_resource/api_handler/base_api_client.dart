@@ -72,6 +72,17 @@ class BaseApiClient {
       if (kDebugMode) {
         print(e);
       }
+      if (responseTypeValue == ResponseType.bytes) {
+        if (e.response?.statusCode == 413) {
+          return left("The selected item is empty");
+        } else if (e.response?.statusCode == 404) {
+          return left("The selected item not found");
+        } else if (e.response?.statusCode == 500) {
+          return left("Failed to create the zip file.");
+        } else {
+          return left("Bad request");
+        }
+      }
       return left(
           returnOnError ?? e.response?.data['message'] ?? dioError['message']);
     } catch (e) {
@@ -137,46 +148,64 @@ class BaseApiClient {
       Map<String, dynamic>? headers,
       ResponseType? responseTypeValue,
       required Function(dynamic) converter}) async {
-    // try {
-    if (LocalResource.sharedPreferences.getString('token') != null) {
-      client.options.headers.addAll({
-        'Authorization':
-            "Bearer ${LocalResource.sharedPreferences.getString('token')}",
-      });
-    }
-    var response = await client.get(
-      url,
-      queryParameters: queryParameters,
-      options: Options(
-        headers: headers ?? defaultHeaders,
-        responseType: responseTypeValue ?? ResponseType.json,
-      ),
-    );
-    if (response.statusCode! >= 200 || response.statusCode! <= 205) {
-      if (kDebugMode) {
-        print(response.data);
+    try {
+      if (LocalResource.sharedPreferences.getString('token') != null) {
+        client.options.headers.addAll({
+          'Authorization':
+              "Bearer ${LocalResource.sharedPreferences.getString('token')}",
+        });
       }
-      return Right(converter(response.data));
-    } else {
-      dprint(
-          "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
-      dprint(response.data);
-      // return left(response.data['message']);
-      return left("dzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
-    }
-    // } on DioException catch (e) {
-    //   Map dioError = DioErrorsHandler.onError(e);
+      var response = await client.get(
+        url,
+        queryParameters: queryParameters,
+        options: Options(
+          headers: headers ?? defaultHeaders,
+          responseType: responseTypeValue ?? ResponseType.json,
+        ),
+      );
+      dprint("$url wwwwwwwwwwwwwwwwwwwwwwwww${response.statusCode}");
+      dprint(response.statusCode);
+      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+        if (kDebugMode) {
+          print(response.data);
+        }
+        return Right(converter(response.data));
+      } else {
+        // dprint("aaaaaaaaaaaaaaaa");
+        dprint(response.data);
+        return left(response.data['message']);
+        // return left("else dzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
+      }
+    } on DioException catch (e) {
+      Map dioError = DioErrorsHandler.onError(e);
 
-    //   if (kDebugMode) {
-    //     print(e);
-    //   }
-    //   return left(e.response?.data['message'] ?? dioError['message']);
-    // } catch (e) {
-    //   if (kDebugMode) {
-    //     print(e);
-    //   }
-    //   return left(e.toString());
-    // }
+      if (kDebugMode) {
+        print(e);
+      }
+      if (responseTypeValue == ResponseType.bytes) {
+        if (e.response?.statusCode == 413) {
+          return left("This group has no files yet");
+        } else if (e.response?.statusCode == 404) {
+          return left("The selected item not found");
+        } else if (e.response?.statusCode == 500) {
+          return left("Failed to create the zip file.");
+        } else {
+          return left("Bad request");
+        }
+      }
+      // dprint(e.response?.statusCode.toString());
+      // return left(
+      //     "${e.response?.statusMessage}DioException $e  d${e.response?.statusCode}zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
+
+      return left(e.response?.data['message'] ?? dioError['message']);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      // return left("catch dzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
+
+      return left(e.toString());
+    }
   }
 
   static Future<Either<String, T>> delete<T>(

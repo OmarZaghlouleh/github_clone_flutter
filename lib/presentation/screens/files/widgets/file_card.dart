@@ -14,8 +14,8 @@ import '../../../style/app_colors.dart';
 import '../../../style/app_text_style.dart';
 
 Widget fileCard(BuildContext context, FileModel fileModel) {
-  return Row(
-    mainAxisSize: MainAxisSize.max,
+  return Wrap(
+    // mainAxisSize: MainAxisSize.max,
     children: [
       BlocBuilder<FilesListCubit, FilesListState>(builder: (context, state) {
         if (state is FilesListLoaded) {
@@ -69,16 +69,16 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                             value: StringManager.edit,
                             child: Text(
                               StringManager.edit,
-                              style:
-                              const TextStyle(color: AppColors.secondaryColor),
+                              style: const TextStyle(
+                                  color: AppColors.secondaryColor),
                             ),
                           ),
                           PopupMenuItem(
                             value: StringManager.cancelFileReservation,
                             child: Text(
                               StringManager.cancelFileReservation,
-                              style:
-                              const TextStyle(color: AppColors.secondaryColor),
+                              style: const TextStyle(
+                                  color: AppColors.secondaryColor),
                             ),
                           ),
                           PopupMenuItem(

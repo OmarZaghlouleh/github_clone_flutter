@@ -5,13 +5,11 @@ import 'package:github_clone_flutter/domain/models/params/get_reports_params.dar
 import '../../../domain/models/params/get_groups_params.dart';
 
 abstract class Links {
-  static const baseUrl =
-      // "http://192.168.43.225:8000/api/";
-      "http://192.168.43.113:8000/api/";
+  static const baseUrl = "http://127.0.0.1:8000/api/";
+  // "http://192.168.43.113:8000/api/";
   static const baseUrlForImage =
       // "http://192.168.43.225:8000/api/";
       "http://192.168.43.113:8000/";
-
 
   //region auth
   static const register = "register";

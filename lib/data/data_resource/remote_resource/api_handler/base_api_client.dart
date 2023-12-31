@@ -170,7 +170,6 @@ class BaseApiClient {
         }
         return Right(converter(response.data));
       } else {
-        dprint(response.data);
         return left(response.data['message']);
       }
     } on DioException catch (e) {

@@ -4,6 +4,7 @@ import 'package:github_clone_flutter/core/utils/enums.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/reports_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/reports_loading_more_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
 import 'package:github_clone_flutter/presentation/screens/reports/widgets/filters.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/card_row.dart';
@@ -18,6 +19,7 @@ class ReportsScreen extends StatelessWidget {
 
   void init(BuildContext context) {
     if (!_scrollController.hasListeners) {
+      BlocProvider.of<ReportsCubit>(context).reset();
       BlocProvider.of<ReportsCubit>(context)
           .getReports(context: context, key: keyString, clear: true);
       dprint("Listener Added");
@@ -66,55 +68,73 @@ class ReportsScreen extends StatelessWidget {
                   child: Center(child: Text("There are no reports to show")),
                 );
               } else {
-                dprint("Here");
                 return Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      await BlocProvider.of<ReportsCubit>(context).getReports(
-                          context: context, key: keyString, clear: true);
-                    },
-                    child: Scrollbar(
-                      thumbVisibility: true,
-                      trackVisibility: true,
-                      controller: _scrollController,
-                      child: ListView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(
-                            parent: BouncingScrollPhysics()),
-                        controller: _scrollController,
-                        itemCount: (state as ReportsLoaded).reports.length,
-                        itemBuilder: (contetx, index) => Card(
-                          elevation: 5,
-                          color: AppColors.primaryColor.withOpacity(0.5),
-                          margin: const EdgeInsets.all(8),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                CardRow(
-                                    title: "Action",
-                                    description: state.reports[index].action),
-                                CardRow(
-                                    title: "At",
-                                    description:
-                                        state.reports[index].createdAt),
-                                CardRow(
-                                    title: "By",
-                                    description:
-                                        state.reports[index].user.fullName),
-                                CardRow(
-                                    title: "Importance",
-                                    description: state.reports[index].importance
-                                        .toString()),
-                                CardRow(
-                                    title: "Info",
-                                    description:
-                                        state.reports[index].additionalInfo),
-                              ],
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            await BlocProvider.of<ReportsCubit>(context)
+                                .getReports(
+                                    context: context,
+                                    key: keyString,
+                                    clear: true);
+                          },
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            trackVisibility: true,
+                            controller: _scrollController,
+                            child: ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(
+                                  parent: BouncingScrollPhysics()),
+                              controller: _scrollController,
+                              itemCount:
+                                  (state as ReportsLoaded).reports.length,
+                              itemBuilder: (contetx, index) => Card(
+                                elevation: 5,
+                                color: AppColors.primaryColor.withOpacity(0.5),
+                                margin: const EdgeInsets.all(8),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      CardRow(
+                                          title: "Action",
+                                          description:
+                                              state.reports[index].action),
+                                      CardRow(
+                                          title: "At",
+                                          description:
+                                              state.reports[index].createdAt),
+                                      CardRow(
+                                          title: "By",
+                                          description: state
+                                              .reports[index].user.fullName),
+                                      CardRow(
+                                          title: "Importance",
+                                          description: state
+                                              .reports[index].importance
+                                              .toString()),
+                                      CardRow(
+                                          title: "Info",
+                                          description: state
+                                              .reports[index].additionalInfo),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      BlocBuilder<ReportsLoadingMoreCubit, bool>(
+                          builder: (context, state) => state
+                              ? const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Loader(),
+                                )
+                              : const SizedBox.shrink())
+                    ],
                   ),
                 );
               }

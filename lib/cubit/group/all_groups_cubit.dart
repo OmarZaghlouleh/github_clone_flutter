@@ -6,6 +6,7 @@ import 'package:github_clone_flutter/core/utils/service_locator_di.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/group/filters/group_desc_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/filters/group_order_cubit.dart';
+import 'package:github_clone_flutter/cubit/group/group_loading_more_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/groups_repo.dart';
 import 'package:github_clone_flutter/domain/models/group_model.dart';
 import 'package:github_clone_flutter/domain/models/params/get_groups_params.dart';
@@ -18,14 +19,23 @@ class AllGroupsCubit extends Cubit<AllGroupsState> {
   int page = 1;
   List<GroupModel> loadedList = [];
 
+  void reset() {
+    page = 1;
+    loadedList.clear();
+  }
+
   Future<void> getAllGroups(
       {required String name,
       required BuildContext context,
       bool clear = false}) async {
-    emit(AllGroupsLoading());
+    if (loadedList.isEmpty) emit(AllGroupsLoading());
     if (clear) {
       loadedList.clear();
       page = 1;
+    }
+
+    if (loadedList.isNotEmpty) {
+      BlocProvider.of<GroupLoadingMoreCubit>(context).toggle(true);
     }
 
     final result = await getIt<GroupsRepoImp>().getAllGroups(
@@ -42,6 +52,7 @@ class AllGroupsCubit extends Cubit<AllGroupsState> {
       if (r.isNotEmpty) page++;
       loadedList.addAll(r);
       emit(AllGroupsLoaded(loadedList));
+      BlocProvider.of<GroupLoadingMoreCubit>(context).toggle(false);
     });
   }
 }

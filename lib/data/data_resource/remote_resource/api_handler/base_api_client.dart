@@ -164,7 +164,9 @@ class BaseApiClient {
         ),
       );
 
+
       if (response.statusCode! >= 200 && response.statusCode! <= 205) {
+
         if (kDebugMode) {
           print(response.data);
         }

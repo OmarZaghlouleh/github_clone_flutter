@@ -163,7 +163,6 @@ class BaseApiClient {
           responseType: responseTypeValue ?? ResponseType.json,
         ),
       );
-      dprint("$url wwwwwwwwwwwwwwwwwwwwwwwww${response.statusCode}");
       dprint(response.statusCode);
       if (response.statusCode! >= 200 || response.statusCode! <= 205) {
         if (kDebugMode) {

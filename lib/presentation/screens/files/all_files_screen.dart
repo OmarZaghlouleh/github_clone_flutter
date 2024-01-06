@@ -4,6 +4,7 @@ import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/files/all_files_cubit.dart';
+import 'package:github_clone_flutter/cubit/files/files_loading_more_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/card_row.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
@@ -20,6 +21,7 @@ class AllFilesScreen extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   void init(BuildContext context) {
     if (!_scrollController.hasListeners) {
+      BlocProvider.of<AllFilesCubit>(context).reset();
       BlocProvider.of<AllFilesCubit>(context)
           .getAllFiles(context: context, name: "", clear: true);
       dprint("Listener Added");
@@ -79,162 +81,184 @@ class AllFilesScreen extends StatelessWidget {
                 );
               } else {
                 return Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      await BlocProvider.of<AllFilesCubit>(context).getAllFiles(
-                          name: _nameController.text.trim(),
-                          context: context,
-                          clear: true);
-                    },
-                    child: Scrollbar(
-                      thumbVisibility: true,
-                      trackVisibility: true,
-                      controller: _scrollController,
-                      child: ListView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(
-                            parent: BouncingScrollPhysics()),
-                        controller: _scrollController,
-                        itemCount: (state as AllFilesLoaded).files.length,
-                        itemBuilder: (contetx, index) => Padding(
-                          padding: EdgeInsets.only(
-                              bottom:
-                                  index == state.files.length - 1 ? 200 : 0),
-                          child: Card(
-                            elevation: 5,
-                            color: AppColors.primaryColor.withOpacity(0.5),
-                            margin: const EdgeInsets.all(8),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          state.files[index].name,
-                                          style: AppTextStyle.headerTextStyle()
-                                              .copyWith(
-                                                  color: AppColors.thirdColor),
-                                        ),
-                                      ),
-                                      Tooltip(
-                                        message: "Reports",
-                                        child: IconButton(
-                                          onPressed: () {
-                                            AppRouter.navigateTo(
-                                                context: context,
-                                                destination: ReportsScreen(
-                                                    keyString: state
-                                                        .files[index].fileKey));
-                                          },
-                                          icon: const Icon(
-                                            Icons.file_copy_rounded,
-                                            color: AppColors.thirdColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 4),
-                                    child: Text(state.files[index].desc,
-                                        style: AppTextStyle.getMediumBoldStyle(
-                                            color: AppColors.lightGrey)),
-                                  ),
-                                  const CustomDivider(),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            await BlocProvider.of<AllFilesCubit>(context)
+                                .getAllFiles(
+                                    name: _nameController.text.trim(),
+                                    context: context,
+                                    clear: true);
+                          },
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            trackVisibility: true,
+                            controller: _scrollController,
+                            child: ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(
+                                  parent: BouncingScrollPhysics()),
+                              controller: _scrollController,
+                              itemCount: (state as AllFilesLoaded).files.length,
+                              itemBuilder: (contetx, index) => Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: index == state.files.length - 1
+                                        ? 200
+                                        : 0),
+                                child: Card(
+                                  elevation: 5,
+                                  color:
+                                      AppColors.primaryColor.withOpacity(0.5),
+                                  margin: const EdgeInsets.all(8),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            CardRow(
-                                              title: "Created At",
-                                              description:
-                                                  state.files[index].createdAt,
-                                              textStyle: AppTextStyle
-                                                  .getMediumBoldStyle(
-                                                      color:
-                                                          AppColors.lightGrey),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                state.files[index].name,
+                                                style: AppTextStyle
+                                                        .headerTextStyle()
+                                                    .copyWith(
+                                                        color: AppColors
+                                                            .thirdColor),
+                                              ),
                                             ),
-                                            CardRow(
-                                              title: "Created By",
-                                              description:
-                                                  state.files[index].createdBy,
-                                              textStyle: AppTextStyle
-                                                  .getMediumBoldStyle(
-                                                      color:
-                                                          AppColors.lightGrey),
-                                            ),
-                                            CardRow(
-                                              title: "Group name",
-                                              description:
-                                                  state.files[index].groupName,
-                                              textStyle: AppTextStyle
-                                                  .getMediumBoldStyle(
-                                                      color:
-                                                          AppColors.lightGrey),
-                                            ),
-                                            CardRow(
-                                              title: "Type",
-                                              description:
-                                                  state.files[index].type,
-                                              textStyle: AppTextStyle
-                                                  .getMediumBoldStyle(
-                                                      color:
-                                                          AppColors.lightGrey),
-                                            ),
-                                            CardRow(
-                                              title: "Size",
-                                              description:
-                                                  state.files[index].size,
-                                              textStyle: AppTextStyle
-                                                  .getMediumBoldStyle(
-                                                      color:
-                                                          AppColors.lightGrey),
+                                            Tooltip(
+                                              message: "Reports",
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  AppRouter.navigateTo(
+                                                      context: context,
+                                                      destination:
+                                                          ReportsScreen(
+                                                              keyString: state
+                                                                  .files[index]
+                                                                  .fileKey));
+                                                },
+                                                icon: const Icon(
+                                                  Icons.file_copy_rounded,
+                                                  color: AppColors.thirdColor,
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            CardRow(
-                                              title: "Reserved By",
-                                              description: state
-                                                  .files[index].reservedByName,
-                                              textStyle: AppTextStyle
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          child: Text(state.files[index].desc,
+                                              style: AppTextStyle
                                                   .getMediumBoldStyle(
                                                       color:
-                                                          AppColors.lightGrey),
-                                            ),
-                                            CardRow(
-                                              title: "Last Update",
-                                              description:
-                                                  state.files[index].lastUpdate,
-                                              textStyle: AppTextStyle
-                                                  .getMediumBoldStyle(
-                                                      color:
-                                                          AppColors.lightGrey),
-                                            ),
-                                          ],
+                                                          AppColors.lightGrey)),
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
+                                        const CustomDivider(),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  CardRow(
+                                                    title: "Created At",
+                                                    description: state
+                                                        .files[index].createdAt,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                  CardRow(
+                                                    title: "Created By",
+                                                    description: state
+                                                        .files[index].createdBy,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                  CardRow(
+                                                    title: "Group name",
+                                                    description: state
+                                                        .files[index].groupName,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                  CardRow(
+                                                    title: "Type",
+                                                    description:
+                                                        state.files[index].type,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                  CardRow(
+                                                    title: "Size",
+                                                    description:
+                                                        state.files[index].size,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  CardRow(
+                                                    title: "Reserved By",
+                                                    description: state
+                                                        .files[index]
+                                                        .reservedByName,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                  CardRow(
+                                                    title: "Last Update",
+                                                    description: state
+                                                        .files[index]
+                                                        .lastUpdate,
+                                                    textStyle: AppTextStyle
+                                                        .getMediumBoldStyle(
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      BlocBuilder<FilesLoadingMoreCubit, bool>(
+                          builder: (context, state) =>
+                              state ? const Loader() : const SizedBox.shrink())
+                    ],
                   ),
                 );
               }

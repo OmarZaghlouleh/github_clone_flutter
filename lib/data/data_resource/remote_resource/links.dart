@@ -15,6 +15,8 @@ abstract class Links {
   //region auth
   static const register = "register";
   static const logout = "logout";
+  static const logoutFromAll = "logoutAll";
+
   static const login = "login";
   static const userProfile = "profile";
   static otherUserProfile(int id) => "profile/$id";

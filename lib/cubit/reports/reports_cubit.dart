@@ -8,6 +8,7 @@ import 'package:github_clone_flutter/cubit/reports/filters/report_action_cubit.d
 import 'package:github_clone_flutter/cubit/reports/filters/report_desc_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_order_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/reports_loading_more_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/repository/reports_repo.dart';
 import 'package:github_clone_flutter/domain/models/params/get_reports_params.dart';
 import 'package:github_clone_flutter/domain/models/report_model.dart';
@@ -19,14 +20,23 @@ class ReportsCubit extends Cubit<ReportsState> {
   int page = 1;
   List<ReportModel> loadedList = [];
 
+  void reset() {
+    page = 1;
+    loadedList.clear();
+  }
+
   Future<void> getReports(
       {required BuildContext context,
       required String key,
       bool clear = false}) async {
-    emit(ReportsLoading());
+    if (loadedList.isEmpty) emit(ReportsLoading());
     if (clear) {
       loadedList.clear();
       page = 1;
+    }
+
+    if (loadedList.isNotEmpty) {
+      BlocProvider.of<ReportsLoadingMoreCubit>(context).toggle(true);
     }
 
     final result = await getIt<ReportsRepo>().getReports(
@@ -47,6 +57,7 @@ class ReportsCubit extends Cubit<ReportsState> {
       if (r.isNotEmpty) page++;
       loadedList.addAll(r);
       emit(ReportsLoaded(loadedList));
+      BlocProvider.of<ReportsLoadingMoreCubit>(context).toggle(false);
     });
   }
 }

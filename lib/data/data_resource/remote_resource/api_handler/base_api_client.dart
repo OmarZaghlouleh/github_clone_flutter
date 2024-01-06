@@ -55,7 +55,7 @@ class BaseApiClient {
           responseType: responseTypeValue ?? ResponseType.json,
         ),
       );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
         }
@@ -121,7 +121,7 @@ class BaseApiClient {
           headers: headers ?? defaultHeaders,
         ),
       );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
         }
@@ -163,17 +163,16 @@ class BaseApiClient {
           responseType: responseTypeValue ?? ResponseType.json,
         ),
       );
-      dprint(response.statusCode);
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+
+
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
+
         if (kDebugMode) {
           print(response.data);
         }
         return Right(converter(response.data));
       } else {
-        // dprint("aaaaaaaaaaaaaaaa");
-        dprint(response.data);
         return left(response.data['message']);
-        // return left("else dzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
       }
     } on DioException catch (e) {
       Map dioError = DioErrorsHandler.onError(e);
@@ -192,16 +191,12 @@ class BaseApiClient {
           return left("Bad request");
         }
       }
-      // dprint(e.response?.statusCode.toString());
-      // return left(
-      //     "${e.response?.statusMessage}DioException $e  d${e.response?.statusCode}zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
 
       return left(e.response?.data['message'] ?? dioError['message']);
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
-      // return left("catch dzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzf");
 
       return left(e.toString());
     }
@@ -232,7 +227,7 @@ class BaseApiClient {
           headers: headers ?? defaultHeaders,
         ),
       );
-      if (response.statusCode! >= 200 || response.statusCode! <= 205) {
+      if (response.statusCode! >= 200 && response.statusCode! <= 205) {
         if (kDebugMode) {
           print(response.data);
         }

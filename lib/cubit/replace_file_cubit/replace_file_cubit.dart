@@ -11,6 +11,7 @@ import '../../core/utils/service_locator_di.dart';
 import '../../core/utils/utils_functions.dart';
 import '../../presentation/common_widgets/show_toast_widget.dart';
 import '../../presentation/screens/files/widgets/upload_file_card_widget.dart';
+import '../files/files_list_cubit.dart';
 
 part 'replace_file_state.dart';
 
@@ -40,7 +41,10 @@ class ReplaceFileCubit extends Cubit<ReplaceFileState> {
       result = null;
       Navigator.of(context).pop();
       showToastWidget(r.message);
+      BlocProvider.of<FilesListCubit>(context).reset();
+
       emit(ReplaceFileLoadedState(replaceFileModel: r));
+
     });
   }
 

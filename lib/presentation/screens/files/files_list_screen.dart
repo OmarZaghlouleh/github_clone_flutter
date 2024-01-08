@@ -85,7 +85,29 @@ class _FilesListScreenState extends State<FilesListScreen> {
   Widget build(BuildContext context) {
     final CheckInCubit checkInCubit = BlocProvider.of<CheckInCubit>(context);
     return BlocBuilder<CheckInCubit, CheckInState>(
+
       builder: (context, state) {
+        if(state is CheckInLoadedState)
+          {
+            BlocProvider.of<FilesListCubit>(context)
+                .reset();
+            BlocProvider.of<FilesListCubit>(context)
+                .getFilesList(
+                userId: widget.userId,
+                context: context,
+                order: (orderSelectedOption == 1)
+                    ? "name"
+                    : (orderSelectedOption == 2)
+                    ? "created_at"
+                    : "",
+                desc: (descSelectedOption == 1)
+                    ? "desc"
+                    : (descSelectedOption == 2)
+                    ? "asc"
+                    : "",
+                name:searchController.text.trim(),
+                key: widget.groupKey);
+          }
         return Scaffold(
             appBar: AppBar(
               title: checkInCubit.selectFileKeys.values.isNotEmpty
@@ -121,6 +143,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                         ),
                         onPressed: () async {
                           await checkInCubit.checkIn(context: context);
+
                         },
                         buttonStyle:
                             Theme.of(context).elevatedButtonTheme.style,
@@ -143,8 +166,9 @@ class _FilesListScreenState extends State<FilesListScreen> {
                               context: context,
                               builder: (context) {
                                 return UploadFileWidget(
+
                                   Key: widget.groupKey,
-                                  type: 'upload',
+                                  type: 'upload', userId: widget.userId, orderSelectedOption: orderSelectedOption, descSelectedOption: descSelectedOption, searchController: searchController, groupKey: widget.groupKey,
                                 );
                               },
                             );
@@ -610,7 +634,7 @@ class _FilesListScreenState extends State<FilesListScreen> {
                                               ),
                                               Expanded(
                                                   child: fileCard(
-                                                      context, files[index])),
+                                                      context, files[index],widget.userId,orderSelectedOption,descSelectedOption,searchController,widget.groupKey)),
                                             ],
                                           ),
                                         ),

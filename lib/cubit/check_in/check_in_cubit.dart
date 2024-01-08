@@ -37,7 +37,7 @@ class CheckInCubit extends Cubit<CheckInState> {
          selectFileKeys.clear();
           selectLongTab = false;
           emit(CheckInInitialState());
-          CheckInLoadedState(checkInAndCheckOutModel: r);
+          emit(CheckInLoadedState(checkInAndCheckOutModel: r));
         });
   }
 

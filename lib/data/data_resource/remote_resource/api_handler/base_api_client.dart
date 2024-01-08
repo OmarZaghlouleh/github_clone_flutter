@@ -61,6 +61,8 @@ class BaseApiClient {
         }
         if (saveToken != null) {
           saveToken(response.headers['Authorization']!.first);
+          print('fffffffffffffffffff');
+          print(response.headers['Authorization']!.first);
         }
         return right(converter(response.data));
       } else {

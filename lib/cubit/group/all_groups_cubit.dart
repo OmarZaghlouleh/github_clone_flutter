@@ -28,11 +28,11 @@ class AllGroupsCubit extends Cubit<AllGroupsState> {
       {required String name,
       required BuildContext context,
       bool clear = false}) async {
-    if (loadedList.isEmpty) emit(AllGroupsLoading());
     if (clear) {
       loadedList.clear();
       page = 1;
     }
+    if (loadedList.isEmpty) emit(AllGroupsLoading());
 
     if (loadedList.isNotEmpty) {
       BlocProvider.of<GroupLoadingMoreCubit>(context).toggle(true);
@@ -51,6 +51,8 @@ class AllGroupsCubit extends Cubit<AllGroupsState> {
     }, (r) {
       if (r.isNotEmpty) page++;
       loadedList.addAll(r);
+      emit(AllGroupsInitial());
+      Future.delayed(Duration.zero);
       emit(AllGroupsLoaded(loadedList));
       BlocProvider.of<GroupLoadingMoreCubit>(context).toggle(false);
     });

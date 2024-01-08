@@ -12,6 +12,7 @@ import 'package:github_clone_flutter/presentation/screens/group/update_group_scr
 import 'package:github_clone_flutter/presentation/screens/files/files_list_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/all_groups_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/reports/reports_screen.dart';
+import 'package:github_clone_flutter/presentation/screens/users/all_users_list.dart';
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 import '../../../../core/utils/strings_manager.dart';
@@ -156,6 +157,21 @@ class HomeDrawer extends StatelessWidget {
                               ),
                               leading: const Icon(
                                 Icons.file_present_rounded,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                            ListTile(
+                              onTap: () async {
+                                AppRouter.navigateTo(
+                                    context: context,
+                                    destination: AllUsersListScreen());
+                              },
+                              title: Text(
+                                "All Users",
+                                style: AppTextStyle.headerTextStyle(),
+                              ),
+                              leading: const Icon(
+                                Icons.people,
                                 color: AppColors.primaryColor,
                               ),
                             ),

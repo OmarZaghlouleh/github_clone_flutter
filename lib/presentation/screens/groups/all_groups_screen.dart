@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/app_router.dart';
+import 'package:github_clone_flutter/core/utils/enums.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/group/all_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/group_loading_more_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
@@ -22,6 +24,8 @@ class AllGroupsScreen extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   void init(BuildContext context) {
+    BlocProvider.of<ReportTypeCubit>(context).changeType(Report.group);
+
     if (!_scrollController.hasListeners) {
       BlocProvider.of<AllGroupsCubit>(context).reset();
       BlocProvider.of<AllGroupsCubit>(context)
@@ -150,6 +154,11 @@ class AllGroupsScreen extends StatelessWidget {
                                                     message: "Reports",
                                                     child: IconButton(
                                                       onPressed: () {
+                                                        BlocProvider.of<
+                                                                    ReportTypeCubit>(
+                                                                context)
+                                                            .changeType(
+                                                                Report.group);
                                                         AppRouter.navigateTo(
                                                             context: context,
                                                             destination: ReportsScreen(

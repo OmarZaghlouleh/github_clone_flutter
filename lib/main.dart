@@ -37,6 +37,8 @@ import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dar
 import 'package:github_clone_flutter/cubit/reports/reports_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/reports_loading_more_cubit.dart';
 import 'package:github_clone_flutter/cubit/update_group_cubit/update_group_cubit.dart';
+import 'package:github_clone_flutter/cubit/users/users_cubit.dart';
+import 'package:github_clone_flutter/cubit/users/users_loading_more_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
 import 'package:github_clone_flutter/presentation/screens/splash_screen.dart';
@@ -97,6 +99,8 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => FilesLoadingMoreCubit()),
         BlocProvider(create: (context) => ReportsLoadingMoreCubit()),
         BlocProvider(create: (context) => LogoutCubit()),
+        BlocProvider(create: (context) => UsersCubit()),
+        BlocProvider(create: (context) => UsersLoadingMoreCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(

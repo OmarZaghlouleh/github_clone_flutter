@@ -27,11 +27,12 @@ class AllFilesCubit extends Cubit<AllFilesState> {
       {required String name,
       required BuildContext context,
       bool clear = false}) async {
-    if (loadedList.isEmpty) emit(AllFilesLoading());
     if (clear) {
       loadedList.clear();
       page = 1;
     }
+
+    if (loadedList.isEmpty) emit(AllFilesLoading());
 
     if (loadedList.isNotEmpty) {
       BlocProvider.of<FilesLoadingMoreCubit>(context).toggle(true);
@@ -51,6 +52,8 @@ class AllFilesCubit extends Cubit<AllFilesState> {
     }, (r) {
       if (r.isNotEmpty) page++;
       loadedList.addAll(r);
+      emit(AllFilesInitial());
+      Future.delayed(Duration.zero);
       emit(AllFilesLoaded(loadedList));
       BlocProvider.of<FilesLoadingMoreCubit>(context).toggle(false);
     });

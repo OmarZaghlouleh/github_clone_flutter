@@ -4,6 +4,7 @@ import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/group/all_groups_cubit.dart';
+import 'package:github_clone_flutter/cubit/group/group_loading_more_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/divider.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
@@ -22,6 +23,7 @@ class AllGroupsScreen extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   void init(BuildContext context) {
     if (!_scrollController.hasListeners) {
+      BlocProvider.of<AllGroupsCubit>(context).reset();
       BlocProvider.of<AllGroupsCubit>(context)
           .getAllGroups(context: context, name: "", clear: true);
       dprint("Listener Added");
@@ -81,205 +83,237 @@ class AllGroupsScreen extends StatelessWidget {
                 );
               } else {
                 return Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      await BlocProvider.of<AllGroupsCubit>(context)
-                          .getAllGroups(
-                              name: _nameController.text.trim(),
-                              context: context,
-                              clear: true);
-                    },
-                    child: Scrollbar(
-                      thumbVisibility: true,
-                      trackVisibility: true,
-                      controller: _scrollController,
-                      child: ListView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(
-                            parent: BouncingScrollPhysics()),
-                        controller: _scrollController,
-                        itemCount: (state as AllGroupsLoaded).groups.length,
-                        itemBuilder: (contetx, index) => Padding(
-                          padding: EdgeInsets.only(
-                              bottom:
-                                  index == state.groups.length - 1 ? 200 : 0),
-                          child: InkWell(
-                            onTap: () {
-                              AppRouter.navigateTo(
-                                  context: context,
-                                  destination: FilesListScreen(
-                                      groupKey: state.groups[index].groupKey));
-                            },
-                            child: Card(
-                              elevation: 5,
-                              color: AppColors.primaryColor.withOpacity(0.5),
-                              margin: const EdgeInsets.all(8),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            state.groups[index].name,
-                                            style:
-                                                AppTextStyle.headerTextStyle()
-                                                    .copyWith(
-                                                        color: AppColors
-                                                            .thirdColor),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Tooltip(
-                                              message: "Reports",
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  AppRouter.navigateTo(
-                                                      context: context,
-                                                      destination:
-                                                          ReportsScreen(
-                                                              keyString: state
-                                                                  .groups[index]
-                                                                  .groupKey));
-                                                },
-                                                icon: const Icon(
-                                                  Icons.file_copy_rounded,
-                                                  color: AppColors.thirdColor,
-                                                ),
-                                              ),
-                                            ),
-                                            10.space(),
-                                            Tooltip(
-                                              message: "Contributers",
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  AppRouter.navigateTo(
-                                                      context: context,
-                                                      destination:
-                                                          GroupContributersScreen(
-                                                              groupName: state
-                                                                  .groups[index]
-                                                                  .name,
-                                                              groupKey: state
-                                                                  .groups[index]
-                                                                  .groupKey));
-                                                },
-                                                icon: const Icon(
-                                                  Icons.group_rounded,
-                                                  color: AppColors.thirdColor,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      child: Text(state.groups[index].desc,
-                                          style:
-                                              AppTextStyle.getMediumBoldStyle(
-                                                  color: AppColors.lightGrey)),
-                                    ),
-                                    const CustomDivider(),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            await BlocProvider.of<AllGroupsCubit>(context)
+                                .getAllGroups(
+                                    name: _nameController.text.trim(),
+                                    context: context,
+                                    clear: true);
+                          },
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            trackVisibility: true,
+                            controller: _scrollController,
+                            child: ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(
+                                  parent: BouncingScrollPhysics()),
+                              controller: _scrollController,
+                              itemCount:
+                                  (state as AllGroupsLoaded).groups.length,
+                              itemBuilder: (contetx, index) => Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: index == state.groups.length - 1
+                                        ? 200
+                                        : 0),
+                                child: InkWell(
+                                  onTap: () {
+                                    AppRouter.navigateTo(
+                                        context: context,
+                                        destination: FilesListScreen(
+                                            groupKey:
+                                                state.groups[index].groupKey));
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    color:
+                                        AppColors.primaryColor.withOpacity(0.5),
+                                    margin: const EdgeInsets.all(8),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              CardRow(
-                                                title: "Created by",
-                                                description: state
-                                                    .groups[index].createdBy,
-                                                textStyle: AppTextStyle
-                                                    .getMediumBoldStyle(
-                                                        color: AppColors
-                                                            .lightGrey),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  state.groups[index].name,
+                                                  style: AppTextStyle
+                                                          .headerTextStyle()
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .thirdColor),
+                                                ),
                                               ),
-                                              CardRow(
-                                                title: "Created At",
-                                                description: state
-                                                    .groups[index].createdAt,
-                                                textStyle: AppTextStyle
-                                                    .getMediumBoldStyle(
+                                              Row(
+                                                children: [
+                                                  Tooltip(
+                                                    message: "Reports",
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        AppRouter.navigateTo(
+                                                            context: context,
+                                                            destination: ReportsScreen(
+                                                                keyString: state
+                                                                    .groups[
+                                                                        index]
+                                                                    .groupKey));
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.file_copy_rounded,
                                                         color: AppColors
-                                                            .lightGrey),
-                                              ),
-                                              CardRow(
-                                                title: "Contributers",
-                                                description: state.groups[index]
-                                                    .numberContributers.length
-                                                    .toString(),
-                                                textStyle: AppTextStyle
-                                                    .getMediumBoldStyle(
+                                                            .thirdColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  10.space(),
+                                                  Tooltip(
+                                                    message: "Contributers",
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        AppRouter.navigateTo(
+                                                            context: context,
+                                                            destination: GroupContributersScreen(
+                                                                groupName: state
+                                                                    .groups[
+                                                                        index]
+                                                                    .name,
+                                                                groupKey: state
+                                                                    .groups[
+                                                                        index]
+                                                                    .groupKey));
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.group_rounded,
                                                         color: AppColors
-                                                            .lightGrey),
-                                              ),
-                                              CardRow(
-                                                title: "Files",
-                                                description: state
-                                                    .groups[index].numberFiles
-                                                    .toString(),
-                                                textStyle: AppTextStyle
-                                                    .getMediumBoldStyle(
-                                                        color: AppColors
-                                                            .lightGrey),
+                                                            .thirdColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              CardRow(
-                                                title: "Commits",
-                                                description: state
-                                                    .groups[index].numberCommits
-                                                    .toString(),
-                                                textStyle: AppTextStyle
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 4),
+                                            child: Text(
+                                                state.groups[index].desc,
+                                                style: AppTextStyle
                                                     .getMediumBoldStyle(
                                                         color: AppColors
-                                                            .lightGrey),
-                                              ),
-                                              CardRow(
-                                                title: "Last Commit",
-                                                description: state
-                                                    .groups[index].lastCommit,
-                                                textStyle: AppTextStyle
-                                                    .getMediumBoldStyle(
-                                                        color: AppColors
-                                                            .lightGrey),
-                                              ),
-                                              CardRow(
-                                                title: "Last Commit By",
-                                                description: state
-                                                    .groups[index].lastCommitBy,
-                                                textStyle: AppTextStyle
-                                                    .getMediumBoldStyle(
-                                                        color: AppColors
-                                                            .lightGrey),
-                                              ),
-                                            ],
+                                                            .lightGrey)),
                                           ),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                          const CustomDivider(),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    CardRow(
+                                                      title: "Created by",
+                                                      description: state
+                                                          .groups[index]
+                                                          .createdBy,
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                    CardRow(
+                                                      title: "Created At",
+                                                      description: state
+                                                          .groups[index]
+                                                          .createdAt,
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                    CardRow(
+                                                      title: "Contributers",
+                                                      description: state
+                                                          .groups[index]
+                                                          .numberContributers
+                                                          .length
+                                                          .toString(),
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                    CardRow(
+                                                      title: "Files",
+                                                      description: state
+                                                          .groups[index]
+                                                          .numberFiles
+                                                          .toString(),
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    CardRow(
+                                                      title: "Commits",
+                                                      description: state
+                                                          .groups[index]
+                                                          .numberCommits
+                                                          .toString(),
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                    CardRow(
+                                                      title: "Last Commit",
+                                                      description: state
+                                                          .groups[index]
+                                                          .lastCommit,
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                    CardRow(
+                                                      title: "Last Commit By",
+                                                      description: state
+                                                          .groups[index]
+                                                          .lastCommitBy,
+                                                      textStyle: AppTextStyle
+                                                          .getMediumBoldStyle(
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      BlocBuilder<GroupLoadingMoreCubit, bool>(
+                          builder: (context, state) => state
+                              ? const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Loader(),
+                                )
+                              : const SizedBox.shrink()),
+                    ],
                   ),
                 );
               }

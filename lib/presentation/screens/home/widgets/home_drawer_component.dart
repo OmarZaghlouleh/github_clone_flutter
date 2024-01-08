@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
+import 'package:github_clone_flutter/cubit/auth/cubit/logout_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/all_groups_cubit.dart';
+import 'package:github_clone_flutter/presentation/common_widgets/loader.dart';
 import 'package:github_clone_flutter/presentation/screens/files/all_files_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/group/create_group_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/group/update_group_screen.dart';
@@ -13,6 +15,7 @@ import 'package:github_clone_flutter/presentation/screens/reports/reports_screen
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 import 'package:github_clone_flutter/presentation/style/app_text_style.dart';
 import '../../../../core/utils/strings_manager.dart';
+import '../../../../cubit/profile/profile_cubit.dart';
 import '../../../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../../common_widgets/divider.dart';
 import '../../auth/auth_screen.dart';
@@ -25,6 +28,8 @@ class HomeDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // BlocProvider.of<ProfileCubit>(context).getProfile(context: context, id: -1);
+
     return SafeArea(
       child: Drawer(
         // clipBehavior: Clip.hardEdge,
@@ -47,9 +52,11 @@ class HomeDrawer extends StatelessWidget {
                     children: [
                       ListTile(
                         onTap: () async {
-                          AppRouter.navigateTo(
+                          await AppRouter.navigateTo(
                               context: context,
                               destination: const MyGroupsScreen());
+                          BlocProvider.of<ProfileCubit>(context)
+                              .getProfile(context: context, id: -1);
                         },
                         title: Text(
                           "My groups",
@@ -62,7 +69,7 @@ class HomeDrawer extends StatelessWidget {
                       ),
                       ListTile(
                         onTap: () async {
-                          AppRouter.navigateTo(
+                          await AppRouter.navigateTo(
                               context: context,
                               destination: const CreateGroupScreen());
                         },
@@ -75,7 +82,6 @@ class HomeDrawer extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                       ),
-
                       ListTile(
                         onTap: () async {
                           AppRouter.navigateTo(
@@ -123,9 +129,11 @@ class HomeDrawer extends StatelessWidget {
                             ),
                             ListTile(
                               onTap: () async {
-                                AppRouter.navigateTo(
+                                await AppRouter.navigateTo(
                                     context: context,
                                     destination: AllGroupsScreen());
+                                BlocProvider.of<ProfileCubit>(context)
+                                    .getProfile(context: context, id: -1);
                               },
                               title: Text(
                                 "All Groups",
@@ -154,64 +162,64 @@ class HomeDrawer extends StatelessWidget {
                           ],
                         ),
                       const CustomDivider(),
-                      ExpansionTile(
-                        title: Text(
-                          StringManager.logout,
-                          style: AppTextStyle.getSmallBoldStyle(
-                            color: AppColors.errorColor,
-                          ),
-                        ),
-                        leading: const Icon(
-                          Icons.logout,
-                          color: AppColors.errorColor,
-                        ),
-                        children: [
-                          ListTile(
-                            onTap: () async {
-                              //TODO: add API request
-                              LocalResource.deleteUserData();
-                              // We should add these 2 functions because we disposed controllers after sign in/up
-                              SignInControllers.initControllers();
-                              SignUpControllers.initControllers();
-                              AppRouter.navigateReplacementTo(
-                                  context: context,
-                                  destination: const AuthScreen());
-                            },
+                      BlocBuilder<LogoutCubit, LogoutState>(
+                        builder: (context, state) {
+                          if (state is LogoutLoading) {
+                            return const Center(
+                                child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Loader(
+                                color: AppColors.errorColor,
+                              ),
+                            ));
+                          }
+                          return ExpansionTile(
                             title: Text(
-                              StringManager.logoutFromThisDevice,
+                              StringManager.logout,
                               style: AppTextStyle.getSmallBoldStyle(
-                                color: AppColors.secondaryColor,
+                                color: AppColors.errorColor,
                               ),
                             ),
                             leading: const Icon(
-                              Icons.stop_screen_share_outlined,
-                              color: AppColors.secondaryColor,
+                              Icons.logout,
+                              color: AppColors.errorColor,
                             ),
-                          ),
-                          ListTile(
-                            onTap: () async {
-                              //TODO: add API request
-
-                              LocalResource.deleteUserData();
-                              // We should add these 2 functions because we disposed controllers after sign in/up
-                              SignInControllers.initControllers();
-                              SignUpControllers.initControllers();
-                              AppRouter.navigateReplacementTo(
-                                  context: context,
-                                  destination: const AuthScreen());
-                            },
-                            title: Text(
-                              StringManager.logoutFromAllDevices,
-                              style: AppTextStyle.getSmallBoldStyle(
-                                color: AppColors.secondaryColor,
+                            children: [
+                              ListTile(
+                                onTap: () async {
+                                  BlocProvider.of<LogoutCubit>(context)
+                                      .logout(false, context);
+                                },
+                                title: Text(
+                                  StringManager.logoutFromThisDevice,
+                                  style: AppTextStyle.getSmallBoldStyle(
+                                    color: AppColors.secondaryColor,
+                                  ),
+                                ),
+                                leading: const Icon(
+                                  Icons.stop_screen_share_outlined,
+                                  color: AppColors.secondaryColor,
+                                ),
                               ),
-                            ),
-                            leading: const Icon(
-                              Icons.devices_other_outlined,
-                              color: AppColors.secondaryColor,
-                            ),
-                          ),
-                        ],
+                              ListTile(
+                                onTap: () async {
+                                  BlocProvider.of<LogoutCubit>(context)
+                                      .logout(true, context);
+                                },
+                                title: Text(
+                                  StringManager.logoutFromAllDevices,
+                                  style: AppTextStyle.getSmallBoldStyle(
+                                    color: AppColors.secondaryColor,
+                                  ),
+                                ),
+                                leading: const Icon(
+                                  Icons.devices_other_outlined,
+                                  color: AppColors.secondaryColor,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                       50.space(),
                     ],

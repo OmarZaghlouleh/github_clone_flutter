@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/core/utils/utils_functions.dart';
 import 'package:github_clone_flutter/cubit/add_files_to_group/add_files_to_group_cubit.dart';
 import 'package:github_clone_flutter/cubit/replace_file_cubit/replace_file_cubit.dart';
 import 'package:github_clone_flutter/presentation/common_widgets/custom_text_form_field.dart';
@@ -9,13 +10,21 @@ import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_f
 import 'package:github_clone_flutter/presentation/style/app_colors.dart';
 
 import '../../../../core/utils/service_locator_di.dart';
+import '../../../../cubit/files/files_list_cubit.dart';
 import '../../../common_widgets/loader.dart';
 
 class UploadFileWidget extends StatefulWidget {
   final String Key;
   final String type;
+  final int userId;
+  final int orderSelectedOption;
 
-  const UploadFileWidget({super.key, required this.Key, required this.type});
+  final int descSelectedOption;
+
+  final TextEditingController searchController;
+  final String groupKey;
+
+  const UploadFileWidget({super.key, required this.Key, required this.type, required this.userId, required this.orderSelectedOption, required this.descSelectedOption, required this.searchController, required this.groupKey});
 
   @override
   UploadFileWidgetState createState() => UploadFileWidgetState();
@@ -74,7 +83,7 @@ class UploadFileWidgetState extends State<UploadFileWidget> {
                                       .description,
                                   file: addFilesToGroupCubit
                                       .uploadFileCardWidgetList[index].file,
-                                      type: 'upload',
+                                  type: 'upload',
                                 ),
                               );
                             },
@@ -103,7 +112,7 @@ class UploadFileWidgetState extends State<UploadFileWidget> {
                       description:
                           replaceFileCubit.uploadFileCardWidget.description,
                       file: replaceFileCubit.uploadFileCardWidget.file,
-                type: 'replace',
+                      type: 'replace',
                     ),
             ),
 
@@ -115,12 +124,35 @@ class UploadFileWidgetState extends State<UploadFileWidget> {
                       if (state is AddFilesToGroupStateLoading) {
                         return const Loader();
                       }
+                      if (state is AddFilesToGroupStateLoaded)
+                        {
+                          print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+                          BlocProvider.of<FilesListCubit>(context)
+                              .reset();
+                          BlocProvider.of<FilesListCubit>(context)
+                              .getFilesList(
+                              userId: widget.userId,
+                              context: context,
+                              order: (widget.orderSelectedOption == 1)
+                                  ? "name"
+                                  : (widget.orderSelectedOption == 2)
+                                  ? "created_at"
+                                  : "",
+                              desc: (widget.descSelectedOption == 1)
+                                  ? "desc"
+                                  : (widget.descSelectedOption == 2)
+                                  ? "asc"
+                                  : "",
+                              name: widget.searchController.text.trim(),
+                              key: widget.groupKey);
+                        }
                       return ElevatedButton(
                         onPressed: () {
                           addFilesToGroupCubit.uploadFiles(
                             context: context,
                             groupKey: widget.Key,
                           );
+                       
                         },
                         child: const Text('Upload'),
                       );
@@ -131,6 +163,28 @@ class UploadFileWidgetState extends State<UploadFileWidget> {
                       if (state is ReplaceFileLoadingState) {
                         return const Loader();
                       }
+                      if(state is ReplaceFileLoadedState)
+                        {
+                          BlocProvider.of<FilesListCubit>(context)
+                              .reset();
+                          BlocProvider.of<FilesListCubit>(context)
+                              .getFilesList(
+                              userId: widget.userId,
+                              context: context,
+                              order: (widget.orderSelectedOption == 1)
+                                  ? "name"
+                                  : (widget.orderSelectedOption == 2)
+                                  ? "created_at"
+                                  : "",
+                              desc: (widget.descSelectedOption == 1)
+                                  ? "desc"
+                                  : (widget.descSelectedOption == 2)
+                                  ? "asc"
+                                  : "",
+                              name: widget.searchController.text.trim(),
+                              key: widget.groupKey);
+
+                        }
                       return ElevatedButton(
                         onPressed: () {
                           BlocProvider.of<ReplaceFileCubit>(context)
@@ -138,6 +192,7 @@ class UploadFileWidgetState extends State<UploadFileWidget> {
                             context: context,
                             fileKey: widget.Key,
                           );
+
                         },
                         child: const Text('replace'),
                       );

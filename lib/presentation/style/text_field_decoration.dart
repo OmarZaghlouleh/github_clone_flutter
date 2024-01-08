@@ -20,7 +20,7 @@ InputDecoration inputDecorationTextFormField(
       ),
     ),
     enabledBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.thirdColor, width: 1.5),
+      borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
       borderRadius: BorderRadius.all(
         Radius.circular(15),
       ),

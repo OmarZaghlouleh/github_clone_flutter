@@ -5,17 +5,30 @@ import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
 import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_files_widget.dart';
+
 import '../../../../core/utils/strings_manager.dart';
 import '../../../../cubit/check_out/check_out_cubit.dart';
+import '../../../../data/data_resource/local_resource/shared_preferences.dart';
 import '../../../../domain/models/file_model.dart';
 import '../../../common_widgets/confirm_dialog.dart';
 import '../../../common_widgets/row_info_text_span.dart';
 import '../../../style/app_colors.dart';
 import '../../../style/app_text_style.dart';
 
-Widget fileCard(BuildContext context, FileModel fileModel) {
-  return Row(
-    mainAxisSize: MainAxisSize.max,
+Widget fileCard(
+    BuildContext context,
+    FileModel fileModel,
+    int userId,
+    int orderSelectedOption,
+    int descSelectedOption,
+    TextEditingController searchController,
+    String groupKey) {
+  return BlocConsumer<CheckOutCubit, CheckOutState>(
+
+  builder: (context, state) {
+
+    return Wrap(
+    // mainAxisSize: MainAxisSize.max,
     children: [
       BlocBuilder<FilesListCubit, FilesListState>(builder: (context, state) {
         if (state is FilesListLoaded) {
@@ -65,20 +78,21 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                         ),
                         color: AppColors.thirdColor.withOpacity(0.9),
                         itemBuilder: (context) => [
-                          PopupMenuItem(
+                       if(fileModel.reservedBy!=0 && LocalResource.sharedPreferences.getInt('userId')==fileModel.reservedBy)   PopupMenuItem(
                             value: StringManager.edit,
                             child: Text(
                               StringManager.edit,
-                              style:
-                              const TextStyle(color: AppColors.secondaryColor),
+                              style: const TextStyle(
+                                  color: AppColors.secondaryColor),
                             ),
                           ),
+                          if(fileModel.reservedBy!=0 && LocalResource.sharedPreferences.getInt('userId')==fileModel.reservedBy)
                           PopupMenuItem(
                             value: StringManager.cancelFileReservation,
                             child: Text(
                               StringManager.cancelFileReservation,
-                              style:
-                              const TextStyle(color: AppColors.secondaryColor),
+                              style: const TextStyle(
+                                  color: AppColors.secondaryColor),
                             ),
                           ),
                           PopupMenuItem(
@@ -98,6 +112,11 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                                 return UploadFileWidget(
                                   Key: fileModel.fileKey,
                                   type: 'replace',
+                                  userId: userId,
+                                  orderSelectedOption: orderSelectedOption,
+                                  descSelectedOption: descSelectedOption,
+                                  searchController: searchController,
+                                  groupKey: groupKey,
                                 );
                               },
                             );
@@ -105,6 +124,7 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
                               StringManager.cancelFileReservation) {
                             BlocProvider.of<CheckOutCubit>(context).checkOut(
                                 fileKey: fileModel.fileKey, context: context);
+
                           } else if (newVal == StringManager.delete) {
                             if (await showConfirmDialog(
                                 context: context,
@@ -183,4 +203,28 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
       ),
     ],
   );
+  }, listener: (BuildContext context, CheckOutState state) {
+    if(state is CheckOutLoadedState)
+    {
+      BlocProvider.of<FilesListCubit>(context)
+          .reset();
+      BlocProvider.of<FilesListCubit>(context)
+          .getFilesList(
+          userId: userId,
+          context: context,
+          order: (orderSelectedOption == 1)
+              ? "name"
+              : (orderSelectedOption == 2)
+              ? "created_at"
+              : "",
+          desc: (descSelectedOption == 1)
+              ? "desc"
+              : (descSelectedOption == 2)
+              ? "asc"
+              : "",
+          name: searchController.text.trim(),
+          key: groupKey);
+    }
+  },
+);
 }

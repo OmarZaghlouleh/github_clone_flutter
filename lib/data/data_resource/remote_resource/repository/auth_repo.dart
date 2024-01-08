@@ -27,4 +27,20 @@ class AuthRepoImp {
           return AuthModel.fromJson(value["data"]);
         });
   }
+
+  Future<Either<String, bool>> logout() {
+    return BaseApiClient.get<bool>(
+        url: Links.baseUrl + Links.logout,
+        converter: (value) {
+          return value['status'] == 200;
+        });
+  }
+
+  Future<Either<String, bool>> logoutFromAll() {
+    return BaseApiClient.get<bool>(
+        url: Links.baseUrl + Links.logoutFromAll,
+        converter: (value) {
+          return value['status'] == 200;
+        });
+  }
 }

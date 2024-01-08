@@ -6,6 +6,7 @@ import 'package:github_clone_flutter/core/utils/global.dart';
 
 import 'package:github_clone_flutter/core/utils/service_locator_di.dart';
 import 'package:github_clone_flutter/cubit/add_files_to_group/add_files_to_group_cubit.dart';
+import 'package:github_clone_flutter/cubit/auth/cubit/logout_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/sign_in_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_in/signin_password_visibility_cubit.dart';
 import 'package:github_clone_flutter/cubit/auth/sign_up/signup_confirm_password_visibility_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:github_clone_flutter/cubit/check_in/check_in_cubit.dart';
 import 'package:github_clone_flutter/cubit/check_out/check_out_cubit.dart';
 import 'package:github_clone_flutter/cubit/create_group/create_group_cubit.dart';
 import 'package:github_clone_flutter/cubit/files/all_files_cubit.dart';
+import 'package:github_clone_flutter/cubit/files/files_loading_more_cubit.dart';
 import 'package:github_clone_flutter/cubit/files/filters/file_desc_cubit.dart';
 import 'package:github_clone_flutter/cubit/files/filters/file_order_cubit.dart';
 import 'package:github_clone_flutter/cubit/get_list_users/get_list_users_cubit.dart';
@@ -24,6 +26,7 @@ import 'package:github_clone_flutter/cubit/group/all_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/filters/group_desc_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/filters/group_order_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/group_contributers_cubit.dart';
+import 'package:github_clone_flutter/cubit/group/group_loading_more_cubit.dart';
 import 'package:github_clone_flutter/cubit/group/my_groups_cubit.dart';
 import 'package:github_clone_flutter/cubit/profile/profile_cubit.dart';
 import 'package:github_clone_flutter/cubit/replace_file_cubit/replace_file_cubit.dart';
@@ -32,6 +35,7 @@ import 'package:github_clone_flutter/cubit/reports/filters/report_desc_cubit.dar
 import 'package:github_clone_flutter/cubit/reports/filters/report_order_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
 import 'package:github_clone_flutter/cubit/reports/reports_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/reports_loading_more_cubit.dart';
 import 'package:github_clone_flutter/cubit/update_group_cubit/update_group_cubit.dart';
 import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/data/data_resource/remote_resource/api_handler/base_api_client.dart';
@@ -84,9 +88,15 @@ class GithubCloneApp extends StatelessWidget {
         BlocProvider(create: (context) => FileOrderCubit()),
         BlocProvider(create: (context) => FileDescCubit()),
         BlocProvider(create: (context) => GroupContributersCubit()),
-        BlocProvider(create: (context)=>ReplaceFileCubit(),),
-        BlocProvider(create: (context)=>CheckInCubit()),
-        BlocProvider(create: (context)=>CheckOutCubit()),
+        BlocProvider(
+          create: (context) => ReplaceFileCubit(),
+        ),
+        BlocProvider(create: (context) => CheckInCubit()),
+        BlocProvider(create: (context) => CheckOutCubit()),
+        BlocProvider(create: (context) => GroupLoadingMoreCubit()),
+        BlocProvider(create: (context) => FilesLoadingMoreCubit()),
+        BlocProvider(create: (context) => ReportsLoadingMoreCubit()),
+        BlocProvider(create: (context) => LogoutCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(

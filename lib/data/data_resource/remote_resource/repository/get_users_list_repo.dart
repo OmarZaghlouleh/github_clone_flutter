@@ -4,15 +4,14 @@ import 'package:github_clone_flutter/domain/models/user_model.dart';
 import '../links.dart';
 
 class GetUsersListRepoImpl {
-  Future<Either<String, UsersModel>> getUsersList({required int pageKey}) {
+  Future<Either<String, UsersModel>> getUsersList(
+      {required int pageKey, bool allUsers = false, String searchText = ""}) {
     return BaseApiClient.get(
-      url:  Links.getListUsers,
+      url: allUsers ? Links.getUsers(searchText) : Links.getListUsers,
       queryParameters: {'page': pageKey},
       converter: (value) {
-
         return UsersModel.fromJson(value['data']);
       },
     );
   }
 }
-

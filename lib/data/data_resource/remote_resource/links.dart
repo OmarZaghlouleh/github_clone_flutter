@@ -22,7 +22,7 @@ abstract class Links {
   static otherUserProfile(int id) => "profile/$id";
   static const updateUserProfile = "update_profile";
   static const createGroup = "groups";
-  static const getListUsers = "users?limit=1";
+  static const getListUsers = "users";
   static const addFilesToGroup = "files";
   static const downloadFiles = "files/download";
 
@@ -88,6 +88,7 @@ abstract class Links {
   static cloneGroup(String key) => "groups/clone/$key";
   static String getReportsUrl(GetReportsParams getReportsParams) {
     String url = "";
+    dprint("Typeee: ${getReportsParams.reportType}");
     if (getReportsParams.reportType.toLowerCase() == "file") {
       url =
           "files_log?page=${getReportsParams.page}&orderBy=${getReportsParams.order == 'createdAt' ? 'created_at' : getReportsParams.order}&action=${getReportsParams.action}&desc=${getReportsParams.desc}&file_key=${getReportsParams.key}";
@@ -109,6 +110,10 @@ abstract class Links {
 
   static String getAllFilesUrl(GetFilesParams getFilesParams) {
     return "files?page=${getFilesParams.page}&orderBy=${getFilesParams.order == 'createdAt' ? 'created_at' : getFilesParams.order}&desc=${getFilesParams.desc}&name=${getFilesParams.name}";
+  }
+
+  static String getUsers(String searchText) {
+    return "users?search=$searchText";
   }
 
   //endregion

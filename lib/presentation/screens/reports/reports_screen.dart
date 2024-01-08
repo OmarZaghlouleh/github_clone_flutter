@@ -68,6 +68,7 @@ class ReportsScreen extends StatelessWidget {
                   child: Center(child: Text("There are no reports to show")),
                 );
               } else {
+                dprint((state as ReportsLoaded).reports.length);
                 return Expanded(
                   child: Column(
                     children: [
@@ -88,8 +89,7 @@ class ReportsScreen extends StatelessWidget {
                               physics: const AlwaysScrollableScrollPhysics(
                                   parent: BouncingScrollPhysics()),
                               controller: _scrollController,
-                              itemCount:
-                                  (state as ReportsLoaded).reports.length,
+                              itemCount: (state).reports.length,
                               itemBuilder: (contetx, index) => Card(
                                 elevation: 5,
                                 color: AppColors.primaryColor.withOpacity(0.5),

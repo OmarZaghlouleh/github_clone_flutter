@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/app_router.dart';
 import 'package:github_clone_flutter/core/utils/constants.dart';
+import 'package:github_clone_flutter/core/utils/enums.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
 import 'package:github_clone_flutter/core/utils/extensions/space.dart';
 import 'package:github_clone_flutter/cubit/files/files_list_cubit.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
+import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/presentation/screens/files/widgets/upload_files_widget.dart';
+import 'package:github_clone_flutter/presentation/screens/reports/reports_screen.dart';
 import '../../../../core/utils/strings_manager.dart';
 import '../../../../cubit/check_out/check_out_cubit.dart';
 import '../../../../domain/models/file_model.dart';
@@ -54,71 +59,96 @@ Widget fileCard(BuildContext context, FileModel fileModel) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: PopupMenuButton(
-                        icon: const Icon(
-                          Icons.more_vert,
-                          color: AppColors.secondaryColor,
-                        ),
-                        color: AppColors.thirdColor.withOpacity(0.9),
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: StringManager.edit,
-                            child: Text(
-                              StringManager.edit,
-                              style: const TextStyle(
-                                  color: AppColors.secondaryColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: PopupMenuButton(
+                            icon: const Icon(
+                              Icons.more_vert,
+                              color: AppColors.secondaryColor,
                             ),
-                          ),
-                          PopupMenuItem(
-                            value: StringManager.cancelFileReservation,
-                            child: Text(
-                              StringManager.cancelFileReservation,
-                              style: const TextStyle(
-                                  color: AppColors.secondaryColor),
-                            ),
-                          ),
-                          PopupMenuItem(
-                            value: StringManager.delete,
-                            child: Text(
-                              StringManager.delete,
-                              style:
-                                  const TextStyle(color: AppColors.errorColor),
-                            ),
-                          ),
-                        ],
-                        onSelected: (newVal) async {
-                          if (newVal == StringManager.edit) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return UploadFileWidget(
-                                  Key: fileModel.fileKey,
-                                  type: 'replace',
+                            color: AppColors.thirdColor.withOpacity(0.9),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: StringManager.edit,
+                                child: Text(
+                                  StringManager.edit,
+                                  style: const TextStyle(
+                                      color: AppColors.secondaryColor),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: StringManager.cancelFileReservation,
+                                child: Text(
+                                  StringManager.cancelFileReservation,
+                                  style: const TextStyle(
+                                      color: AppColors.secondaryColor),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: StringManager.delete,
+                                child: Text(
+                                  StringManager.delete,
+                                  style: const TextStyle(
+                                      color: AppColors.errorColor),
+                                ),
+                              ),
+                            ],
+                            onSelected: (newVal) async {
+                              if (newVal == StringManager.edit) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return UploadFileWidget(
+                                      Key: fileModel.fileKey,
+                                      type: 'replace',
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          } else if (newVal ==
-                              StringManager.cancelFileReservation) {
-                            BlocProvider.of<CheckOutCubit>(context).checkOut(
-                                fileKey: fileModel.fileKey, context: context);
-                          } else if (newVal == StringManager.delete) {
-                            if (await showConfirmDialog(
-                                context: context,
-                                contentText:
-                                    "Are you sure that you want to delete the file?")) {
-                              BlocProvider.of<FilesListCubit>(context)
-                                  .deleteFile(
-                                      context: context,
-                                      fileKey: fileModel.fileKey);
-                            }
-                          }
-                        },
+                              } else if (newVal ==
+                                  StringManager.cancelFileReservation) {
+                                BlocProvider.of<CheckOutCubit>(context)
+                                    .checkOut(
+                                        fileKey: fileModel.fileKey,
+                                        context: context);
+                              } else if (newVal == StringManager.delete) {
+                                if (await showConfirmDialog(
+                                    context: context,
+                                    contentText:
+                                        "Are you sure that you want to delete the file?")) {
+                                  BlocProvider.of<FilesListCubit>(context)
+                                      .deleteFile(
+                                          context: context,
+                                          fileKey: fileModel.fileKey);
+                                }
+                              }
+                            },
+                          ),
+                        ),
                       ),
-                    ),
+                      if (LocalResource.sharedPreferences.getInt('roleId') == 1)
+                        Tooltip(
+                          message: "Reports",
+                          child: IconButton(
+                            onPressed: () {
+                              BlocProvider.of<ReportTypeCubit>(context)
+                                  .changeType(Report.file);
+                              AppRouter.navigateTo(
+                                  context: context,
+                                  destination: ReportsScreen(
+                                      keyString: fileModel.fileKey));
+                            },
+                            icon: const Icon(
+                              Icons.file_copy_rounded,
+                              color: AppColors.thirdColor,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_clone_flutter/core/utils/enums.dart';
 import 'package:github_clone_flutter/core/utils/extensions/media_query.dart';
+import 'package:github_clone_flutter/cubit/reports/filters/report_type_cubit.dart';
+import 'package:github_clone_flutter/data/data_resource/local_resource/shared_preferences.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/group_contributers_screen.dart';
 import 'package:github_clone_flutter/presentation/screens/groups/widgets/contributers_card.dart';
+import 'package:github_clone_flutter/presentation/screens/reports/reports_screen.dart';
 
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/strings_manager.dart';
@@ -88,7 +92,9 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
                             if (newVal == StringManager.edit) {
                               AppRouter.navigateTo(
                                   context: context,
-                                  destination:  UpdateGroupScreen(groupKey:groupModel.groupKey ,));
+                                  destination: UpdateGroupScreen(
+                                    groupKey: groupModel.groupKey,
+                                  ));
                             } else if (newVal == StringManager.delete) {
                               if (await showConfirmDialog(
                                   context: context,
@@ -110,21 +116,44 @@ Widget groupCard(BuildContext context, GroupModel groupModel) {
                         ),
                       ),
                     ),
-                    Tooltip(
-                      message: "Contributers",
-                      child: IconButton(
-                        onPressed: () {
-                          AppRouter.navigateTo(
-                              context: context,
-                              destination: GroupContributersScreen(
-                                  groupName: groupModel.name,
-                                  groupKey: groupModel.groupKey));
-                        },
-                        icon: const Icon(
-                          Icons.group_rounded,
-                          color: AppColors.thirdColor,
+                    Row(
+                      children: [
+                        if (LocalResource.sharedPreferences.getInt('roleId') ==
+                            1)
+                          Tooltip(
+                            message: "Reports",
+                            child: IconButton(
+                              onPressed: () {
+                                BlocProvider.of<ReportTypeCubit>(context)
+                                    .changeType(Report.group);
+                                AppRouter.navigateTo(
+                                    context: context,
+                                    destination: ReportsScreen(
+                                        keyString: groupModel.groupKey));
+                              },
+                              icon: const Icon(
+                                Icons.file_copy_rounded,
+                                color: AppColors.thirdColor,
+                              ),
+                            ),
+                          ),
+                        Tooltip(
+                          message: "Contributers",
+                          child: IconButton(
+                            onPressed: () {
+                              AppRouter.navigateTo(
+                                  context: context,
+                                  destination: GroupContributersScreen(
+                                      groupName: groupModel.name,
+                                      groupKey: groupModel.groupKey));
+                            },
+                            icon: const Icon(
+                              Icons.group_rounded,
+                              color: AppColors.thirdColor,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),

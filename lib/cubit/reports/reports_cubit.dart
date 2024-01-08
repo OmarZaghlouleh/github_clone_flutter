@@ -29,11 +29,11 @@ class ReportsCubit extends Cubit<ReportsState> {
       {required BuildContext context,
       required String key,
       bool clear = false}) async {
-    if (loadedList.isEmpty) emit(ReportsLoading());
     if (clear) {
       loadedList.clear();
       page = 1;
     }
+    if (loadedList.isEmpty) emit(ReportsLoading());
 
     if (loadedList.isNotEmpty) {
       BlocProvider.of<ReportsLoadingMoreCubit>(context).toggle(true);
@@ -56,7 +56,10 @@ class ReportsCubit extends Cubit<ReportsState> {
     }, (r) {
       if (r.isNotEmpty) page++;
       loadedList.addAll(r);
+      emit(ReportsInitial());
+      Future.delayed(Duration.zero);
       emit(ReportsLoaded(loadedList));
+      dprint("Length${loadedList.length} Length${r.length}");
       BlocProvider.of<ReportsLoadingMoreCubit>(context).toggle(false);
     });
   }

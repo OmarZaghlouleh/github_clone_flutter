@@ -23,6 +23,12 @@ class LogoutCubit extends Cubit<LogoutState> {
     result.fold((l) {
       emit(LogoutError());
       showSnackBar(title: l, context: context, error: true);
+      LocalResource.deleteUserData();
+      // We should add these 2 functions because we disposed controllers after sign in/up
+      SignInControllers.initControllers();
+      SignUpControllers.initControllers();
+      AppRouter.navigateReplacementTo(
+          context: context, destination: const AuthScreen());
     }, (r) {
       emit(LogoutDone());
       LocalResource.deleteUserData();

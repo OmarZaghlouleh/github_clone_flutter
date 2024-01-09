@@ -17,12 +17,18 @@ class CheckInCubit extends Cubit<CheckInState> {
   Map<int, Map<bool, String>> selectFileKeys = {};
   bool selectLongTab = false;
 
-  Future<void> checkIn({required BuildContext context}) async {
+  void checkIn({required BuildContext context}) async {
     emit(CheckInLoadingState());
     final List<String> filesKey = [];
-    for (int key in selectFileKeys.keys) {
-      filesKey.add(selectFileKeys[key]![true]!);
-    }
+    for (var element in selectFileKeys.values) {
+      if(element.keys.first)
+        filesKey.add(element.values.first);}
+    // for (int key in selectFileKeys.keys) {
+    //   print('ppppppppp');
+    //   print(selectFileKeys[key]![true]!);
+    //   if(selectFileKeys[key]!.values.first!=null)
+    //   filesKey.add(selectFileKeys[key]![true]!);
+    // }
 
     final result = await getIt<CheckInRepoImpl>()
         .checkIn(checkInParams: CheckInParams(filesKey: filesKey));
@@ -36,7 +42,7 @@ class CheckInCubit extends Cubit<CheckInState> {
       showToastWidget('Files have been reserved successfully');
          selectFileKeys.clear();
           selectLongTab = false;
-          emit(CheckInInitialState());
+
           emit(CheckInLoadedState(checkInAndCheckOutModel: r));
         });
   }
@@ -48,7 +54,7 @@ class CheckInCubit extends Cubit<CheckInState> {
         selectFileKeys[index] = {true: fileKey};
       } else {
         for (int i = selectFileKeys.length; i < index; i++) {
-          selectFileKeys.putIfAbsent(i, () => {false: ""});
+          selectFileKeys.putIfAbsent(i, () => {false: "a"});
         }
         selectFileKeys.putIfAbsent(index, () => {true: fileKey});
       }

@@ -51,7 +51,6 @@ dependencies:
   http_parser: ^4.0.2
   http:
 
-
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

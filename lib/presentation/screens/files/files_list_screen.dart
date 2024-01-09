@@ -141,8 +141,8 @@ class _FilesListScreenState extends State<FilesListScreen> {
                             const Icon(Icons.check),
                           ],
                         ),
-                        onPressed: () async {
-                          await checkInCubit.checkIn(context: context);
+                        onPressed: ()  {
+                           checkInCubit.checkIn(context: context);
 
                         },
                         buttonStyle:

@@ -6,22 +6,10 @@ import '../../../domain/models/params/get_groups_params.dart';
 
 abstract class Links {
 
-  static const baseUrl =
-<<<<<<< HEAD
-      "http://192.168.1.103:8000/api/";
-      // "http://127.0.0.1:8000/api/";
+  static const baseUrl = "http://127.0.0.1:8000/api/";
 
-  static const baseUrlForImage =
-      "http://192.168.1.103:8000/api/";
-      // "http://127.0.0.1:8000/";
-=======
-      // "http://192.168.43.113:8000/api/";
-      "http://127.0.0.1:8000/api/";
+  static const baseUrlForImage = "http://127.0.0.1:8000/";
 
-  static const baseUrlForImage =
-      // "http://192.168.43.113:8000/api/";
-      "http://127.0.0.1:8000/";
->>>>>>> a668cfeba5a2707c213be14b8fa3efc79c6af46d
 
   //region auth
   static const register = "register";

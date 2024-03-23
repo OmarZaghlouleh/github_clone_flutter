@@ -31,6 +31,7 @@ class SignUpControllers {
     passwordTextController = TextEditingController();
     confirmPasswordTextController = TextEditingController();
     fakeFieldController = TextEditingController();
+    emailTextController = TextEditingController();
   }
 
   static void clearControllers() {
